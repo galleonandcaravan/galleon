@@ -1,0 +1,23 @@
+.about__image-top {
+  margin-top: 15px;
+}
+
+.about__image-bottom {
+  margin-bottom: -15px;
+}
+
+@media screen and (max-width: 1023px) {
+  .about .images-switcher {
+    width: 33rem;
+  }
+
+  .about__image-top {
+    margin-top: 5px;
+  }
+
+  .about__image-bottom {
+    margin-bottom: -5px;
+  }
+}
+
+

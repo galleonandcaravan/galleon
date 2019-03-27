@@ -1,0 +1,21 @@
+.contact__image-top {
+  margin-top: 15px;
+}
+
+.contact__image-bottom {
+  margin-bottom: -15px;
+}
+
+@media screen and (max-width: 1023px) {
+  .contact .images-switcher {
+    width: 16rem;
+  }
+
+  .contact__image-top {
+    margin-top: 10px;
+  }
+
+  .contact__image-bottom {
+    margin-bottom: -10px;
+  }
+}

@@ -1,0 +1,48 @@
+@font-face {
+    font-family: 'Nocturne Serif';
+    src: url('./fonts/NocturneSerif-Lightitalic.woff2') format('woff2'),
+        url('./fonts/NocturneSerif-Lightitalic.woff') format('woff');
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Nocturne Serif';
+    src: url('./fonts/NocturneSerif-Light.woff2') format('woff2'),
+        url('./fonts/NocturneSerif-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Nocturne Serif';
+    src: url('./fonts/NocturneSerif-Regular.woff2') format('woff2'),
+        url('./fonts/NocturneSerif-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Nocturne Serif';
+    src: url('./fonts/NocturneSerif-Regular.woff2') format('woff2'),
+        url('./fonts/NocturneSerif-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Nocturne Serif';
+    src: url('./fonts/NocturneSerif-Mediumitalic.woff2') format('woff2'),
+        url('./fonts/NocturneSerif-Mediumitalic.woff') format('woff');
+    font-weight: 500;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Nocturne Serif';
+    src: url('./fonts/NocturneSerif-Medium.woff2') format('woff2'),
+        url('./fonts/NocturneSerif-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+}
+

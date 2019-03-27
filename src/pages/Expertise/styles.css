@@ -1,0 +1,13 @@
+.expertise__image-top {
+  margin-top: 25px;
+}
+
+.expertise__image-bottom {
+  margin-bottom: -25px;
+}
+
+@media screen and (max-width: 1023px) {
+  .expertise .images-switcher {
+    width: 34rem;
+  }
+}

@@ -1,0 +1,21 @@
+.story__image-top {
+  margin-top: 15px;
+}
+
+.story__image-bottom {
+  margin-bottom: -15px;
+}
+
+@media screen and (max-width: 1023px) {
+  .story .images-switcher {
+    width: 37rem;
+  }
+
+  .story__image-top {
+    margin-top: 5px;
+  }
+
+  .story__image-bottom {
+    margin-bottom: -5px;
+  }
+}
