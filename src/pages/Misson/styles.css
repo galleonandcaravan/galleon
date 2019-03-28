@@ -2,13 +2,6 @@
   width: 40rem;
 }
 
-.mission__image-top {
-  margin-top: 20px;
-}
-
-.mission__image-bottom {
-  margin-bottom: -20px;
-}
 
 @media screen and (min-width: 1100px) {
   .mission .images-switcher {
@@ -25,13 +18,5 @@
 @media screen and (max-width: 1023px) {
   .mission .images-switcher {
     width: 38rem;
-  }
-
-  .mission__image-top {
-    margin-top: 10px;
-  }
-
-  .mission__image-bottom {
-    margin-bottom: -10px;
   }
 }

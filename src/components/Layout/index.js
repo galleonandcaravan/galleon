@@ -1,48 +1,63 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
-import { CSSTransition } from 'react-transition-group';
-import Header from "../Header";
-import Footer from "../Footer";
-import GCLine from "../GCLine";
-import Dots from "../Dots";
+import Header from '../Header';
+import Footer from '../Footer';
+import GCLine from '../GCLine';
+import Dots from '../Dots';
+import { isMobile } from '../../utils/mobile';
 import './styles.css';
 
 class Layout extends Component {
   static propTypes = {
     className: PropTypes.string,
     children: PropTypes.node,
-    activePage: PropTypes.string,
+    activePage: PropTypes.string
+  };
+
+  state = {
+    pageMounted: false
   };
 
   static defaultProps = {
     className: '',
     activePage: '',
-    children: null,
-  };
-
-  state = {
-    childrenVisible: false,
+    children: null
   };
 
   componentDidMount() {
     setTimeout(() => {
-      this.setState({ childrenVisible: true });
-    }, 800);
+      this.setState({
+        pageMounted: true
+      });
+    }, 0);
+    window.addEventListener('resize', this.handleResize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize);
+  }
+
+  handleResize = () => {
+    this.forceUpdate();
   }
 
   render() {
     const { children, activePage, className } = this.props;
-    const { childrenVisible } = this.state;
+    const { pageMounted } = this.state;
 
     return (
       <div className={cn('layout', className)}>
         <div className="layout__container">
           <Header activePage={activePage} />
-          <GCLine activePage={activePage} />
-          <CSSTransition in={childrenVisible} timeout={1000} classNames="children" unmountOnExit>
-            <Fragment>{children}</Fragment>
-          </CSSTransition>
+          {
+            !isMobile() && (
+              <GCLine activePage={activePage} />
+            )
+          }
+          <div className={cn('layout-page', { 'layout-page_mounted': pageMounted })}>
+            {children}
+          </div>
           <Dots activePage={activePage} />
           <Footer />
         </div>

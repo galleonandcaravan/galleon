@@ -7,7 +7,11 @@ html, body {
   background-color: black;
   color: white;
   font-weight: 400;
-  font-size: 1.33vw;
+  font-size: 1.85vw;
+}
+
+body {
+  overflow-x: hidden;
 }
 
 @media screen and (min-width: 700px) {
@@ -49,10 +53,125 @@ ul {
 }
 
 .section {
-  transition: all 0.5s ease;
-  opacity: 0;
+  transition: all 1s ease;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: calc(100vw - 20rem);
 }
 
 .section_active {
   opacity: 1;
+}
+
+.page {
+  width: 500vw;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  transition: all 1s ease;
+}
+
+.page.active-page-1 {
+  transform: translateX(0);
+}
+
+.page.active-page-2 {
+  transform: translateX(-100vw);
+}
+
+.page.active-page-3 {
+  transform: translateX(-200vw);
+}
+
+.page.active-page-4 {
+  transform: translateX(-300vw);
+}
+
+.page.active-page-5 {
+  transform: translateX(-400vw);
+}
+
+.section:nth-child(2) {
+  left: 100vw;
+}
+
+.section:nth-child(3) {
+  left: 200vw;
+}
+
+.section:nth-child(4) {
+  left: 300vw;
+}
+
+.section:nth-child(5) {
+  left: 400vw;
+}
+
+
+@media screen and (max-width: 1023px) {
+  .section {
+    width: calc(100vw - 10rem);
+  }
+
+
+}
+
+@media screen and (max-width: 720px) {
+  body {
+    background-image: url('../images/gradient-mobile.jpg');
+    background-repeat: no-repeat;
+    background-position: top right;
+    background-color: black;
+    background-size: contain;
+  }
+
+  .page {
+    position: relative;
+    display: flex;
+    width: 500vw;
+    flex-wrap: nowrap;
+  }
+
+  .section {
+    flex: 0 1 100vw;
+    padding-right: 7.5rem;
+    position: relative;
+  }
+
+  .section:nth-child(2) {
+    left: auto;
+  }
+
+  .section:nth-child(3) {
+    left: auto;
+  }
+
+  .section:nth-child(4) {
+    left: auto;
+  }
+
+  .section:nth-child(5) {
+    left: auto;
+  }
+}
+
+.mobile {
+  display: none;
+}
+
+.desktop {
+  display: block;
+}
+
+@media screen and (max-width: 720px) {
+  .mobile {
+    display: block;
+  }
+
+  .desktop {
+    display: none;
+  }
 }

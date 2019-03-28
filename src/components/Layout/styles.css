@@ -8,25 +8,15 @@
   position: relative;
   height: 100vh;
   min-height: 700px;
-  width: 100%;
 }
 
-.children-enter {
+.layout-page {
+  transition: opacity 1s ease;
   opacity: 0;
 }
 
-.children-enter-active {
+.layout-page_mounted {
   opacity: 1;
-  transition: opacity 1s ease;
-}
-
-.children-exit {
-  opacity: 1;
-}
-
-.children-exit-active {
-  opacity: 0;
-  transition: opacity 1s ease;
 }
 
 @media screen and (max-width: 1023px) {
@@ -36,5 +26,17 @@
 
   .layout__container {
     min-height: 960px;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .layout {
+    padding: 0 3.5rem;
+  }
+
+  .layout__container {
+    min-height: 0;
+    height: auto;
+    min-height: 0;
   }
 }

@@ -8,8 +8,8 @@ import './styles.css';
 const Expertise = ({ switcherImagesVisible }) => (
   <div className="expertise" id="page-expertise">
     <MainContent
-      title="We have<br /><b>an Expertise</b>"
-      text="By partnering with an award-winning fintech<br />firm, we offer innovative products and<br />strategic solutions that get your funds where<br />they need to be, seamlessly."
+      title="We have<br /><b>an&nbsp;Expertise</b>"
+      text="By partnering with an award-winning fintech<br class='desktop' />firm, we offer innovative products and<br class='desktop' />strategic solutions that get your funds where<br class='desktop' />they need to be, seamlessly."
     />
     <ImagesSwitcher
       imageTop={PAGES_IMAGES.EXPERTISE.TOP}

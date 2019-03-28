@@ -1,3 +1,6 @@
 export const SCREEN_LINE_PADDING_DESKTOP_TOP = 70;
 export const SCREEN_LINE_PADDING_DESKTOP_BOTTOM = 140;
-
+export const GC_LINE_MARGIN_TOP = {
+  DEFAULT: 0,
+  TABLET: 40,
+}

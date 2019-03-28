@@ -1,7 +1,6 @@
 @font-face {
     font-family: 'Nocturne Serif';
-    src: url('./fonts/NocturneSerif-Lightitalic.woff2') format('woff2'),
-        url('./fonts/NocturneSerif-Lightitalic.woff') format('woff');
+    src: url('./fonts/390FD6_0_0.eot');src: url('./fonts/390FD6_0_0.eot?#iefix') format('embedded-opentype'),url('./fonts/390FD6_0_0.woff2') format('woff2'),url('./fonts/390FD6_0_0.woff') format('woff'),url('./fonts/390FD6_0_0.ttf') format('truetype');
     font-weight: 300;
     font-style: italic;
 }
@@ -16,33 +15,25 @@
 
 @font-face {
     font-family: 'Nocturne Serif';
-    src: url('./fonts/NocturneSerif-Regular.woff2') format('woff2'),
-        url('./fonts/NocturneSerif-Regular.woff') format('woff');
+    src: url('./fonts/390FD6_3_0.eot');src: url('./fonts/390FD6_3_0.eot?#iefix') format('embedded-opentype'),url('./fonts/390FD6_3_0.woff2') format('woff2'),url('./fonts/390FD6_3_0.woff') format('woff'),url('./fonts/390FD6_3_0.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
 }
 
-@font-face {
-    font-family: 'Nocturne Serif';
-    src: url('./fonts/NocturneSerif-Regular.woff2') format('woff2'),
-        url('./fonts/NocturneSerif-Regular.woff') format('woff');
-    font-weight: 400;
-    font-style: italic;
-}
 
 @font-face {
     font-family: 'Nocturne Serif';
-    src: url('./fonts/NocturneSerif-Mediumitalic.woff2') format('woff2'),
-        url('./fonts/NocturneSerif-Mediumitalic.woff') format('woff');
+    src: url('./fonts/390FD6_2_0.eot');src: url('./fonts/390FD6_2_0.eot?#iefix') format('embedded-opentype'),url('./fonts/390FD6_2_0.woff2') format('woff2'),url('./fonts/390FD6_2_0.woff') format('woff'),url('./fonts/390FD6_2_0.ttf') format('truetype');
     font-weight: 500;
     font-style: italic;
 }
 
 @font-face {
     font-family: 'Nocturne Serif';
-    src: url('./fonts/NocturneSerif-Medium.woff2') format('woff2'),
-        url('./fonts/NocturneSerif-Medium.woff') format('woff');
+    src: url('./fonts/390FD6_1_0.eot');src: url('./fonts/390FD6_1_0.eot?#iefix') format('embedded-opentype'),url('./fonts/390FD6_1_0.woff2') format('woff2'),url('./fonts/390FD6_1_0.woff') format('woff'),url('./fonts/390FD6_1_0.ttf') format('truetype');
     font-weight: 500;
     font-style: normal;
 }
+
+
 

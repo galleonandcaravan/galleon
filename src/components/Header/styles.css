@@ -19,6 +19,10 @@
   max-width: 230px;
 }
 
+.header-logo_mobile {
+  display: none;
+}
+
 .header__container {
   position: absolute;
   left: 0;
@@ -89,7 +93,7 @@
 
   .header__container {
     top: 0px;
-    height: 70px;
+    height: 65px;
     left: 0;
     right: 0;
     position: absolute;
@@ -104,8 +108,25 @@
   }
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 720px) {
   .header__container {
-    height: 60px;
+    height: 55px;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .header__container {
+    position: absolute;
+    top: 12rem;
+  }
+
+  .header-logo {
+    display: none;
+  }
+
+  .header-logo_mobile {
+    display: block;
+    max-width: 300px;
+    width: 30rem;
   }
 }

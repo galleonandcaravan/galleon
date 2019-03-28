@@ -11,8 +11,8 @@ import contactImageBottom from '../images/contact/bg-1.png';
 
 export const PAGES = {
   ABOUT: '',
-  MISSION: 'mission',
   STORY: 'story',
+  MISSION: 'mission',
   EXPERTISE: 'expertise',
   CONTACT: 'contact',
 };
@@ -38,5 +38,9 @@ export const PAGES_IMAGES = {
     TOP: contactImageTop,
     BOTTOM: contactImageBottom,
   },
+}
 
+export const HEADER_AUTH_LINKS = {
+  REGISTER: '/',
+  LOGIN: '/',
 }

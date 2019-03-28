@@ -9,7 +9,7 @@ const Contact = ({ switcherImagesVisible }) => (
   <div className="contact" id="page-contact">
     <MainContent
       title="Contact <b>us</b>"
-      text="If you have a foreign exchange requirement<br /> above £1m per annum, say <br /><br />hello@galleonandcaravan.com"
+      text="If you have a foreign exchange requirement<br class='desktop' /> above £1m per annum, say <br class='desktop' /><br class='desktop' />hello@galleonandcaravan.com"
     />
     <ImagesSwitcher
       imageTop={PAGES_IMAGES.CONTACT.TOP}

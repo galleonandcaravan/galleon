@@ -31,6 +31,11 @@
   font-weight: 500;
 }
 
+.footer-menu__item span {
+  color: white;
+  cursor: pointer;
+}
+
 .footer-menu__item:last-child {
   margin-right: 0;
 }
@@ -111,5 +116,23 @@
     left: 0px;
     top: -15px;
     width: 55px;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .footer {
+    position: relative;
+    bottom: auto;
+    left: 0;
+    right: 0;
+    margin-top: 200px;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .footer-copyright {
+    margin-left: -8rem;
+    margin-right: -8rem;
+    margin-bottom: 25px;
   }
 }

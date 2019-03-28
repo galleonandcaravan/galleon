@@ -3,8 +3,6 @@ import cn from 'classnames';
 import PropTypes from 'prop-types';
 import './styles.css';
 
-const IMAGE_PADDING = 210;
-
 class ImagesSwitcher extends Component {
   static propTypes = {
     imageTop: PropTypes.string.isRequired,
@@ -59,9 +57,11 @@ class ImagesSwitcher extends Component {
   };
 
   resizeImages = () => {
+    const imagesSwitcherHeight = document.querySelector('.js-images-switcher').offsetHeight;
+
     this.setState({
-      imageTopHeight: document.body.clientHeight - IMAGE_PADDING,
-      imageBottomHeight: document.body.clientHeight - IMAGE_PADDING
+      imageTopHeight: imagesSwitcherHeight,
+      imageBottomHeight: imagesSwitcherHeight,
     });
   };
 
@@ -77,11 +77,11 @@ class ImagesSwitcher extends Component {
 
     return (
       <div
-        className={cn('images-switcher', {
+        className={cn('js-images-switcher', 'images-switcher', {
           'images-switcher__visible': bgImagesVisible
         })}
       >
-        <div className="images-switcher__image-top" id="js-bg-image-top">
+        <div className="images-switcher__image-top js-image-switcher-top">
           <div
             className={cn('images-switcher__image', imageTopClassName)}
             style={{
@@ -92,7 +92,7 @@ class ImagesSwitcher extends Component {
           />
         </div>
 
-        <div className="images-switcher__image-bottom" id="js-bg-image-bottom">
+        <div className="images-switcher__image-bottom js-image-switcher-bottom">
           <div
             className={cn('images-switcher__image', imageBottomClassName)}
             style={{

@@ -4,11 +4,12 @@ import cn from 'classnames';
 import throttle from 'lodash.throttle';
 import {
   SCREEN_LINE_PADDING_DESKTOP_TOP,
-  SCREEN_LINE_PADDING_DESKTOP_BOTTOM
+  SCREEN_LINE_PADDING_DESKTOP_BOTTOM,
+  GC_LINE_MARGIN_TOP,
 } from './constants';
 import gImage from './images/g.png';
 import cImage from './images/c.png';
-import { isMobileOrTablet } from '../../utils/mobile';
+import { isTablet } from '../../utils/mobile';
 import './styles.css';
 
 class GCLine extends Component {
@@ -21,48 +22,41 @@ class GCLine extends Component {
   };
 
   state = {
-    animateStarted: false
+    mountAnimateStarted: false
   };
 
   constructor(props) {
     super(props);
-    this.center = React.createRef();
     this.dragStarted = false;
   }
 
   componentDidMount() {
-    // Start animate in next tick
-    setTimeout(() => {
-      this.startAnimate();
-    }, 0);
-
-    // Set line position after finish start animation
-    setTimeout(() => {
-      this.setLineAndImagesPosition(document.body.clientHeight / 2);
-    }, 850);
-
-    // Add mouseMove listener after 2 sec
-    setTimeout(() => {
-      document.addEventListener('mousemove', this.handleMouseMoveWithThrottle);
-    }, 2000);
-
     this.handleMouseMoveWithThrottle = throttle(this.handleMouseMove, 10);
     this.checkMousePosition = setInterval(this.checkMousePosition, 10);
-    this.lineMouseY = document.body.clientHeight / 2;
+    this.lineY = this.getCenterLinePosY();
     this.clientHeight = document.body.clientHeight;
-    this.handleResize();
 
     window.addEventListener('resize', this.handleResize);
+    document.addEventListener('mouseup', this.handleEndDrag);
+    document.addEventListener('mousemove', this.handleMouseMoveWithThrottle);
+
+    this.handleResize();
+    this.getDOMNodes();
+    this.resetPosition();
+
+    // Start mount animate in next tick
+    setTimeout(() => {
+      this.startMountAnimate();
+    }, 0);
   }
 
   componentDidUpdate(prevProps) {
     const { activePage } = this.props;
 
-    // Page changed
+    // Page changed, start pageChanged method in next tick
     if (prevProps.activePage !== activePage) {
       setTimeout(() => {
-        this.getImagesDOMNodes();
-        this.setLineAndImagesPosition(this.currentMouseY, true);
+        this.pageChanged();
       }, 0);
     }
   }
@@ -70,80 +64,146 @@ class GCLine extends Component {
   componentWillUnmount() {
     document.removeEventListener('mousemove', this.handleMouseMoveWithThrottle);
     window.removeEventListener('resize', this.handleResize);
+    document.removeEventListener('mouseup', this.handleEndDrag);
     clearInterval(this.checkMousePosition);
   }
 
-  handleResize = () => {
-    this.clientHeight = document.body.clientHeight;
-    this.isMobile = isMobileOrTablet();
+  resetPosition = () => {
+    this.lineY = this.getCenterLinePosY();
+    this.setLineAndImagesPosition(this.lineY);
   };
 
-  startAnimate = () => {
+  pageChanged = () => {
+    // Page changed. Detect position and start smoothly line move
+    this.getDOMNodes();
+    const centerPositionY = this.getCenterLinePosY();
+    this.moveSmoothly = true;
+    const { screenLinePaddingTop, screenLinePaddingBottom } = this.getScreenLinePaddings();
+    this.currentMouseY = !this.currentMouseY || this.currentMouseY > centerPositionY
+      ? screenLinePaddingTop
+      : this.clientHeight - screenLinePaddingBottom;
+    this.lineY += 1;
+    this.startMove = true;
+    this.prevImageTopHeight = 0;
+  };
+
+  handleResize = () => {
+    if (this.prevWindowWidth !== window.innerWidth) {
+      this.clientHeight = document.body.clientHeight;
+      this.isTablet = isTablet();
+      this.getGCLineMarginTop();
+      this.resetPosition();
+    }
+    this.prevWindowWidth = window.innerWidth;
+  };
+
+  startMountAnimate = () => {
     this.setState({
-      animateStarted: true
+      mountAnimateStarted: true
     });
   };
 
-  getImagesDOMNodes = () => {
-    const { activePage } = this.props;
-    this.imageTopDOM = document.querySelector(
-      `#page-${activePage || 'about'} #js-bg-image-top`
-    );
-    this.imageBottomDOM = document.querySelector(
-      `#page-${activePage || 'about'} #js-bg-image-bottom`
-    );
+  getScreenLinePaddings = () => {
+    // Get screen paddings for line
+    const { clientHeight } = this;
+
+    const screenLinePaddingTop = this.isTablet
+      ? (clientHeight / 100) * 33 - this.gcLineMarginTop
+      : SCREEN_LINE_PADDING_DESKTOP_TOP - this.gcLineMarginTop;
+    const screenLinePaddingBottom = this.isTablet
+      ? (clientHeight / 100) * 24 + this.gcLineMarginTop
+      : SCREEN_LINE_PADDING_DESKTOP_BOTTOM + this.gcLineMarginTop;
+
+    return {
+      screenLinePaddingTop,
+      screenLinePaddingBottom,
+    }
+  }
+
+  getGCLineMarginTop = () => {
+    let gcLineMarginTop = GC_LINE_MARGIN_TOP.DEFAULT;
+    if (isTablet()) {
+      gcLineMarginTop = GC_LINE_MARGIN_TOP.TABLET;
+    }
+    this.gcLineMarginTop = gcLineMarginTop;
+  };
+
+  getCenterLinePosY = () => {
+    return document.body.clientHeight / 2;
+  };
+
+  getDOMNodes = () => {
+    this.imagesTopDOM = [...document.querySelectorAll('.js-image-switcher-top')];
+    this.imagesBottomDOM = [...document.querySelectorAll('.js-image-switcher-bottom')];
+    this.gcLinesDOM = [...document.querySelectorAll('.js-gcLine')];
   };
 
   handleMouseMove = event => {
     // Save current position of mouse Y
-    this.currentMouseY = event.clientY + window.pageYOffset;
+    if (this.dragStarted) {
+      this.currentMouseY = event.clientY + window.pageYOffset - this.gcLineMarginTop;
+    }
+  };
+
+  handleStartDrag = () => {
+    this.currentMouseY = 0;
+    this.dragStarted = true;
+    this.startMove = true;
+  };
+
+  handleEndDrag = () => {
+    this.dragStarted = false;
+    this.startMove = false;
   };
 
   checkMousePosition = () => {
     // Check position of mouse Y and calc position of line
 
-    let lineMouseYChanged = false;
-    if (this.currentMouseY) {
-      if (this.currentMouseY < this.lineMouseY) {
-        // Calc speed
-        const speed = this.getMoveSpeed(this.lineMouseY - this.currentMouseY);
-        this.lineMouseY += -speed;
-        lineMouseYChanged = true;
-      }
+    if (this.startMove && this.currentMouseY) {
+      let lineYChanged = false;
 
-      if (this.currentMouseY > this.lineMouseY) {
-        // Calc speed
-        const speed = this.getMoveSpeed(this.currentMouseY - this.lineMouseY);
-        this.lineMouseY += speed;
-        lineMouseYChanged = true;
-      }
+      if (this.currentMouseY) {
+        if (this.currentMouseY < this.lineY) {
+          // Calc speed
+          const speed = this.getMoveSpeed(this.lineY - this.currentMouseY);
+          this.lineY += -speed;
+          lineYChanged = true;
+        }
 
-      if (lineMouseYChanged) {
-        // Set position of line and images
-        this.setLineAndImagesPosition(this.lineMouseY);
+        if (this.currentMouseY > this.lineY) {
+          // Calc speed
+          const speed = this.getMoveSpeed(this.currentMouseY - this.lineY);
+          this.lineY += speed;
+          lineYChanged = true;
+        }
+
+        if (lineYChanged) {
+          // Set position of line and images
+          this.setLineAndImagesPosition(this.lineY);
+        } else {
+          // Stop smoothly move
+          this.moveSmoothly = false;
+        }
       }
+    } else {
+      this.moveSmoothly = false;
     }
   };
 
   getMoveSpeed = diffY => {
-    const speed = Math.ceil(diffY / 10);
+    const speed = this.moveSmoothly ? Math.ceil(diffY / 50) : diffY;
     return speed < 2 ? 2 : speed;
   };
 
   setLineAndImagesPosition = (mousePosY, force) => {
     // Set position of line and height of images
     if (!this.imageTopDOM) {
-      this.getImagesDOMNodes();
+      this.getDOMNodes();
     }
     const { clientHeight } = this;
     const halfScreenHeight = clientHeight / 2;
-
-    const screenLinePaddingTop = this.isMobile
-      ? clientHeight / 100 * 33
-      : SCREEN_LINE_PADDING_DESKTOP_TOP;
-    const screenLinePaddingBottom = this.isMobile
-      ? clientHeight / 100 * 26
-      : SCREEN_LINE_PADDING_DESKTOP_BOTTOM
+    const { screenLinePaddingTop, screenLinePaddingBottom } = this.getScreenLinePaddings();
+    const clientHeight15Percent = clientHeight / 100 * 15;
 
     let posY = mousePosY - 10;
     if (posY <= screenLinePaddingTop) {
@@ -158,35 +218,42 @@ class GCLine extends Component {
     const centerLinePosY = posY - halfScreenHeight;
 
     // Calc height of images containers
-    const imageTopHeight = posY + 12;
-    const imageBottomHeight = clientHeight - posY - 12;
+    let imageTopHeight = posY + 12 + this.gcLineMarginTop - clientHeight15Percent + 20;
+    let imageBottomHeight = clientHeight - posY - 12 - this.gcLineMarginTop - clientHeight15Percent - 20;
+
+    if (isTablet()) {
+      imageTopHeight -= 72 + clientHeight15Percent;
+      imageBottomHeight -= 60;
+    }
 
     // Set styles
-    if (
-      (force || this.prevImageTopHeight !== imageTopHeight) &&
-      (this.center || {}).current &&
-      this.imageTopDOM &&
-      this.imageBottomDOM
-    ) {
-      this.center.current.style.transform = `translateY(${centerLinePosY}px)`;
-      this.imageTopDOM.style.height = `${imageTopHeight}px`;
-      this.imageBottomDOM.style.height = `${imageBottomHeight}px`;
+    if (force || this.prevImageTopHeight !== imageTopHeight) {
+      this.gcLinesDOM.forEach((gcLineDOM) => {
+        gcLineDOM.style.transform = `translateY(${centerLinePosY}px)`; // eslint-disable-line
+      })
+      this.imagesTopDOM.forEach((imageTopDOM) => {
+        imageTopDOM.style.height = `${imageTopHeight}px`; // eslint-disable-line
+      })
+      this.imagesBottomDOM.forEach((imageBottomDOM) => {
+        imageBottomDOM.style.height = `${imageBottomHeight}px`; // eslint-disable-line
+      })
     }
 
     this.prevImageTopHeight = imageTopHeight;
   };
 
   render() {
-    const { animateStarted } = this.state;
+    const { mountAnimateStarted } = this.state;
 
     return (
-      <div className={cn('gcLine', { gcLine__animated: animateStarted })}>
+      <div
+        className={cn('gcLine', { gcLine__animated: mountAnimateStarted })}
+      >
         <img src={gImage} className="gcLine__g" alt="" />
         <div
-          className="gcLine__center"
+          className="gcLine__center js-gcLine"
           onMouseDown={this.handleStartDrag}
           onTouchStart={this.handleStartDrag}
-          ref={this.center}
         >
           <div className="gcLine__line" />
         </div>

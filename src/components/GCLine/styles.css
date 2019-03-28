@@ -13,15 +13,19 @@
 }
 
 .gcLine__c {
-  margin-left: 2.5rem;
+  margin-left: 1.5rem;
   flex: 0 0 auto;
   width: 68px;
+  transform: translateY(-10px);
+  user-select: none;
 }
 
 .gcLine__g {
   flex: 0 0 auto;
   margin-right: 1rem;
   width: 70px;
+  transform: translateY(-10px);
+  user-select: none;
 }
 
 .gcLine__animated {
@@ -33,7 +37,16 @@
   width: 100%;
   flex: 1 1 auto;
   z-index: 5;
+  cursor: pointer;
   position: relative;
+  outline: none;
+}
+
+.gcLine__center:focus,
+.gcLine__center:hover,
+.gcLine__line:focus,
+.gcLine__line:hover {
+  outline: none;
 }
 
 .gcLine__line {
@@ -44,9 +57,14 @@
   left: 0;
   right: 0;
   transform: translateY(-50%);
+  outline: none;
 }
 
 @media screen and (max-width: 1023px) {
+  .gcLine {
+    margin-top: 40px;
+  }
+
   .gcLine__animated {
     width: 100%;
   }

@@ -2,7 +2,8 @@ import React from 'react';
 import cn from 'classnames';
 import PropTypes from 'prop-types';
 import logo from './images/logo.png';
-import { PAGES } from '../../constants';
+import logoMobile from './images/logo-mobile.png';
+import { HEADER_AUTH_LINKS, PAGES } from '../../constants';
 import HeaderMobile from '../HeaderMobile';
 import './styles.css';
 
@@ -11,6 +12,7 @@ const Header = ({ activePage }) => {
     <div className="header">
       <div className="header__container">
         <img className="header-logo" src={logo} alt=""/>
+        <img className="header-logo_mobile" src={logoMobile} alt=""/>
 
         <ul className="header-menu">
           <li
@@ -56,16 +58,18 @@ const Header = ({ activePage }) => {
 
         <ul className="header-auth">
           <li className="header-auth__item">
-            <a href="/register">Register</a>
+            <a href={HEADER_AUTH_LINKS.REGISTER}>Register</a>
           </li>
 
           <li className="header-auth__item">
-            <a href="/login">Log In</a>
+            <a href={HEADER_AUTH_LINKS.LOGIN}>Log In</a>
           </li>
         </ul>
       </div>
 
-      <HeaderMobile />
+      <HeaderMobile
+        activePage={activePage}
+      />
     </div>
   );
 }
