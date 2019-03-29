@@ -92,18 +92,16 @@ class GCLine extends Component {
   };
 
   handleResize = () => {
+    this.clientHeight = document.body.clientHeight;
     if (this.prevWindowWidth !== window.innerWidth) {
+      this.lineY = this.getCenterLinePosY();
       this.clientWidth = document.body.clientWidth;
       this.isTablet = isTablet();
       this.getGCLineMarginTop();
-      this.resetPosition();
       this.handleEndDrag();
-    }
-    if (this.prevWindowHeight !== window.innerHeight) {
-      this.clientHeight = document.body.clientHeight;
+      this.resetPosition();
     }
     this.prevWindowWidth = window.innerWidth;
-    this.prevWindowHeight = window.innerHeight;
   };
 
   startMountAnimate = () => {
