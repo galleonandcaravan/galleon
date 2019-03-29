@@ -12,6 +12,11 @@
   transform: translateY(-20px);
 }
 
+.gcLine_hidden {
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+
 .gcLine__c {
   margin-left: 1.5rem;
   flex: 0 0 auto;
@@ -28,7 +33,7 @@
   user-select: none;
 }
 
-.gcLine__animated {
+.gcLine_animated {
   width: 50rem;
 }
 

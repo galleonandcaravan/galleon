@@ -5,15 +5,22 @@ import './styles.css';
 
 class Footer extends Component {
   static propTypes = {
-    togglePopup: PropTypes.func.isRequired,
-  }
+    togglePopup: PropTypes.func.isRequired
+  };
 
   render() {
     const { togglePopup } = this.props;
 
     return (
       <div className="footer">
-        <img src={footerIcon} className="footer-logo" alt="" />
+        <img
+          src={footerIcon}
+          className="footer-logo"
+          alt=""
+          onClick={() => {
+            window.location.hash = '';
+          }}
+        />
 
         <ul className="footer-menu">
           <li className="footer-menu__item">
@@ -25,9 +32,7 @@ class Footer extends Component {
           </li>
 
           <li className="footer-menu__item">
-            <span onClick={() => togglePopup('terms')}>
-              terms & conditions
-            </span>
+            <span onClick={() => togglePopup('terms')}>terms & conditions</span>
           </li>
         </ul>
 

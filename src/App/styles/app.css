@@ -78,6 +78,10 @@ ul {
   transition: all 1s ease;
 }
 
+.page_hidden {
+  opacity: 0;
+}
+
 .page.active-page-1 {
   transform: translateX(0);
 }

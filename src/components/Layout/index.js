@@ -13,18 +13,23 @@ class Layout extends Component {
     className: PropTypes.string,
     children: PropTypes.node,
     activePage: PropTypes.string,
-    popupsVisible: PropTypes.shape({}).isRequired,
+    popupVisibleBlock: PropTypes.string,
     togglePopup: PropTypes.func.isRequired,
+    gcLineHidden: PropTypes.bool,
+    dotsHidden: PropTypes.bool
+  };
+
+  static defaultProps = {
+    gcLineHidden: false,
+    dotsHidden: false,
+    popupVisibleBlock: '',
+    className: '',
+    activePage: '',
+    children: null
   };
 
   state = {
     pageMounted: false
-  };
-
-  static defaultProps = {
-    className: '',
-    activePage: '',
-    children: null
   };
 
   componentDidMount() {
@@ -49,8 +54,10 @@ class Layout extends Component {
       children,
       activePage,
       className,
-      popupsVisible,
-      togglePopup
+      popupVisibleBlock,
+      togglePopup,
+      gcLineHidden,
+      dotsHidden
     } = this.props;
 
     const { pageMounted } = this.state;
@@ -60,10 +67,12 @@ class Layout extends Component {
         <div className="layout__container">
           <Header
             activePage={activePage}
-            popupsVisible={popupsVisible}
+            popupVisibleBlock={popupVisibleBlock}
             togglePopup={togglePopup}
           />
-          {!isMobile() && <GCLine activePage={activePage} />}
+          {!isMobile() && (
+            <GCLine activePage={activePage} isHidden={gcLineHidden} />
+          )}
           <div
             className={cn('layout-page', {
               'layout-page_mounted': pageMounted
@@ -71,8 +80,11 @@ class Layout extends Component {
           >
             {children}
           </div>
-          <Dots activePage={activePage} />
-          <Footer popupsVisible={popupsVisible} togglePopup={togglePopup} />
+          <Dots activePage={activePage} isHidden={dotsHidden} />
+          <Footer
+            popupVisibleBlock={popupVisibleBlock}
+            togglePopup={togglePopup}
+          />
         </div>
       </div>
     );

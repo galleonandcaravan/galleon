@@ -1,19 +1,19 @@
 self.__precacheManifest = [
   {
-    "revision": "9a84eddf8c11602ec5220d798257b153",
-    "url": "/galleon/static/media/390FD6_0_0.9a84eddf.eot"
+    "revision": "e95d4986339f94723be4fe5047744723",
+    "url": "/galleon/static/media/390FD6_0_0.e95d4986.woff2"
   },
   {
-    "revision": "2b57a06d2d418a651267",
-    "url": "/galleon/static/css/main.529814d9.chunk.css"
+    "revision": "4df1f991ce90ea4b7776",
+    "url": "/galleon/static/css/main.08b64d53.chunk.css"
   },
   {
     "revision": "e3bdae60cdee24b368f1",
     "url": "/galleon/static/js/runtime~main.e48db09e.js"
   },
   {
-    "revision": "de636595f9b2b630a85e",
-    "url": "/galleon/static/js/2.2756c53d.chunk.js"
+    "revision": "8aeabcb093bd5d8a46c7",
+    "url": "/galleon/static/js/2.77e96be0.chunk.js"
   },
   {
     "revision": "40e6e8e1bd77be89d76be0ff1f124eb7",
@@ -76,16 +76,16 @@ self.__precacheManifest = [
     "url": "/galleon/static/media/gradient-mobile.0956fa59.jpg"
   },
   {
-    "revision": "2b57a06d2d418a651267",
-    "url": "/galleon/static/js/main.b319f133.chunk.js"
+    "revision": "4df1f991ce90ea4b7776",
+    "url": "/galleon/static/js/main.0850dcfe.chunk.js"
   },
   {
     "revision": "4478beff6552736d8a7e8131f727b791",
     "url": "/galleon/static/media/390FD6_0_0.4478beff.woff"
   },
   {
-    "revision": "e95d4986339f94723be4fe5047744723",
-    "url": "/galleon/static/media/390FD6_0_0.e95d4986.woff2"
+    "revision": "9a84eddf8c11602ec5220d798257b153",
+    "url": "/galleon/static/media/390FD6_0_0.9a84eddf.eot"
   },
   {
     "revision": "a37d460b985283f2bcff1efe68e17eaa",
@@ -112,12 +112,12 @@ self.__precacheManifest = [
     "url": "/galleon/static/media/390FD6_3_0.7c971241.woff"
   },
   {
-    "revision": "a788f6ecc2bf373c486c0db59a6e1f4a",
-    "url": "/galleon/static/media/390FD6_2_0.a788f6ec.eot"
-  },
-  {
     "revision": "c37d4466fe0ac9a6c658633761014120",
     "url": "/galleon/static/media/390FD6_3_0.c37d4466.ttf"
+  },
+  {
+    "revision": "a788f6ecc2bf373c486c0db59a6e1f4a",
+    "url": "/galleon/static/media/390FD6_2_0.a788f6ec.eot"
   },
   {
     "revision": "4612750acd225a28c3baec12fc39f27b",
@@ -128,12 +128,12 @@ self.__precacheManifest = [
     "url": "/galleon/static/media/390FD6_2_0.d93f6cd9.woff"
   },
   {
-    "revision": "548142f9efdb76a88157f82b687e51a9",
-    "url": "/galleon/static/media/390FD6_1_0.548142f9.eot"
-  },
-  {
     "revision": "9049d2b2458cbbd15f50d95a3522fe8b",
     "url": "/galleon/static/media/390FD6_2_0.9049d2b2.ttf"
+  },
+  {
+    "revision": "548142f9efdb76a88157f82b687e51a9",
+    "url": "/galleon/static/media/390FD6_1_0.548142f9.eot"
   },
   {
     "revision": "3e47231284442bcf863a5a5a86f26147",
@@ -148,7 +148,7 @@ self.__precacheManifest = [
     "url": "/galleon/static/media/390FD6_1_0.60a20ab3.ttf"
   },
   {
-    "revision": "82e9c8ea1ecab34d8d9a1070e2ef1179",
+    "revision": "47b677aaf77f0e859314744669e8d2ca",
     "url": "/galleon/index.html"
   }
 ];

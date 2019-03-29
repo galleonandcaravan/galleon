@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import cn from 'classnames';
 import PropTypes from 'prop-types';
 import logo from './images/logo.png';
@@ -7,87 +7,111 @@ import { HEADER_AUTH_LINKS, PAGES } from '../../constants';
 import HeaderMobile from '../HeaderMobile';
 import './styles.css';
 
-const Header = ({
-  activePage,
-  popupsVisible,
-  togglePopup,
-}) => {
-  return (
-    <div className="header">
-      <div className="header__container">
-        <img className="header-logo" src={logo} alt=""/>
-        <img className="header-logo_mobile" src={logoMobile} alt=""/>
+class Header extends Component {
+  static propTypes = {
+    activePage: PropTypes.string,
+    popupVisibleBlock: PropTypes.string.isRequired,
+    togglePopup: PropTypes.func.isRequired
+  };
 
-        <ul className="header-menu">
-          <li
-            className={cn('header-menu__item', {
-              'header-menu__item-active': activePage === PAGES.ABOUT,
-            })}
-          >
-            <a href={`#${PAGES.ABOUT}`}>about us</a>
-          </li>
+  static defaultProps = {
+    activePage: ''
+  };
 
-          <li
-            className={cn('header-menu__item', {
-              'header-menu__item-active': activePage === PAGES.STORY,
-            })}
-          >
-            <a href={`#${PAGES.STORY}`}>story</a>
-          </li>
+  handleMenuItem = () => {
+    const { popupVisibleBlock, togglePopup } = this.props;
+    if (popupVisibleBlock) {
+      togglePopup();
+    }
+  };
 
-          <li
-            className={cn('header-menu__item', {
-              'header-menu__item-active': activePage === PAGES.MISSION,
-            })}
-          >
-            <a href={`#${PAGES.MISSION}`}>misson</a>
-          </li>
+  render() {
+    const { activePage, popupVisibleBlock, togglePopup } = this.props;
 
-          <li
-            className={cn('header-menu__item', {
-              'header-menu__item-active': activePage === PAGES.EXPERTISE,
-            })}
-          >
-            <a href={`#${PAGES.EXPERTISE}`}>expertise</a>
-          </li>
+    return (
+      <div className="header">
+        <div className="header__container">
+          <img
+            className="header-logo"
+            src={logo}
+            alt=""
+            onClick={() => {
+              window.location.hash = '';
+            }}
+          />
+          <img className="header-logo_mobile" src={logoMobile} alt="" />
 
-          <li
-            className={cn('header-menu__item', {
-              'header-menu__item-active': activePage === PAGES.CONTACT,
-            })}
-          >
-            <a href={`#${PAGES.CONTACT}`}>contact us</a>
-          </li>
-        </ul>
+          <ul className="header-menu">
+            <li
+              className={cn('header-menu__item', {
+                'header-menu__item-active': activePage === PAGES.ABOUT
+              })}
+            >
+              <a href={`#${PAGES.ABOUT}`} onClick={this.handleMenuItem}>
+                about us
+              </a>
+            </li>
 
-        <ul className="header-auth">
-          <li className="header-auth__item">
-            <a href={HEADER_AUTH_LINKS.REGISTER}>Register</a>
-          </li>
+            <li
+              className={cn('header-menu__item', {
+                'header-menu__item-active': activePage === PAGES.STORY
+              })}
+            >
+              <a href={`#${PAGES.STORY}`} onClick={this.handleMenuItem}>
+                story
+              </a>
+            </li>
 
-          <li className="header-auth__item">
-            <a href={HEADER_AUTH_LINKS.LOGIN}>Log In</a>
-          </li>
-        </ul>
+            <li
+              className={cn('header-menu__item', {
+                'header-menu__item-active': activePage === PAGES.MISSION
+              })}
+            >
+              <a href={`#${PAGES.MISSION}`} onClick={this.handleMenuItem}>
+                misson
+              </a>
+            </li>
+
+            <li
+              className={cn('header-menu__item', {
+                'header-menu__item-active': activePage === PAGES.EXPERTISE
+              })}
+            >
+              <a href={`#${PAGES.EXPERTISE}`} onClick={this.handleMenuItem}>
+                expertise
+              </a>
+            </li>
+
+            <li
+              className={cn('header-menu__item', {
+                'header-menu__item-active': activePage === PAGES.CONTACT
+              })}
+            >
+              <a href={`#${PAGES.CONTACT}`} onClick={this.handleMenuItem}>
+                contact us
+              </a>
+            </li>
+          </ul>
+
+          <ul className="header-auth">
+            <li className="header-auth__item">
+              <a href={HEADER_AUTH_LINKS.REGISTER}>Register</a>
+            </li>
+
+            <li className="header-auth__item">
+              <a href={HEADER_AUTH_LINKS.LOGIN}>Log In</a>
+            </li>
+          </ul>
+        </div>
+
+        <HeaderMobile
+          activePage={activePage}
+          popupVisibleBlock={popupVisibleBlock}
+          togglePopup={togglePopup}
+        />
       </div>
-
-      <HeaderMobile
-        activePage={activePage}
-        popupsVisible={popupsVisible}
-        togglePopup={togglePopup}
-      />
-    </div>
-  );
-}
-
-Header.propTypes = {
-  activePage: PropTypes.string,
-  popupsVisible: PropTypes.shape({}).isRequired,
-  togglePopup: PropTypes.func.isRequired,
-}
-
-Header.defaultProps = {
-  activePage: '',
+    );
+  }
 }
 
 export default Header;

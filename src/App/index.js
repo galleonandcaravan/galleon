@@ -8,7 +8,7 @@ import Expertise from '../pages/Expertise';
 import Contact from '../pages/Contact';
 import Layout from '../components/Layout';
 import { PAGES } from '../constants';
-import Modal from '../components/Modal';
+import ModalPrivacy from '../components/ModalPrivacy';
 import { isDesktop } from '../utils/media';
 import './styles/app.css';
 import './styles/fonts.css';
@@ -24,11 +24,7 @@ class App extends Component {
       switcherImagesVisibleByPageIndex: {},
       switcherImagesIncrement: 0,
       pageIndex: 0,
-      popupsVisible: {
-        privacy: false,
-        security: false,
-        terms: false
-      }
+      popupVisibleBlock: ''
     };
 
     this.switcherImagesVisible = {};
@@ -56,10 +52,14 @@ class App extends Component {
     const page = this.getPage();
     const pageIndex = this.getPageIndex(page);
 
-    this.setState({ page, pageIndex });
+    this.setState({
+      page,
+      pageIndex,
+      popupVisibleBlock: ''
+    });
   };
 
-  getPageIndex = (page) => {
+  getPageIndex = page => {
     let pageIndex = 0;
 
     Object.keys(PAGES).forEach((key, index) => {
@@ -69,20 +69,16 @@ class App extends Component {
     });
 
     return pageIndex;
-  }
+  };
 
   getPage = () => {
     return window.location.hash.replace('#', '');
   };
 
-  handleMouseWheel = (event) => {
-    const { popupsVisible } = this.state;
-    const popupVisible =
-      popupsVisible.privacy ||
-      popupsVisible.security ||
-      popupsVisible.terms;
+  handleMouseWheel = event => {
+    const { popupVisibleBlock } = this.state;
 
-    if (!popupVisible && !this.disableMouseWheel && isDesktop()) {
+    if (!popupVisibleBlock && !this.disableMouseWheel && isDesktop()) {
       const delta = Math.sign(event.deltaY);
       if (delta === 1) {
         this.goToNextPage();
@@ -95,31 +91,27 @@ class App extends Component {
         this.disableMouseWheel = false;
       }, 1000);
     }
-  }
+  };
 
   goToPrevPage = () => {
     const page = this.getPage();
     const pageIndex = this.getPageIndex(page);
-    const nextPageIndex = pageIndex - 1 >= 0
-      ? pageIndex - 1
-      : PAGES_COUNT - 1
+    const nextPageIndex = pageIndex - 1 >= 0 ? pageIndex - 1 : PAGES_COUNT - 1;
     this.goToPageByIndex(nextPageIndex);
-  }
+  };
 
   goToNextPage = () => {
     const page = this.getPage();
     const pageIndex = this.getPageIndex(page);
-    const nextPageIndex = pageIndex + 1 <= PAGES_COUNT - 1
-      ? pageIndex + 1
-      : 0
+    const nextPageIndex = pageIndex + 1 <= PAGES_COUNT - 1 ? pageIndex + 1 : 0;
     this.goToPageByIndex(nextPageIndex);
-  }
+  };
 
-  goToPageByIndex = (pageIndex) => {
+  goToPageByIndex = pageIndex => {
     const pages = Object.keys(PAGES).map(pageKey => PAGES[pageKey]);
     const nextPage = pages[pageIndex];
     window.location.hash = nextPage;
-  }
+  };
 
   loadNextSwitcherImages = () => {
     // Set flag for load next switcher images (smart precache)
@@ -142,18 +134,21 @@ class App extends Component {
     }
   };
 
-  togglePopup = popupKey => {
-    const { popupsVisible } = this.state;
+  togglePopup = activeBlock => {
+    const { popupVisibleBlock } = this.state;
+
     this.setState({
-      popupsVisible: {
-        ...popupsVisible,
-        [popupKey]: !popupsVisible[popupKey]
-      }
+      popupVisibleBlock: popupVisibleBlock === activeBlock ? '' : activeBlock
     });
   };
 
   render() {
-    const { page, pageIndex, switcherImagesVisibleByPageIndex, popupsVisible } = this.state;
+    const {
+      page,
+      pageIndex,
+      switcherImagesVisibleByPageIndex,
+      popupVisibleBlock
+    } = this.state;
     const aboutPageIsActive = page === PAGES.ABOUT;
     const missionPageIsActive = page === PAGES.MISSION;
     const storyPageIsActive = page === PAGES.STORY;
@@ -164,11 +159,19 @@ class App extends Component {
       <Layout
         className="app"
         onChangePage={this.handleChangePage}
-        popupsVisible={popupsVisible}
+        popupVisibleBlock={popupVisibleBlock}
         togglePopup={this.togglePopup}
         activePage={page}
+        gcLineHidden={!!popupVisibleBlock}
+        dotsHidden={!!popupVisibleBlock}
       >
-        <div className={cn('page', `active-page-${pageIndex + 1}`)}>
+        <div
+          className={cn(
+            'page',
+            { page_hidden: popupVisibleBlock },
+            `active-page-${pageIndex + 1}`
+          )}
+        >
           <div className={cn('section', { section_active: aboutPageIsActive })}>
             <About
               switcherImagesVisible={
@@ -185,7 +188,9 @@ class App extends Component {
             />
           </div>
 
-          <div className={cn('section', { section_active: missionPageIsActive })}>
+          <div
+            className={cn('section', { section_active: missionPageIsActive })}
+          >
             <Mission
               switcherImagesVisible={
                 missionPageIsActive || switcherImagesVisibleByPageIndex[2]
@@ -203,7 +208,9 @@ class App extends Component {
             />
           </div>
 
-          <div className={cn('section', { section_active: contactPageIsActive })}>
+          <div
+            className={cn('section', { section_active: contactPageIsActive })}
+          >
             <Contact
               switcherImagesVisible={
                 contactPageIsActive || switcherImagesVisibleByPageIndex[4]
@@ -211,25 +218,10 @@ class App extends Component {
             />
           </div>
 
-          <Modal
-            isOpen={popupsVisible.privacy}
-            onClose={() => this.togglePopup('privacy')}
-            title="Privacy"
-            text="Text text text text Text text text text Text text text text Text text text text Text text text text Text text text text Text text text text Text text text text "
-          />
-
-          <Modal
-            isOpen={popupsVisible.security}
-            onClose={() => this.togglePopup('security')}
-            title="Security"
-            text="Text text text text Text text text text Text text text text Text text text text Text text text text Text text text text Text text text text Text text text text "
-          />
-
-          <Modal
-            isOpen={popupsVisible.terms}
-            onClose={() => this.togglePopup('terms')}
-            title="Terms & conditions"
-            text="Text text text text Text text text text Text text text text Text text text text Text text text text Text text text text Text text text text Text text text text "
+          <ModalPrivacy
+            isOpen={!!popupVisibleBlock}
+            activeBlock={popupVisibleBlock}
+            togglePopup={this.togglePopup}
           />
         </div>
       </Layout>

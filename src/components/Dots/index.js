@@ -4,12 +4,14 @@ import PropTypes from 'prop-types';
 import { PAGES } from '../../constants';
 import './styles.css';
 
-const Dots = ({ activePage }) => (
-  <ul className="dots">
+const Dots = ({ activePage, isHidden }) => (
+  <ul className={cn('dots', { dots_hidden: isHidden })}>
     {Object.keys(PAGES).map(pageKey => (
       <li
         key={pageKey}
-        className={cn('dots__item', { dots__item_active: activePage === PAGES[pageKey] })}
+        className={cn('dots__item', {
+          dots__item_active: activePage === PAGES[pageKey]
+        })}
       >
         <a href={`#${PAGES[pageKey]}`} />
       </li>
@@ -19,10 +21,12 @@ const Dots = ({ activePage }) => (
 
 Dots.propTypes = {
   activePage: PropTypes.string,
+  isHidden: PropTypes.bool
 };
 
 Dots.defaultProps = {
   activePage: '',
+  isHidden: false
 };
 
 export default Dots;

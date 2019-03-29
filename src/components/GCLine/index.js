@@ -10,11 +10,13 @@ import './styles.css';
 
 class GCLine extends Component {
   static propTypes = {
-    activePage: PropTypes.string
+    activePage: PropTypes.string,
+    isHidden: PropTypes.bool
   };
 
   static defaultProps = {
-    activePage: ''
+    activePage: '',
+    isHidden: false
   };
 
   state = {
@@ -297,10 +299,17 @@ class GCLine extends Component {
   };
 
   render() {
+    const { isHidden } = this.props;
     const { mountAnimateStarted } = this.state;
 
     return (
-      <div className={cn('gcLine', { gcLine__animated: mountAnimateStarted })}>
+      <div
+        className={cn(
+          'gcLine',
+          { gcLine_hidden: isHidden },
+          { gcLine_animated: mountAnimateStarted }
+        )}
+      >
         <img src={gImage} className="gcLine__g" alt="" />
         <div
           className="gcLine__center js-gcLine"

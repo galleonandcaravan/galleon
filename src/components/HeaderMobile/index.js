@@ -9,7 +9,7 @@ import './styles.css';
 class HeaderMobile extends Component {
   static propTypes = {
     activePage: PropTypes.string,
-    popupsVisible: PropTypes.shape({}).isRequired,
+    popupVisibleBlock: PropTypes.string.isRequired,
     togglePopup: PropTypes.func.isRequired,
   };
 
@@ -33,9 +33,9 @@ class HeaderMobile extends Component {
     }
   };
 
-  openModal = (popupKey)  => {
+  openModal = (activeBlock)  => {
     const { togglePopup } = this.props;
-    togglePopup(popupKey);
+    togglePopup(activeBlock);
     this.toggleMenuVisible();
   }
 
