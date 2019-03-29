@@ -4,7 +4,7 @@ self.__precacheManifest = [
     "url": "/galleon/static/media/390FD6_0_0.9a84eddf.eot"
   },
   {
-    "revision": "b81496cb84ff6f990226",
+    "revision": "b6a657fe21950fa10560",
     "url": "/galleon/static/css/main.529814d9.chunk.css"
   },
   {
@@ -76,8 +76,8 @@ self.__precacheManifest = [
     "url": "/galleon/static/media/gradient-mobile.0956fa59.jpg"
   },
   {
-    "revision": "b81496cb84ff6f990226",
-    "url": "/galleon/static/js/main.ca1b073c.chunk.js"
+    "revision": "b6a657fe21950fa10560",
+    "url": "/galleon/static/js/main.924fb368.chunk.js"
   },
   {
     "revision": "e95d4986339f94723be4fe5047744723",
@@ -112,10 +112,6 @@ self.__precacheManifest = [
     "url": "/galleon/static/media/390FD6_3_0.7c971241.woff"
   },
   {
-    "revision": "c37d4466fe0ac9a6c658633761014120",
-    "url": "/galleon/static/media/390FD6_3_0.c37d4466.ttf"
-  },
-  {
     "revision": "a788f6ecc2bf373c486c0db59a6e1f4a",
     "url": "/galleon/static/media/390FD6_2_0.a788f6ec.eot"
   },
@@ -124,16 +120,20 @@ self.__precacheManifest = [
     "url": "/galleon/static/media/390FD6_2_0.4612750a.woff2"
   },
   {
+    "revision": "c37d4466fe0ac9a6c658633761014120",
+    "url": "/galleon/static/media/390FD6_3_0.c37d4466.ttf"
+  },
+  {
     "revision": "d93f6cd9c98df2a20b45bb6030c69ab0",
     "url": "/galleon/static/media/390FD6_2_0.d93f6cd9.woff"
   },
   {
-    "revision": "9049d2b2458cbbd15f50d95a3522fe8b",
-    "url": "/galleon/static/media/390FD6_2_0.9049d2b2.ttf"
-  },
-  {
     "revision": "548142f9efdb76a88157f82b687e51a9",
     "url": "/galleon/static/media/390FD6_1_0.548142f9.eot"
+  },
+  {
+    "revision": "9049d2b2458cbbd15f50d95a3522fe8b",
+    "url": "/galleon/static/media/390FD6_2_0.9049d2b2.ttf"
   },
   {
     "revision": "3e47231284442bcf863a5a5a86f26147",
@@ -148,7 +148,7 @@ self.__precacheManifest = [
     "url": "/galleon/static/media/390FD6_1_0.60a20ab3.ttf"
   },
   {
-    "revision": "7db4326d89a41575485a44e6fdb25ba0",
+    "revision": "bd413b2a536b44e9df4e4db5955da084",
     "url": "/galleon/index.html"
   }
 ];
