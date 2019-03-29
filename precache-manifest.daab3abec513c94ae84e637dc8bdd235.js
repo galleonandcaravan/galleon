@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "e95d4986339f94723be4fe5047744723",
-    "url": "/galleon/static/media/390FD6_0_0.e95d4986.woff2"
+    "revision": "9a84eddf8c11602ec5220d798257b153",
+    "url": "/galleon/static/media/390FD6_0_0.9a84eddf.eot"
   },
   {
-    "revision": "992ce8dafbeb95806cf3",
-    "url": "/galleon/static/css/main.835aa4d7.chunk.css"
+    "revision": "b81496cb84ff6f990226",
+    "url": "/galleon/static/css/main.529814d9.chunk.css"
   },
   {
     "revision": "e3bdae60cdee24b368f1",
@@ -76,8 +76,12 @@ self.__precacheManifest = [
     "url": "/galleon/static/media/gradient-mobile.0956fa59.jpg"
   },
   {
-    "revision": "992ce8dafbeb95806cf3",
+    "revision": "b81496cb84ff6f990226",
     "url": "/galleon/static/js/main.ca1b073c.chunk.js"
+  },
+  {
+    "revision": "e95d4986339f94723be4fe5047744723",
+    "url": "/galleon/static/media/390FD6_0_0.e95d4986.woff2"
   },
   {
     "revision": "4478beff6552736d8a7e8131f727b791",
@@ -86,10 +90,6 @@ self.__precacheManifest = [
   {
     "revision": "3515f27ef128c3cbc6e0b44b2dd68964",
     "url": "/galleon/static/media/NocturneSerif-Light.3515f27e.woff2"
-  },
-  {
-    "revision": "9a84eddf8c11602ec5220d798257b153",
-    "url": "/galleon/static/media/390FD6_0_0.9a84eddf.eot"
   },
   {
     "revision": "a37d460b985283f2bcff1efe68e17eaa",
@@ -128,16 +128,16 @@ self.__precacheManifest = [
     "url": "/galleon/static/media/390FD6_2_0.d93f6cd9.woff"
   },
   {
+    "revision": "9049d2b2458cbbd15f50d95a3522fe8b",
+    "url": "/galleon/static/media/390FD6_2_0.9049d2b2.ttf"
+  },
+  {
     "revision": "548142f9efdb76a88157f82b687e51a9",
     "url": "/galleon/static/media/390FD6_1_0.548142f9.eot"
   },
   {
     "revision": "3e47231284442bcf863a5a5a86f26147",
     "url": "/galleon/static/media/390FD6_1_0.3e472312.woff2"
-  },
-  {
-    "revision": "9049d2b2458cbbd15f50d95a3522fe8b",
-    "url": "/galleon/static/media/390FD6_2_0.9049d2b2.ttf"
   },
   {
     "revision": "390cb624f5ae8e437441ed25dcc51f83",
@@ -148,7 +148,7 @@ self.__precacheManifest = [
     "url": "/galleon/static/media/390FD6_1_0.60a20ab3.ttf"
   },
   {
-    "revision": "833774d8cd0d17b6739061d27141807f",
+    "revision": "7db4326d89a41575485a44e6fdb25ba0",
     "url": "/galleon/index.html"
   }
 ];
