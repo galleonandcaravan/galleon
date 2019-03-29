@@ -8,3 +8,7 @@ export const isTablet = () => {
 export const isMobile = () => {
   return window.matchMedia('(max-width: 720px)').matches;
 };
+
+export const isDesktop = () => {
+  return window.matchMedia('(min-width: 1024px)').matches;
+};

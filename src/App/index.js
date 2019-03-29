@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import throttle from 'lodash.throttle';
 import cn from 'classnames';
 import About from '../pages/About';
 import Mission from '../pages/Misson';
@@ -8,6 +9,7 @@ import Contact from '../pages/Contact';
 import Layout from '../components/Layout';
 import { PAGES } from '../constants';
 import Modal from '../components/Modal';
+import { isDesktop } from '../utils/media';
 import './styles/app.css';
 import './styles/fonts.css';
 
@@ -34,7 +36,9 @@ class App extends Component {
   }
 
   componentDidMount() {
+    this.handleMouseWheelThrottle = throttle(this.handleMouseWheel, 100);
     window.addEventListener('hashchange', this.handleChangePage);
+    window.addEventListener('mousewheel', this.handleMouseWheelThrottle);
 
     // Load next switcher images after 5 sec (smart precache)
     this.loadSwitcherImagesInterval = setInterval(() => {
@@ -45,10 +49,17 @@ class App extends Component {
 
   componentWillUnmount() {
     window.removeEventListener('hashchange', this.handleChangePage);
+    window.removeEventListener('mousewheel', this.handleMouseWheelThrottle);
   }
 
   handleChangePage = () => {
     const page = this.getPage();
+    const pageIndex = this.getPageIndex(page);
+
+    this.setState({ page, pageIndex });
+  };
+
+  getPageIndex = (page) => {
     let pageIndex = 0;
 
     Object.keys(PAGES).forEach((key, index) => {
@@ -57,12 +68,58 @@ class App extends Component {
       }
     });
 
-    this.setState({ page, pageIndex });
-  };
+    return pageIndex;
+  }
 
   getPage = () => {
     return window.location.hash.replace('#', '');
   };
+
+  handleMouseWheel = (event) => {
+    const { popupsVisible } = this.state;
+    const popupVisible =
+      popupsVisible.privacy ||
+      popupsVisible.security ||
+      popupsVisible.terms;
+
+    if (!popupVisible && !this.disableMouseWheel && isDesktop()) {
+      const delta = Math.sign(event.deltaY);
+      if (delta === 1) {
+        this.goToNextPage();
+      } else {
+        this.goToPrevPage();
+      }
+
+      this.disableMouseWheel = true;
+      setTimeout(() => {
+        this.disableMouseWheel = false;
+      }, 1000);
+    }
+  }
+
+  goToPrevPage = () => {
+    const page = this.getPage();
+    const pageIndex = this.getPageIndex(page);
+    const nextPageIndex = pageIndex - 1 >= 0
+      ? pageIndex - 1
+      : PAGES_COUNT - 1
+    this.goToPageByIndex(nextPageIndex);
+  }
+
+  goToNextPage = () => {
+    const page = this.getPage();
+    const pageIndex = this.getPageIndex(page);
+    const nextPageIndex = pageIndex + 1 <= PAGES_COUNT - 1
+      ? pageIndex + 1
+      : 0
+    this.goToPageByIndex(nextPageIndex);
+  }
+
+  goToPageByIndex = (pageIndex) => {
+    const pages = Object.keys(PAGES).map(pageKey => PAGES[pageKey]);
+    const nextPage = pages[pageIndex];
+    window.location.hash = nextPage;
+  }
 
   loadNextSwitcherImages = () => {
     // Set flag for load next switcher images (smart precache)

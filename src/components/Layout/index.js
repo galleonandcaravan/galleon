@@ -5,7 +5,7 @@ import Header from '../Header';
 import Footer from '../Footer';
 import GCLine from '../GCLine';
 import Dots from '../Dots';
-import { isMobile } from '../../utils/mobile';
+import { isMobile } from '../../utils/media';
 import './styles.css';
 
 class Layout extends Component {

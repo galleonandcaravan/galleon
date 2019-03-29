@@ -5,7 +5,7 @@ import throttle from 'lodash.throttle';
 import { GC_LINE_MARGIN_TOP } from './constants';
 import gImage from './images/g.png';
 import cImage from './images/c.png';
-import { isTablet } from '../../utils/mobile';
+import { isTablet } from '../../utils/media';
 import './styles.css';
 
 class GCLine extends Component {
