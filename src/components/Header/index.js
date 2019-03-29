@@ -44,7 +44,7 @@ class Header extends Component {
           <ul className="header-menu">
             <li
               className={cn('header-menu__item', {
-                'header-menu__item-active': activePage === PAGES.ABOUT
+                'header-menu__item-active': activePage === PAGES.ABOUT && !popupVisibleBlock
               })}
             >
               <a href={`#${PAGES.ABOUT}`} onClick={this.handleMenuItem}>
@@ -54,7 +54,7 @@ class Header extends Component {
 
             <li
               className={cn('header-menu__item', {
-                'header-menu__item-active': activePage === PAGES.STORY
+                'header-menu__item-active': activePage === PAGES.STORY && !popupVisibleBlock
               })}
             >
               <a href={`#${PAGES.STORY}`} onClick={this.handleMenuItem}>
@@ -64,7 +64,7 @@ class Header extends Component {
 
             <li
               className={cn('header-menu__item', {
-                'header-menu__item-active': activePage === PAGES.MISSION
+                'header-menu__item-active': activePage === PAGES.MISSION && !popupVisibleBlock
               })}
             >
               <a href={`#${PAGES.MISSION}`} onClick={this.handleMenuItem}>
@@ -74,7 +74,7 @@ class Header extends Component {
 
             <li
               className={cn('header-menu__item', {
-                'header-menu__item-active': activePage === PAGES.EXPERTISE
+                'header-menu__item-active': activePage === PAGES.EXPERTISE && !popupVisibleBlock
               })}
             >
               <a href={`#${PAGES.EXPERTISE}`} onClick={this.handleMenuItem}>
@@ -84,7 +84,7 @@ class Header extends Component {
 
             <li
               className={cn('header-menu__item', {
-                'header-menu__item-active': activePage === PAGES.CONTACT
+                'header-menu__item-active': activePage === PAGES.CONTACT && !popupVisibleBlock
               })}
             >
               <a href={`#${PAGES.CONTACT}`} onClick={this.handleMenuItem}>
