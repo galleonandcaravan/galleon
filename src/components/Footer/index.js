@@ -1,29 +1,15 @@
 import React, { Component } from 'react';
-import Modal from '../Modal';
+import PropTypes from 'prop-types';
 import footerIcon from './images/icon.png';
 import './styles.css';
 
 class Footer extends Component {
-  state = {
-    popupsVisible: {
-      privacy: false,
-      security: false,
-      terms: false
-    }
-  };
-
-  togglePopup = popupKey => {
-    const { popupsVisible } = this.state;
-    this.setState({
-      popupsVisible: {
-        ...popupsVisible,
-        [popupKey]: !popupsVisible[popupKey]
-      }
-    });
-  };
+  static propTypes = {
+    togglePopup: PropTypes.func.isRequired,
+  }
 
   render() {
-    const { popupsVisible } = this.state;
+    const { togglePopup } = this.props;
 
     return (
       <div className="footer">
@@ -31,15 +17,15 @@ class Footer extends Component {
 
         <ul className="footer-menu">
           <li className="footer-menu__item">
-            <span onClick={() => this.togglePopup('privacy')}>privacy</span>
+            <span onClick={() => togglePopup('privacy')}>privacy</span>
           </li>
 
           <li className="footer-menu__item">
-            <span onClick={() => this.togglePopup('security')}>security</span>
+            <span onClick={() => togglePopup('security')}>security</span>
           </li>
 
           <li className="footer-menu__item">
-            <span onClick={() => this.togglePopup('terms')}>
+            <span onClick={() => togglePopup('terms')}>
               terms & conditions
             </span>
           </li>
@@ -67,27 +53,6 @@ class Footer extends Component {
             Institution (no. 900797).
           </div>
         </div>
-
-        <Modal
-          isOpen={popupsVisible.privacy}
-          onClose={() => this.togglePopup('privacy')}
-          title="Privacy"
-          text="Text text text text Text text text text Text text text text Text text text text Text text text text Text text text text Text text text text Text text text text "
-        />
-
-        <Modal
-          isOpen={popupsVisible.security}
-          onClose={() => this.togglePopup('security')}
-          title="Security"
-          text="Text text text text Text text text text Text text text text Text text text text Text text text text Text text text text Text text text text Text text text text "
-        />
-
-        <Modal
-          isOpen={popupsVisible.terms}
-          onClose={() => this.togglePopup('terms')}
-          title="Terms & conditions"
-          text="Text text text text Text text text text Text text text text Text text text text Text text text text Text text text text Text text text text Text text text text "
-        />
       </div>
     );
   }

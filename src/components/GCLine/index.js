@@ -2,11 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import throttle from 'lodash.throttle';
-import {
-  SCREEN_LINE_PADDING_DESKTOP_TOP,
-  SCREEN_LINE_PADDING_DESKTOP_BOTTOM,
-  GC_LINE_MARGIN_TOP,
-} from './constants';
+import { GC_LINE_MARGIN_TOP } from './constants';
 import gImage from './images/g.png';
 import cImage from './images/c.png';
 import { isTablet } from '../../utils/mobile';
@@ -32,12 +28,14 @@ class GCLine extends Component {
 
   componentDidMount() {
     this.handleMouseMoveWithThrottle = throttle(this.handleMouseMove, 10);
-    this.checkMousePosition = setInterval(this.checkMousePosition, 10);
+    this.checkMousePositionInterval = setInterval(this.checkMousePosition, 10);
     this.lineY = this.getCenterLinePosY();
     this.clientHeight = document.body.clientHeight;
 
     window.addEventListener('resize', this.handleResize);
     document.addEventListener('mouseup', this.handleEndDrag);
+    document.addEventListener('touchup', this.handleEndDrag);
+    document.addEventListener('touchmove', this.handleMouseMoveWithThrottle);
     document.addEventListener('mousemove', this.handleMouseMoveWithThrottle);
 
     this.handleResize();
@@ -63,9 +61,11 @@ class GCLine extends Component {
 
   componentWillUnmount() {
     document.removeEventListener('mousemove', this.handleMouseMoveWithThrottle);
+    document.removeEventListener('touchmove', this.handleMouseMoveWithThrottle);
     window.removeEventListener('resize', this.handleResize);
     document.removeEventListener('mouseup', this.handleEndDrag);
-    clearInterval(this.checkMousePosition);
+    document.removeEventListener('touchup', this.handleEndDrag);
+    clearInterval(this.checkMousePositionInterval);
   }
 
   resetPosition = () => {
@@ -78,10 +78,14 @@ class GCLine extends Component {
     this.getDOMNodes();
     const centerPositionY = this.getCenterLinePosY();
     this.moveSmoothly = true;
-    const { screenLinePaddingTop, screenLinePaddingBottom } = this.getScreenLinePaddings();
-    this.currentMouseY = !this.currentMouseY || this.currentMouseY > centerPositionY
-      ? screenLinePaddingTop
-      : this.clientHeight - screenLinePaddingBottom;
+    const {
+      screenLinePaddingTop,
+      screenLinePaddingBottom
+    } = this.getScreenLinePaddings();
+    this.currentMouseY =
+      !this.currentMouseY || this.currentMouseY > centerPositionY
+        ? screenLinePaddingTop
+        : this.clientHeight - screenLinePaddingBottom;
     this.lineY += 1;
     this.startMove = true;
     this.prevImageTopHeight = 0;
@@ -89,12 +93,17 @@ class GCLine extends Component {
 
   handleResize = () => {
     if (this.prevWindowWidth !== window.innerWidth) {
-      this.clientHeight = document.body.clientHeight;
+      this.clientWidth = document.body.clientWidth;
       this.isTablet = isTablet();
       this.getGCLineMarginTop();
       this.resetPosition();
+      this.handleEndDrag();
+    }
+    if (this.prevWindowHeight !== window.innerHeight) {
+      this.clientHeight = document.body.clientHeight;
     }
     this.prevWindowWidth = window.innerWidth;
+    this.prevWindowHeight = window.innerHeight;
   };
 
   startMountAnimate = () => {
@@ -103,22 +112,55 @@ class GCLine extends Component {
     });
   };
 
+  getMinimumDesktopPaddings = () => {
+    const { clientHeight } = this;
+    let minimumDesktopPaddingTop = (clientHeight - 650) / 2;
+    let minimumDesktopPaddingBottom = (clientHeight - 650) / 2 + 70;
+
+    if (minimumDesktopPaddingTop < 70) {
+      minimumDesktopPaddingTop = 70;
+    }
+
+    if (minimumDesktopPaddingBottom < 140) {
+      minimumDesktopPaddingBottom = 140;
+    }
+    return {
+      minimumDesktopPaddingTop,
+      minimumDesktopPaddingBottom
+    };
+  };
+
+  getMinimumTabletPaddings = () => {
+    return {
+      minimumTabletPaddingTop:
+        (this.clientHeight / 100) * 33 - this.gcLineMarginTop,
+      minimumTabletPaddingBottom:
+        (this.clientHeight / 100) * 24 + this.gcLineMarginTop
+    };
+  };
+
   getScreenLinePaddings = () => {
     // Get screen paddings for line
-    const { clientHeight } = this;
-
+    const {
+      minimumDesktopPaddingTop,
+      minimumDesktopPaddingBottom
+    } = this.getMinimumDesktopPaddings();
+    const {
+      minimumTabletPaddingTop,
+      minimumTabletPaddingBottom
+    } = this.getMinimumTabletPaddings();
     const screenLinePaddingTop = this.isTablet
-      ? (clientHeight / 100) * 33 - this.gcLineMarginTop
-      : SCREEN_LINE_PADDING_DESKTOP_TOP - this.gcLineMarginTop;
+      ? minimumTabletPaddingTop
+      : minimumDesktopPaddingTop;
     const screenLinePaddingBottom = this.isTablet
-      ? (clientHeight / 100) * 24 + this.gcLineMarginTop
-      : SCREEN_LINE_PADDING_DESKTOP_BOTTOM + this.gcLineMarginTop;
+      ? minimumTabletPaddingBottom
+      : minimumDesktopPaddingBottom;
 
     return {
       screenLinePaddingTop,
-      screenLinePaddingBottom,
-    }
-  }
+      screenLinePaddingBottom
+    };
+  };
 
   getGCLineMarginTop = () => {
     let gcLineMarginTop = GC_LINE_MARGIN_TOP.DEFAULT;
@@ -133,15 +175,20 @@ class GCLine extends Component {
   };
 
   getDOMNodes = () => {
-    this.imagesTopDOM = [...document.querySelectorAll('.js-image-switcher-top')];
-    this.imagesBottomDOM = [...document.querySelectorAll('.js-image-switcher-bottom')];
+    this.imagesTopDOM = [
+      ...document.querySelectorAll('.js-image-switcher-top')
+    ];
+    this.imagesBottomDOM = [
+      ...document.querySelectorAll('.js-image-switcher-bottom')
+    ];
     this.gcLinesDOM = [...document.querySelectorAll('.js-gcLine')];
   };
 
   handleMouseMove = event => {
+    const clientY = event.touches ? event.touches[0].clientY : event.clientY;
     // Save current position of mouse Y
     if (this.dragStarted) {
-      this.currentMouseY = event.clientY + window.pageYOffset - this.gcLineMarginTop;
+      this.currentMouseY = clientY + window.pageYOffset - this.gcLineMarginTop;
     }
   };
 
@@ -202,10 +249,12 @@ class GCLine extends Component {
     }
     const { clientHeight } = this;
     const halfScreenHeight = clientHeight / 2;
-    const { screenLinePaddingTop, screenLinePaddingBottom } = this.getScreenLinePaddings();
-    const clientHeight15Percent = clientHeight / 100 * 15;
-
-    let posY = mousePosY - 10;
+    const {
+      screenLinePaddingTop,
+      screenLinePaddingBottom
+    } = this.getScreenLinePaddings();
+    const clientHeight15Percent = (clientHeight / 100) * 15;
+    let posY = mousePosY - 12;
     if (posY <= screenLinePaddingTop) {
       posY = screenLinePaddingTop;
     }
@@ -218,25 +267,32 @@ class GCLine extends Component {
     const centerLinePosY = posY - halfScreenHeight;
 
     // Calc height of images containers
-    let imageTopHeight = posY + 12 + this.gcLineMarginTop - clientHeight15Percent + 20;
-    let imageBottomHeight = clientHeight - posY - 12 - this.gcLineMarginTop - clientHeight15Percent - 20;
+    let imageTopHeight =
+      posY + 12 + this.gcLineMarginTop - clientHeight15Percent + 20;
+    let imageBottomHeight =
+      clientHeight -
+      12 -
+      posY -
+      this.gcLineMarginTop -
+      clientHeight15Percent -
+      20;
 
     if (isTablet()) {
-      imageTopHeight -= 72 + clientHeight15Percent;
-      imageBottomHeight -= 60;
+      imageTopHeight -= (clientHeight / 100) * 22.2;
+      imageBottomHeight -= (clientHeight / 100) * 6.2;
     }
 
     // Set styles
     if (force || this.prevImageTopHeight !== imageTopHeight) {
-      this.gcLinesDOM.forEach((gcLineDOM) => {
+      this.gcLinesDOM.forEach(gcLineDOM => {
         gcLineDOM.style.transform = `translateY(${centerLinePosY}px)`; // eslint-disable-line
-      })
-      this.imagesTopDOM.forEach((imageTopDOM) => {
+      });
+      this.imagesTopDOM.forEach(imageTopDOM => {
         imageTopDOM.style.height = `${imageTopHeight}px`; // eslint-disable-line
-      })
-      this.imagesBottomDOM.forEach((imageBottomDOM) => {
+      });
+      this.imagesBottomDOM.forEach(imageBottomDOM => {
         imageBottomDOM.style.height = `${imageBottomHeight}px`; // eslint-disable-line
-      })
+      });
     }
 
     this.prevImageTopHeight = imageTopHeight;
@@ -246,14 +302,13 @@ class GCLine extends Component {
     const { mountAnimateStarted } = this.state;
 
     return (
-      <div
-        className={cn('gcLine', { gcLine__animated: mountAnimateStarted })}
-      >
+      <div className={cn('gcLine', { gcLine__animated: mountAnimateStarted })}>
         <img src={gImage} className="gcLine__g" alt="" />
         <div
           className="gcLine__center js-gcLine"
           onMouseDown={this.handleStartDrag}
           onTouchStart={this.handleStartDrag}
+          onTouchEnd={this.handleEndDrag}
         >
           <div className="gcLine__line" />
         </div>

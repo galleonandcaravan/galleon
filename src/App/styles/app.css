@@ -10,6 +10,10 @@ html, body {
   font-size: 1.85vw;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   overflow-x: hidden;
 }
@@ -111,13 +115,21 @@ ul {
 }
 
 
+.mobile {
+  display: none;
+}
+
+.desktop {
+  display: block;
+}
+
+
 @media screen and (max-width: 1023px) {
   .section {
     width: calc(100vw - 10rem);
   }
-
-
 }
+
 
 @media screen and (max-width: 720px) {
   body {
@@ -156,17 +168,7 @@ ul {
   .section:nth-child(5) {
     left: auto;
   }
-}
 
-.mobile {
-  display: none;
-}
-
-.desktop {
-  display: block;
-}
-
-@media screen and (max-width: 720px) {
   .mobile {
     display: block;
   }

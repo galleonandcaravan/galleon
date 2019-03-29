@@ -7,6 +7,7 @@ import Expertise from '../pages/Expertise';
 import Contact from '../pages/Contact';
 import Layout from '../components/Layout';
 import { PAGES } from '../constants';
+import Modal from '../components/Modal';
 import './styles/app.css';
 import './styles/fonts.css';
 
@@ -21,6 +22,11 @@ class App extends Component {
       switcherImagesVisibleByPageIndex: {},
       switcherImagesIncrement: 0,
       pageIndex: 0,
+      popupsVisible: {
+        privacy: false,
+        security: false,
+        terms: false
+      }
     };
 
     this.switcherImagesVisible = {};
@@ -79,8 +85,18 @@ class App extends Component {
     }
   };
 
+  togglePopup = popupKey => {
+    const { popupsVisible } = this.state;
+    this.setState({
+      popupsVisible: {
+        ...popupsVisible,
+        [popupKey]: !popupsVisible[popupKey]
+      }
+    });
+  };
+
   render() {
-    const { page, pageIndex, switcherImagesVisibleByPageIndex } = this.state;
+    const { page, pageIndex, switcherImagesVisibleByPageIndex, popupsVisible } = this.state;
     const aboutPageIsActive = page === PAGES.ABOUT;
     const missionPageIsActive = page === PAGES.MISSION;
     const storyPageIsActive = page === PAGES.STORY;
@@ -91,6 +107,8 @@ class App extends Component {
       <Layout
         className="app"
         onChangePage={this.handleChangePage}
+        popupsVisible={popupsVisible}
+        togglePopup={this.togglePopup}
         activePage={page}
       >
         <div className={cn('page', `active-page-${pageIndex + 1}`)}>
@@ -135,6 +153,27 @@ class App extends Component {
               }
             />
           </div>
+
+          <Modal
+            isOpen={popupsVisible.privacy}
+            onClose={() => this.togglePopup('privacy')}
+            title="Privacy"
+            text="Text text text text Text text text text Text text text text Text text text text Text text text text Text text text text Text text text text Text text text text "
+          />
+
+          <Modal
+            isOpen={popupsVisible.security}
+            onClose={() => this.togglePopup('security')}
+            title="Security"
+            text="Text text text text Text text text text Text text text text Text text text text Text text text text Text text text text Text text text text Text text text text "
+          />
+
+          <Modal
+            isOpen={popupsVisible.terms}
+            onClose={() => this.togglePopup('terms')}
+            title="Terms & conditions"
+            text="Text text text text Text text text text Text text text text Text text text text Text text text text Text text text text Text text text text Text text text text "
+          />
         </div>
       </Layout>
     );

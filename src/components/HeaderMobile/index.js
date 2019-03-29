@@ -8,7 +8,9 @@ import './styles.css';
 
 class HeaderMobile extends Component {
   static propTypes = {
-    activePage: PropTypes.string
+    activePage: PropTypes.string,
+    popupsVisible: PropTypes.shape({}).isRequired,
+    togglePopup: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -16,7 +18,7 @@ class HeaderMobile extends Component {
   };
 
   state = {
-    menuVisible: false
+    menuVisible: false,
   };
 
   toggleMenuVisible = () => {
@@ -30,6 +32,12 @@ class HeaderMobile extends Component {
       document.body.style['overflow-y'] = 'auto';
     }
   };
+
+  openModal = (popupKey)  => {
+    const { togglePopup } = this.props;
+    togglePopup(popupKey);
+    this.toggleMenuVisible();
+  }
 
   render() {
     const { activePage } = this.props;
@@ -126,10 +134,43 @@ class HeaderMobile extends Component {
 
                 <ul className="header-mobile-auth">
                   <li className="header-mobile-auth__item">
-                    <a href={HEADER_AUTH_LINKS.REGISTER}>REGISTER</a>
+                    <a
+                      href={HEADER_AUTH_LINKS.REGISTER}
+                      onClick={this.toggleMenuVisible}
+                    >
+                      REGISTER
+                    </a>
                   </li>
                   <li className="header-mobile-auth__item">
-                    <a href={HEADER_AUTH_LINKS.LOGIN}>LOG IN</a>
+                    <a
+                      href={HEADER_AUTH_LINKS.LOGIN}
+                      onClick={this.toggleMenuVisible}
+                    >
+                      LOG IN
+                    </a>
+                  </li>
+                </ul>
+
+                <ul className="header-mobile-additional">
+                  <li
+                    className="header-mobile-additional__item"
+                    onClick={() => this.openModal('privacy')}
+                  >
+                    privacy
+                  </li>
+
+                  <li
+                    className="header-mobile-additional__item"
+                    onClick={() => this.openModal('security')}
+                  >
+                    security
+                  </li>
+
+                  <li
+                    className="header-mobile-additional__item"
+                    onClick={() => this.openModal('terms')}
+                  >
+                    terms & conditions
                   </li>
                 </ul>
               </div>

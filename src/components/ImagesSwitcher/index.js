@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import cn from 'classnames';
 import PropTypes from 'prop-types';
+import GCLineMobile from '../GCLineMobile';
+import { isMobile } from '../../utils/mobile';
 import './styles.css';
 
 class ImagesSwitcher extends Component {
@@ -15,7 +17,7 @@ class ImagesSwitcher extends Component {
   static defaultProps = {
     imageTopClassName: null,
     imageBottomClassName: null,
-    switcherImagesVisible: false,
+    switcherImagesVisible: false
   };
 
   state = {
@@ -57,11 +59,12 @@ class ImagesSwitcher extends Component {
   };
 
   resizeImages = () => {
-    const imagesSwitcherHeight = document.querySelector('.js-images-switcher').offsetHeight;
+    const imagesSwitcherHeight = document.querySelector('.js-images-switcher')
+      .offsetHeight;
 
     this.setState({
       imageTopHeight: imagesSwitcherHeight,
-      imageBottomHeight: imagesSwitcherHeight,
+      imageBottomHeight: imagesSwitcherHeight
     });
   };
 
@@ -71,36 +74,43 @@ class ImagesSwitcher extends Component {
       imageBottom,
       imageTopClassName,
       imageBottomClassName,
-      switcherImagesVisible,
+      switcherImagesVisible
     } = this.props;
     const { imageTopHeight, imageBottomHeight, bgImagesVisible } = this.state;
 
     return (
-      <div
-        className={cn('js-images-switcher', 'images-switcher', {
-          'images-switcher__visible': bgImagesVisible
-        })}
-      >
-        <div className="images-switcher__image-top js-image-switcher-top">
-          <div
-            className={cn('images-switcher__image', imageTopClassName)}
-            style={{
-              backgroundImage: switcherImagesVisible ? `url(${imageTop})` : null,
-              height: `${imageTopHeight}px`
-            }}
-            ref={this.imageTop}
-          />
-        </div>
+      <div className="images-switcher-container">
+        {isMobile() && <GCLineMobile />}
+        <div
+          className={cn('js-images-switcher', 'images-switcher', {
+            'images-switcher__visible': bgImagesVisible
+          })}
+        >
+          <div className="images-switcher__image-top js-image-switcher-top">
+            <div
+              className={cn('images-switcher__image', imageTopClassName)}
+              style={{
+                backgroundImage: switcherImagesVisible
+                  ? `url(${imageTop})`
+                  : null,
+                height: `${imageTopHeight}px`
+              }}
+              ref={this.imageTop}
+            />
+          </div>
 
-        <div className="images-switcher__image-bottom js-image-switcher-bottom">
-          <div
-            className={cn('images-switcher__image', imageBottomClassName)}
-            style={{
-              backgroundImage: switcherImagesVisible ? `url(${imageBottom})` : null,
-              height: `${imageBottomHeight}px`
-            }}
-            ref={this.imageTop}
-          />
+          <div className="images-switcher__image-bottom js-image-switcher-bottom">
+            <div
+              className={cn('images-switcher__image', imageBottomClassName)}
+              style={{
+                backgroundImage: switcherImagesVisible
+                  ? `url(${imageBottom})`
+                  : null,
+                height: `${imageBottomHeight}px`
+              }}
+              ref={this.imageTop}
+            />
+          </div>
         </div>
       </div>
     );

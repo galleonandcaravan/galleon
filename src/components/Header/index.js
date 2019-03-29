@@ -7,7 +7,11 @@ import { HEADER_AUTH_LINKS, PAGES } from '../../constants';
 import HeaderMobile from '../HeaderMobile';
 import './styles.css';
 
-const Header = ({ activePage }) => {
+const Header = ({
+  activePage,
+  popupsVisible,
+  togglePopup,
+}) => {
   return (
     <div className="header">
       <div className="header__container">
@@ -69,6 +73,8 @@ const Header = ({ activePage }) => {
 
       <HeaderMobile
         activePage={activePage}
+        popupsVisible={popupsVisible}
+        togglePopup={togglePopup}
       />
     </div>
   );
@@ -76,6 +82,8 @@ const Header = ({ activePage }) => {
 
 Header.propTypes = {
   activePage: PropTypes.string,
+  popupsVisible: PropTypes.shape({}).isRequired,
+  togglePopup: PropTypes.func.isRequired,
 }
 
 Header.defaultProps = {

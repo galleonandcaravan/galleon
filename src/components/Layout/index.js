@@ -12,7 +12,9 @@ class Layout extends Component {
   static propTypes = {
     className: PropTypes.string,
     children: PropTypes.node,
-    activePage: PropTypes.string
+    activePage: PropTypes.string,
+    popupsVisible: PropTypes.shape({}).isRequired,
+    togglePopup: PropTypes.func.isRequired,
   };
 
   state = {
@@ -40,26 +42,37 @@ class Layout extends Component {
 
   handleResize = () => {
     this.forceUpdate();
-  }
+  };
 
   render() {
-    const { children, activePage, className } = this.props;
+    const {
+      children,
+      activePage,
+      className,
+      popupsVisible,
+      togglePopup
+    } = this.props;
+
     const { pageMounted } = this.state;
 
     return (
       <div className={cn('layout', className)}>
         <div className="layout__container">
-          <Header activePage={activePage} />
-          {
-            !isMobile() && (
-              <GCLine activePage={activePage} />
-            )
-          }
-          <div className={cn('layout-page', { 'layout-page_mounted': pageMounted })}>
+          <Header
+            activePage={activePage}
+            popupsVisible={popupsVisible}
+            togglePopup={togglePopup}
+          />
+          {!isMobile() && <GCLine activePage={activePage} />}
+          <div
+            className={cn('layout-page', {
+              'layout-page_mounted': pageMounted
+            })}
+          >
             {children}
           </div>
           <Dots activePage={activePage} />
-          <Footer />
+          <Footer popupsVisible={popupsVisible} togglePopup={togglePopup} />
         </div>
       </div>
     );
