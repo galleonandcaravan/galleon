@@ -96,15 +96,17 @@ class App extends Component {
   goToPrevPage = () => {
     const page = this.getPage();
     const pageIndex = this.getPageIndex(page);
-    const nextPageIndex = pageIndex - 1 >= 0 ? pageIndex - 1 : PAGES_COUNT - 1;
-    this.goToPageByIndex(nextPageIndex);
+    if (pageIndex - 1 >= 0) {
+      this.goToPageByIndex(pageIndex - 1);
+    }
   };
 
   goToNextPage = () => {
     const page = this.getPage();
     const pageIndex = this.getPageIndex(page);
-    const nextPageIndex = pageIndex + 1 <= PAGES_COUNT - 1 ? pageIndex + 1 : 0;
-    this.goToPageByIndex(nextPageIndex);
+    if (pageIndex + 1 <= PAGES_COUNT - 1) {
+      this.goToPageByIndex(pageIndex + 1);
+    }
   };
 
   goToPageByIndex = pageIndex => {
