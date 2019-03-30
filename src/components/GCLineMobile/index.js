@@ -52,13 +52,13 @@ class GCLineMobile extends Component {
       const imageBottomWidth = this.clientWidth - imageTopWidth - (this.clientWidth / 100 * 7) - 30;
 
       this.gcLinesDOM.forEach(gcLineDOM => {
-        gcLineDOM.style.left = `${this.touchPositionX}px`; // eslint-disable-line
+        gcLineDOM.style.left = `${this.touchPositionX}px`;
       });
       this.imagesTopDOM.forEach((imageTopDOM) => {
-        imageTopDOM.style.width = `${imageTopWidth}px`; // eslint-disable-line
+        imageTopDOM.style.width = `${imageTopWidth}px`;
       })
       this.imagesBottomDOM.forEach((imageBottomDOM) => {
-        imageBottomDOM.style.width = `${imageBottomWidth}px`; // eslint-disable-line
+        imageBottomDOM.style.width = `${imageBottomWidth}px`;
       })
     }
   };

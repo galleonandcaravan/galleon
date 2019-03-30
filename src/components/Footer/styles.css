@@ -32,6 +32,10 @@
   font-weight: 500;
 }
 
+.footer-menu__item span:hover {
+  border-bottom: 1px solid;
+}
+
 .footer-menu__item span {
   color: white;
   cursor: pointer;

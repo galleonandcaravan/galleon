@@ -7,17 +7,19 @@ import './styles.css';
 
 class ImagesSwitcher extends Component {
   static propTypes = {
-    imageTop: PropTypes.string.isRequired,
-    imageBottom: PropTypes.string.isRequired,
+    imageTop: PropTypes.string,
+    imageBottom: PropTypes.string,
     imageTopClassName: PropTypes.string,
     imageBottomClassName: PropTypes.string,
     switcherImagesVisible: PropTypes.bool,
   };
 
   static defaultProps = {
+    imageTop: null,
+    imageBottom: null,
     imageTopClassName: null,
     imageBottomClassName: null,
-    switcherImagesVisible: false
+    switcherImagesVisible: false,
   };
 
   state = {
@@ -59,7 +61,7 @@ class ImagesSwitcher extends Component {
   };
 
   resizeImages = () => {
-    const imagesSwitcherHeight = document.querySelector('.js-images-switcher')
+    const imagesSwitcherHeight = document.querySelector('.section_active .js-images-switcher')
       .offsetHeight;
 
     this.setState({

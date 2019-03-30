@@ -65,10 +65,6 @@ ul {
   width: calc(100vw - 20rem);
 }
 
-.section_active {
-  opacity: 1;
-}
-
 .page {
   width: 500vw;
   position: absolute;
@@ -82,43 +78,6 @@ ul {
   opacity: 0;
 }
 
-.page.active-page-1 {
-  transform: translateX(0);
-}
-
-.page.active-page-2 {
-  transform: translateX(-100vw);
-}
-
-.page.active-page-3 {
-  transform: translateX(-200vw);
-}
-
-.page.active-page-4 {
-  transform: translateX(-300vw);
-}
-
-.page.active-page-5 {
-  transform: translateX(-400vw);
-}
-
-.section:nth-child(2) {
-  left: 100vw;
-}
-
-.section:nth-child(3) {
-  left: 200vw;
-}
-
-.section:nth-child(4) {
-  left: 300vw;
-}
-
-.section:nth-child(5) {
-  left: 400vw;
-}
-
-
 .mobile {
   display: none;
 }
@@ -127,50 +86,9 @@ ul {
   display: block;
 }
 
-
 @media screen and (max-width: 1023px) {
   .section {
     width: calc(100vw - 10rem);
-  }
-}
-
-
-@media screen and (max-width: 720px) {
-  body {
-    background-image: url('../images/gradient-mobile.jpg');
-    background-repeat: no-repeat;
-    background-position: top right;
-    background-color: black;
-    background-size: contain;
-  }
-
-  .page {
-    position: relative;
-    display: flex;
-    width: 500vw;
-    flex-wrap: nowrap;
-  }
-
-  .section {
-    flex: 0 1 100vw;
-    padding-right: 7.5rem;
-    position: relative;
-  }
-
-  .section:nth-child(2) {
-    left: auto;
-  }
-
-  .section:nth-child(3) {
-    left: auto;
-  }
-
-  .section:nth-child(4) {
-    left: auto;
-  }
-
-  .section:nth-child(5) {
-    left: auto;
   }
 
   .mobile {
@@ -179,5 +97,28 @@ ul {
 
   .desktop {
     display: none;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  body {
+    background-image: url('../images/gradient-mobile.jpg');
+    background-repeat: no-repeat;
+    background-position: top right;
+    background-color: black;
+    background-size: cover;
+  }
+
+  .layout {
+    width: 100vw;
+    min-height: 100vh;
+  }
+
+  .section {
+    display: none;
+  }
+
+  .section_active {
+    display: block;
   }
 }

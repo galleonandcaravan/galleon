@@ -10,7 +10,7 @@ import contactImageTop from '../images/contact/bg-2.png';
 import contactImageBottom from '../images/contact/bg-1.png';
 
 export const PAGES = {
-  ABOUT: '',
+  ABOUT: 'about',
   STORY: 'story',
   MISSION: 'mission',
   EXPERTISE: 'expertise',
@@ -43,4 +43,10 @@ export const PAGES_IMAGES = {
 export const HEADER_AUTH_LINKS = {
   REGISTER: '/',
   LOGIN: '/',
+}
+
+export const GC_LINE_ANIMATION_INTERVAL = {
+  TO_BOTTOM: 700,
+  TO_TOP: 1100,
+  TO_CENTER: 700,
 }

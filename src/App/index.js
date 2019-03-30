@@ -7,40 +7,44 @@ import Story from '../pages/Story';
 import Expertise from '../pages/Expertise';
 import Contact from '../pages/Contact';
 import Layout from '../components/Layout';
-import { PAGES } from '../constants';
+import { PAGES, PAGES_IMAGES, GC_LINE_ANIMATION_INTERVAL } from '../constants';
 import ModalPrivacy from '../components/ModalPrivacy';
-import { isDesktop } from '../utils/media';
+import { isDesktop, isMobile } from '../utils/media';
 import './styles/app.css';
 import './styles/fonts.css';
 
 const PAGES_COUNT = 5;
-const LOAD_NEXT_SWITCH_IMAGES_INTERVAL = 1000;
+const LOAD_NEXT_SWITCH_IMAGES_INTERVAL = 300;
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: this.getPage(),
-      switcherImagesVisibleByPageIndex: {},
-      switcherImagesIncrement: 0,
+      page: '',
       pageIndex: 0,
       popupVisibleBlock: ''
     };
 
     this.switcherImagesVisible = {};
     this.switcherImagesVisible = {};
+    window.location.hash = '';
   }
 
   componentDidMount() {
     this.handleMouseWheelThrottle = throttle(this.handleMouseWheel, 100);
-    window.addEventListener('hashchange', this.handleChangePage);
     window.addEventListener('mousewheel', this.handleMouseWheelThrottle);
 
-    // Load next switcher images after 5 sec (smart precache)
-    this.loadSwitcherImagesInterval = setInterval(() => {
-      this.loadNextSwitcherImages();
-    }, LOAD_NEXT_SWITCH_IMAGES_INTERVAL);
-    this.handleChangePage();
+    this.getDOMNodes();
+    this.contentTitleDOMNodes[0].style.opacity = '1';
+    this.contentTextDOMNodes[0].style.opacity = '1';
+    this.imagesSWitcherDOMNodes[0].style.display = 'block';
+
+    this.prevPage = this.getPage();
+    this.loadSwitcherImages();
+    this.disableLinks();
+    setTimeout(() => {
+      window.addEventListener('hashchange', this.handleChangePage);
+    }, 1000);
   }
 
   componentWillUnmount() {
@@ -48,15 +52,28 @@ class App extends Component {
     window.removeEventListener('mousewheel', this.handleMouseWheelThrottle);
   }
 
-  handleChangePage = () => {
-    const page = this.getPage();
-    const pageIndex = this.getPageIndex(page);
+  setMobileImages() {
+    const nextPage = this.getPage().toUpperCase();
+    const nextPageImages = PAGES_IMAGES[nextPage];
 
-    this.setState({
-      page,
-      pageIndex,
-      popupVisibleBlock: ''
+    this.imagesSWitcherDOMNodes.forEach((imagesSwitcherDOM, index) => {
+      const imageTopDOM = imagesSwitcherDOM.querySelector('.js-image-switcher-top > div');
+      const imageBottomDOM = imagesSwitcherDOM.querySelector('.js-image-switcher-bottom > div');
+      imageTopDOM.style.backgroundImage = `url(${nextPageImages.TOP})`;
+      imageBottomDOM.style.backgroundImage = `url(${nextPageImages.BOTTOM})`;
     });
+  }
+
+  getDOMNodes = () => {
+    this.contentTitleDOMNodes = [
+      ...document.querySelectorAll('.js-content-title')
+    ];
+    this.contentTextDOMNodes = [
+      ...document.querySelectorAll('.js-content-text')
+    ];
+    this.imagesSWitcherDOMNodes = [
+      ...document.querySelectorAll('.js-images-switcher')
+    ];
   };
 
   getPageIndex = page => {
@@ -71,34 +88,49 @@ class App extends Component {
     return pageIndex;
   };
 
-  getPage = () => {
-    return window.location.hash.replace('#', '');
+  loadSwitcherImages = () => {
+    this.cacheImages = [];
+    [
+      PAGES_IMAGES.MISSION.TOP,
+      PAGES_IMAGES.MISSION.BOTTOM,
+      PAGES_IMAGES.STORY.TOP,
+      PAGES_IMAGES.STORY.BOTTOM,
+      PAGES_IMAGES.EXPERTISE.TOP,
+      PAGES_IMAGES.EXPERTISE.BOTTOM,
+      PAGES_IMAGES.CONTACT.TOP,
+      PAGES_IMAGES.CONTACT.BOTTOM
+    ].forEach((imageUrl, index) => {
+      setTimeout(() => {
+        this.cacheImages[index] = new Image();
+        this.cacheImages[index].src = imageUrl;
+      }, LOAD_NEXT_SWITCH_IMAGES_INTERVAL * (index + 1));
+    });
+  };
+
+  togglePopup = activeBlock => {
+    const { popupVisibleBlock } = this.state;
+
+    this.setState({
+      popupVisibleBlock: popupVisibleBlock === activeBlock ? '' : activeBlock
+    });
   };
 
   handleMouseWheel = event => {
     const { popupVisibleBlock } = this.state;
 
-    if (!popupVisibleBlock && !this.disableMouseWheel && isDesktop()) {
+    if (!window.disableLinks && !popupVisibleBlock && isDesktop()) {
       const delta = Math.sign(event.deltaY);
       if (delta === 1) {
         this.goToNextPage();
       } else {
         this.goToPrevPage();
       }
-
-      this.disableMouseWheel = true;
-      setTimeout(() => {
-        this.disableMouseWheel = false;
-      }, 1000);
+      this.disableLinks();
     }
   };
 
-  goToPrevPage = () => {
-    const page = this.getPage();
-    const pageIndex = this.getPageIndex(page);
-    if (pageIndex - 1 >= 0) {
-      this.goToPageByIndex(pageIndex - 1);
-    }
+  getPage = () => {
+    return window.location.hash.replace('#', '') || 'about';
   };
 
   goToNextPage = () => {
@@ -115,43 +147,77 @@ class App extends Component {
     window.location.hash = nextPage;
   };
 
-  loadNextSwitcherImages = () => {
-    // Set flag for load next switcher images (smart precache)
-    const {
-      switcherImagesVisibleByPageIndex,
-      switcherImagesIncrement
-    } = this.state;
-
-    if (switcherImagesIncrement <= PAGES_COUNT - 2) {
-      this.setState({
-        switcherImagesIncrement: switcherImagesIncrement + 1,
-        switcherImagesVisibleByPageIndex: {
-          ...switcherImagesVisibleByPageIndex,
-          [switcherImagesIncrement]: true
-        }
-      });
-    } else {
-      // All images loaded
-      clearInterval(this.loadSwitcherImagesInterval);
+  goToPrevPage = () => {
+    const page = this.getPage();
+    const pageIndex = this.getPageIndex(page);
+    if (pageIndex - 1 >= 0) {
+      this.goToPageByIndex(pageIndex - 1);
     }
   };
 
-  togglePopup = activeBlock => {
-    const { popupVisibleBlock } = this.state;
+  handleChangePage = () => {
+    const page = this.getPage();
+    const pageIndex = this.getPageIndex(page);
 
     this.setState({
-      popupVisibleBlock: popupVisibleBlock === activeBlock ? '' : activeBlock
-    });
-  };
-
-  render() {
-    const {
       page,
       pageIndex,
-      switcherImagesVisibleByPageIndex,
-      popupVisibleBlock
-    } = this.state;
-    const aboutPageIsActive = page === PAGES.ABOUT;
+      popupVisibleBlock: ''
+    });
+
+    if (!isMobile()) {
+      this.desktopAnimate(pageIndex);
+    } else {
+      this.setMobileImages();
+    }
+    this.prevPage = this.getPage();
+  };
+
+  disableLinks = () => {
+    if (!isMobile()) {
+      window.disableLinks = true;
+      setTimeout(() => {
+        window.disableLinks = false;
+      }, 2000);
+    }
+  }
+
+  desktopAnimate(pageIndex) {
+    const nextPage = this.getPage().toUpperCase();
+    const nextPageImages = PAGES_IMAGES[nextPage];
+    const prevPage = (this.prevPage || 'ABOUT').toUpperCase();
+    const prevPageImages = PAGES_IMAGES[prevPage];
+    this.contentTitleDOMNodes.forEach(contentTitleDOM => {
+      contentTitleDOM.style.opacity = '0';
+    });
+    this.contentTextDOMNodes.forEach(contentTextOOM => {
+      contentTextOOM.style.opacity = '0';
+    });
+    setTimeout(() => {
+      this.contentTitleDOMNodes[pageIndex].style.opacity = '1';
+      this.contentTextDOMNodes[pageIndex].style.opacity = '1';
+      this.imagesSWitcherDOMNodes.forEach((imagesSwitcherDOM, index) => {
+        const imageTopDOM = imagesSwitcherDOM.querySelector('.js-image-switcher-top > div');
+        const imageBottomDOM = imagesSwitcherDOM.querySelector('.js-image-switcher-bottom > div');
+        imageTopDOM.style.backgroundImage = `url(${prevPageImages.TOP})`;
+        imageBottomDOM.style.backgroundImage = `url(${nextPageImages.BOTTOM})`;
+
+        if (index !== pageIndex) {
+          imagesSwitcherDOM.style.display = 'none';
+        } else {
+          imagesSwitcherDOM.style.display = 'block';
+        }
+
+        setTimeout(() => {
+          imageTopDOM.style.backgroundImage = `url(${nextPageImages.TOP})`;
+        }, GC_LINE_ANIMATION_INTERVAL.TO_TOP)
+      });
+    }, GC_LINE_ANIMATION_INTERVAL.TO_BOTTOM);
+  }
+
+  render() {
+    const { page, popupVisibleBlock } = this.state;
+    const aboutPageIsActive = page === PAGES.ABOUT || !page;
     const missionPageIsActive = page === PAGES.MISSION;
     const storyPageIsActive = page === PAGES.STORY;
     const expertisePageIsActive = page === PAGES.EXPERTISE;
@@ -167,57 +233,31 @@ class App extends Component {
         gcLineHidden={!!popupVisibleBlock}
         dotsHidden={!!popupVisibleBlock}
       >
-        <div
-          className={cn(
-            'page',
-            { page_hidden: popupVisibleBlock },
-            `active-page-${pageIndex + 1}`
-          )}
-        >
+        <div className={cn('page', { page_hidden: popupVisibleBlock })}>
           <div className={cn('section', { section_active: aboutPageIsActive })}>
-            <About
-              switcherImagesVisible={
-                aboutPageIsActive || switcherImagesVisibleByPageIndex[0]
-              }
-            />
+            <About switcherImagesVisible />
           </div>
 
           <div className={cn('section', { section_active: storyPageIsActive })}>
-            <Story
-              switcherImagesVisible={
-                storyPageIsActive || switcherImagesVisibleByPageIndex[1]
-              }
-            />
+            <Story switcherImagesVisible />
           </div>
 
           <div
             className={cn('section', { section_active: missionPageIsActive })}
           >
-            <Mission
-              switcherImagesVisible={
-                missionPageIsActive || switcherImagesVisibleByPageIndex[2]
-              }
-            />
+            <Mission switcherImagesVisible />
           </div>
 
           <div
             className={cn('section', { section_active: expertisePageIsActive })}
           >
-            <Expertise
-              switcherImagesVisible={
-                expertisePageIsActive || switcherImagesVisibleByPageIndex[3]
-              }
-            />
+            <Expertise switcherImagesVisible />
           </div>
 
           <div
             className={cn('section', { section_active: contactPageIsActive })}
           >
-            <Contact
-              switcherImagesVisible={
-                contactPageIsActive || switcherImagesVisibleByPageIndex[4]
-              }
-            />
+            <Contact switcherImagesVisible />
           </div>
 
           <ModalPrivacy

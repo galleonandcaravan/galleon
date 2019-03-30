@@ -18,10 +18,17 @@ class Header extends Component {
     activePage: ''
   };
 
-  handleMenuItem = () => {
+  handleMenuItem = event => {
+    event.preventDefault();
+    event.stopPropagation();
     const { popupVisibleBlock, togglePopup } = this.props;
-    if (popupVisibleBlock) {
-      togglePopup();
+
+    if (!window.disableLinks) {
+      const hash = event.target.href.split('#')[1];
+      window.location.hash = hash;
+      if (popupVisibleBlock) {
+        togglePopup();
+      }
     }
   };
 
@@ -44,7 +51,8 @@ class Header extends Component {
           <ul className="header-menu">
             <li
               className={cn('header-menu__item', {
-                'header-menu__item-active': activePage === PAGES.ABOUT && !popupVisibleBlock
+                'header-menu__item-active':
+                  (activePage === PAGES.ABOUT || !activePage) && !popupVisibleBlock
               })}
             >
               <a href={`#${PAGES.ABOUT}`} onClick={this.handleMenuItem}>
@@ -54,7 +62,8 @@ class Header extends Component {
 
             <li
               className={cn('header-menu__item', {
-                'header-menu__item-active': activePage === PAGES.STORY && !popupVisibleBlock
+                'header-menu__item-active':
+                  activePage === PAGES.STORY && !popupVisibleBlock
               })}
             >
               <a href={`#${PAGES.STORY}`} onClick={this.handleMenuItem}>
@@ -64,7 +73,8 @@ class Header extends Component {
 
             <li
               className={cn('header-menu__item', {
-                'header-menu__item-active': activePage === PAGES.MISSION && !popupVisibleBlock
+                'header-menu__item-active':
+                  activePage === PAGES.MISSION && !popupVisibleBlock
               })}
             >
               <a href={`#${PAGES.MISSION}`} onClick={this.handleMenuItem}>
@@ -74,7 +84,8 @@ class Header extends Component {
 
             <li
               className={cn('header-menu__item', {
-                'header-menu__item-active': activePage === PAGES.EXPERTISE && !popupVisibleBlock
+                'header-menu__item-active':
+                  activePage === PAGES.EXPERTISE && !popupVisibleBlock
               })}
             >
               <a href={`#${PAGES.EXPERTISE}`} onClick={this.handleMenuItem}>
@@ -84,7 +95,8 @@ class Header extends Component {
 
             <li
               className={cn('header-menu__item', {
-                'header-menu__item-active': activePage === PAGES.CONTACT && !popupVisibleBlock
+                'header-menu__item-active':
+                  activePage === PAGES.CONTACT && !popupVisibleBlock
               })}
             >
               <a href={`#${PAGES.CONTACT}`} onClick={this.handleMenuItem}>

@@ -21,6 +21,14 @@ class HeaderMobile extends Component {
     menuVisible: false,
   };
 
+  changePage = (event) => {
+    if (!window.disableLinks && event.target.href) {
+      const hash = event.target.href.split('#')[1];
+      window.location.hash = hash;
+    }
+    this.toggleMenuVisible();
+  };
+
   toggleMenuVisible = () => {
     const { menuVisible } = this.state;
     const updatedMenuVisible = !menuVisible;
@@ -64,12 +72,12 @@ class HeaderMobile extends Component {
                   <li
                     className={cn('header-mobile-menu__item', {
                       'header-mobile-menu__item_active':
-                        activePage === PAGES.ABOUT
+                        activePage === PAGES.ABOUT || !activePage
                     })}
                   >
                     <a
                       href={`#${PAGES.ABOUT}`}
-                      onClick={this.toggleMenuVisible}
+                      onClick={this.changePage}
                     >
                       about us
                     </a>
@@ -83,7 +91,7 @@ class HeaderMobile extends Component {
                   >
                     <a
                       href={`#${PAGES.STORY}`}
-                      onClick={this.toggleMenuVisible}
+                      onClick={this.changePage}
                     >
                       story
                     </a>
@@ -97,7 +105,7 @@ class HeaderMobile extends Component {
                   >
                     <a
                       href={`#${PAGES.MISSION}`}
-                      onClick={this.toggleMenuVisible}
+                      onClick={this.changePage}
                     >
                       misson
                     </a>
@@ -111,7 +119,7 @@ class HeaderMobile extends Component {
                   >
                     <a
                       href={`#${PAGES.EXPERTISE}`}
-                      onClick={this.toggleMenuVisible}
+                      onClick={this.changePage}
                     >
                       expertise
                     </a>
@@ -125,7 +133,7 @@ class HeaderMobile extends Component {
                   >
                     <a
                       href={`#${PAGES.CONTACT}`}
-                      onClick={this.toggleMenuVisible}
+                      onClick={this.changePage}
                     >
                       contact us
                     </a>

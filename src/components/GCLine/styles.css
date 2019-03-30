@@ -9,7 +9,7 @@
   justify-content: center;
   align-items: center;
   align-content: center;
-  transform: translateY(-20px);
+  transform: translateY(-30px);
 }
 
 .gcLine_hidden {
@@ -42,7 +42,6 @@
   width: 100%;
   flex: 1 1 auto;
   z-index: 5;
-  cursor: pointer;
   position: relative;
   outline: none;
 }
@@ -68,6 +67,9 @@
 @media screen and (max-width: 1023px) {
   .gcLine {
     margin-top: 40px;
+    left: 50%;
+    right: auto;
+    transform: translate(-50%, 0px);
   }
 
   .gcLine__animated {

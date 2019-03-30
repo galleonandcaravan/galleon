@@ -31,9 +31,11 @@
   bottom: 0;
   left: 0;
   font-size: 4.6rem;
+  opacity: 0;
   font-weight: 300;
   font-style: italic;
   user-select: none;
+  transition: opacity .75s ease;
 }
 
 .main-content__title b {
@@ -46,7 +48,10 @@
   left: 0;
   top: 0;
   user-select: none;
+  opacity: 0;
   font-size: 1.5rem;
+  line-height: 1.4;
+  transition: opacity .75s ease;
 }
 
 @media screen and (min-width: 1700px) {
@@ -138,6 +143,7 @@
     bottom: auto;
     left: auto;
     font-size: 8rem;
+    opacity: 1 !important;
   }
 
   .main-content__text {
@@ -146,5 +152,6 @@
     top: auto;
     font-size: 3rem;
     padding-top: 8.5rem;
+    opacity: 1 !important;
   }
 }

@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import MainContent from '../../components/MainContent';
 import ImagesSwitcher from '../../components/ImagesSwitcher';
-import { PAGES_IMAGES } from '../../constants';
 import './styles.css';
 
 const Expertise = ({ switcherImagesVisible }) => (
@@ -12,8 +11,6 @@ const Expertise = ({ switcherImagesVisible }) => (
       text="By partnering with an award-winning fintech<br class='desktop' />firm, we offer innovative products and<br class='desktop' />strategic solutions that get your funds where<br class='desktop' />they need to be, seamlessly."
     />
     <ImagesSwitcher
-      imageTop={PAGES_IMAGES.EXPERTISE.TOP}
-      imageBottom={PAGES_IMAGES.EXPERTISE.BOTTOM}
       imageTopClassName="expertise__image-top"
       imageBottomClassName="expertise__image-bottom"
       switcherImagesVisible={switcherImagesVisible}
