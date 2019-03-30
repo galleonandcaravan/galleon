@@ -14,14 +14,13 @@ import './styles/app.css';
 import './styles/fonts.css';
 
 const PAGES_COUNT = 5;
-const LOAD_NEXT_SWITCH_IMAGES_INTERVAL = 300;
+const LOAD_NEXT_SWITCH_IMAGES_INTERVAL = 150;
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       page: '',
-      pageIndex: 0,
       popupVisibleBlock: ''
     };
 
@@ -196,6 +195,8 @@ class App extends Component {
     setTimeout(() => {
       this.contentTitleDOMNodes[pageIndex].style.opacity = '1';
       this.contentTextDOMNodes[pageIndex].style.opacity = '1';
+      this.imagesSWitcherDOMNodes[pageIndex].style.opacity = '0';
+
       this.imagesSWitcherDOMNodes.forEach((imagesSwitcherDOM, index) => {
         const imageTopDOM = imagesSwitcherDOM.querySelector('.js-image-switcher-top > div');
         const imageBottomDOM = imagesSwitcherDOM.querySelector('.js-image-switcher-bottom > div');
@@ -203,9 +204,7 @@ class App extends Component {
         imageBottomDOM.style.backgroundImage = `url(${nextPageImages.BOTTOM})`;
 
         if (index !== pageIndex) {
-          imagesSwitcherDOM.style.display = 'none';
-        } else {
-          imagesSwitcherDOM.style.display = 'block';
+          imagesSwitcherDOM.style.opacity = '1';
         }
 
         setTimeout(() => {
