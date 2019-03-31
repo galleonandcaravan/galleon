@@ -66,23 +66,25 @@ class GCLine extends Component {
   };
 
   pageChanged = () => {
-    // Page changed. Detect position and start smoothly line move
-    this.getDOMNodes();
-    const {
-      screenLinePaddingTop,
-      screenLinePaddingBottom
-    } = this.getScreenLinePaddings();
-    this.nextLinePosY = this.clientHeight - screenLinePaddingBottom;
-    this.startMove = true;
-    this.prevImageTopHeight = 0;
-
     setTimeout(() => {
-      this.nextLinePosY = screenLinePaddingTop;
-    }, GC_LINE_ANIMATION_INTERVAL.TO_BOTTOM);
+      // Page changed. Detect position and start smoothly line move
+      this.getDOMNodes();
+      const {
+        screenLinePaddingTop,
+        screenLinePaddingBottom
+      } = this.getScreenLinePaddings();
+      this.nextLinePosY = this.clientHeight - screenLinePaddingBottom;
+      this.startMove = true;
+      this.prevImageTopHeight = 0;
 
-    setTimeout(() => {
-      this.nextLinePosY = this.getCenterLinePosY();
-    }, GC_LINE_ANIMATION_INTERVAL.TO_TOP + GC_LINE_ANIMATION_INTERVAL.TO_CENTER);
+      window.animationTimers.push(setTimeout(() => {
+        this.nextLinePosY = screenLinePaddingTop;
+      }, GC_LINE_ANIMATION_INTERVAL.TO_BOTTOM));
+
+      window.animationTimers.push(setTimeout(() => {
+        this.nextLinePosY = this.getCenterLinePosY();
+      }, GC_LINE_ANIMATION_INTERVAL.TO_TOP + GC_LINE_ANIMATION_INTERVAL.TO_CENTER));
+    }, GC_LINE_ANIMATION_INTERVAL.START_DELAY)
   };
 
   handleResize = () => {

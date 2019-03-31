@@ -26,6 +26,7 @@ class App extends Component {
 
     this.switcherImagesVisible = {};
     this.switcherImagesVisible = {};
+    window.animationTimers = [];
     window.location.hash = '';
   }
 
@@ -41,9 +42,13 @@ class App extends Component {
     this.prevPage = this.getPage();
     this.loadSwitcherImages();
     this.disableLinks();
+    window.disableMouseWheel = true;
     setTimeout(() => {
       window.addEventListener('hashchange', this.handleChangePage);
     }, 1000);
+    setTimeout(() => {
+      window.disableMouseWheel = false;
+    }, 2000);
   }
 
   componentWillUnmount() {
@@ -56,8 +61,12 @@ class App extends Component {
     const nextPageImages = PAGES_IMAGES[nextPage];
 
     this.imagesSWitcherDOMNodes.forEach((imagesSwitcherDOM, index) => {
-      const imageTopDOM = imagesSwitcherDOM.querySelector('.js-image-switcher-top > div');
-      const imageBottomDOM = imagesSwitcherDOM.querySelector('.js-image-switcher-bottom > div');
+      const imageTopDOM = imagesSwitcherDOM.querySelector(
+        '.js-image-switcher-top > div'
+      );
+      const imageBottomDOM = imagesSwitcherDOM.querySelector(
+        '.js-image-switcher-bottom > div'
+      );
       imageTopDOM.style.backgroundImage = `url(${nextPageImages.TOP})`;
       imageBottomDOM.style.backgroundImage = `url(${nextPageImages.BOTTOM})`;
     });
@@ -117,7 +126,12 @@ class App extends Component {
   handleMouseWheel = event => {
     const { popupVisibleBlock } = this.state;
 
-    if (!window.disableLinks && !popupVisibleBlock && isDesktop()) {
+    if (
+      !window.disableLinks &&
+      !window.disableMouseWheel &&
+      !popupVisibleBlock &&
+      isDesktop()
+    ) {
       const delta = Math.sign(event.deltaY);
       if (delta === 1) {
         this.goToNextPage();
@@ -125,6 +139,7 @@ class App extends Component {
         this.goToPrevPage();
       }
       this.disableLinks();
+      this.disableMouseWheel();
     }
   };
 
@@ -155,12 +170,16 @@ class App extends Component {
   };
 
   handleChangePage = () => {
+    const prevPageImageTopDOM = document.querySelector(
+      '.section_active .js-image-switcher-top > div'
+    );
+    this.prevPageImageTopBackgroundImage =
+      prevPageImageTopDOM.style.backgroundImage;
     const page = this.getPage();
     const pageIndex = this.getPageIndex(page);
 
     this.setState({
       page,
-      pageIndex,
       popupVisibleBlock: ''
     });
 
@@ -170,6 +189,8 @@ class App extends Component {
       this.setMobileImages();
     }
     this.prevPage = this.getPage();
+    this.disableLinks();
+    this.disableMouseWheel();
   };
 
   disableLinks = () => {
@@ -177,41 +198,68 @@ class App extends Component {
       window.disableLinks = true;
       setTimeout(() => {
         window.disableLinks = false;
-      }, 2000);
+      }, 1500);
+    }
+  };
+
+  disableMouseWheel = () => {
+    if (!isMobile()) {
+      window.disableMouseWheel = true;
+      setTimeout(() => {
+        window.disableMouseWheel = false;
+      }, GC_LINE_ANIMATION_INTERVAL.START_DELAY + GC_LINE_ANIMATION_INTERVAL.TO_BOTTOM + GC_LINE_ANIMATION_INTERVAL.TO_TOP + GC_LINE_ANIMATION_INTERVAL.TO_CENTER)
     }
   }
 
   desktopAnimate(pageIndex) {
+    // Clear all animations
+    window.animationTimers.forEach(timer => clearTimeout(timer));
+
+    // Start new animation
     const nextPage = this.getPage().toUpperCase();
     const nextPageImages = PAGES_IMAGES[nextPage];
-    const prevPage = (this.prevPage || 'ABOUT').toUpperCase();
-    const prevPageImages = PAGES_IMAGES[prevPage];
     this.contentTitleDOMNodes.forEach(contentTitleDOM => {
       contentTitleDOM.style.opacity = '0';
     });
     this.contentTextDOMNodes.forEach(contentTextOOM => {
       contentTextOOM.style.opacity = '0';
     });
-    setTimeout(() => {
-      this.contentTitleDOMNodes[pageIndex].style.opacity = '1';
-      this.contentTextDOMNodes[pageIndex].style.opacity = '1';
-      this.imagesSWitcherDOMNodes[pageIndex].style.opacity = '0';
 
-      this.imagesSWitcherDOMNodes.forEach((imagesSwitcherDOM, index) => {
-        const imageTopDOM = imagesSwitcherDOM.querySelector('.js-image-switcher-top > div');
-        const imageBottomDOM = imagesSwitcherDOM.querySelector('.js-image-switcher-bottom > div');
-        imageTopDOM.style.backgroundImage = `url(${prevPageImages.TOP})`;
-        imageBottomDOM.style.backgroundImage = `url(${nextPageImages.BOTTOM})`;
+    window.animationTimers.push(
+      setTimeout(() => {
+        this.contentTitleDOMNodes[pageIndex].style.opacity = '1';
+        this.contentTextDOMNodes[pageIndex].style.opacity = '1';
+      }, 500)
+    );
 
-        if (index !== pageIndex) {
-          imagesSwitcherDOM.style.opacity = '1';
-        }
+    window.animationTimers.push(
+      setTimeout(() => {
+        this.imagesSWitcherDOMNodes[pageIndex].style.opacity = '0';
 
-        setTimeout(() => {
-          imageTopDOM.style.backgroundImage = `url(${nextPageImages.TOP})`;
-        }, GC_LINE_ANIMATION_INTERVAL.TO_TOP)
-      });
-    }, GC_LINE_ANIMATION_INTERVAL.TO_BOTTOM);
+        this.imagesSWitcherDOMNodes.forEach((imagesSwitcherDOM, index) => {
+          const imageTopDOM = imagesSwitcherDOM.querySelector(
+            '.js-image-switcher-top > div'
+          );
+          const imageBottomDOM = imagesSwitcherDOM.querySelector(
+            '.js-image-switcher-bottom > div'
+          );
+          imageTopDOM.style.backgroundImage = this.prevPageImageTopBackgroundImage;
+          imageBottomDOM.style.backgroundImage = `url(${
+            nextPageImages.BOTTOM
+          })`;
+
+          if (index !== pageIndex) {
+            imagesSwitcherDOM.style.opacity = '1';
+          }
+
+          window.animationTimers.push(
+            setTimeout(() => {
+              imageTopDOM.style.backgroundImage = `url(${nextPageImages.TOP})`;
+            }, GC_LINE_ANIMATION_INTERVAL.TO_TOP)
+          );
+        });
+      }, GC_LINE_ANIMATION_INTERVAL.START_DELAY + GC_LINE_ANIMATION_INTERVAL.TO_BOTTOM)
+    );
   }
 
   render() {

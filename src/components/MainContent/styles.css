@@ -35,7 +35,7 @@
   font-weight: 300;
   font-style: italic;
   user-select: none;
-  transition: opacity .75s ease;
+  transition: opacity .5s ease;
 }
 
 .main-content__title b {
@@ -51,7 +51,7 @@
   opacity: 0;
   font-size: 1.5rem;
   line-height: 1.4;
-  transition: opacity .75s ease;
+  transition: opacity .5s ease;
 }
 
 @media screen and (min-width: 1700px) {

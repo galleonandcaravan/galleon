@@ -46,6 +46,7 @@ export const HEADER_AUTH_LINKS = {
 }
 
 export const GC_LINE_ANIMATION_INTERVAL = {
+  START_DELAY: 800,
   TO_BOTTOM: 700,
   TO_TOP: 1100,
   TO_CENTER: 700,
