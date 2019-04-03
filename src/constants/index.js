@@ -44,10 +44,3 @@ export const HEADER_AUTH_LINKS = {
   REGISTER: '/',
   LOGIN: '/',
 }
-
-export const GC_LINE_ANIMATION_INTERVAL = {
-  START_DELAY: 1000,
-  TO_BOTTOM: 800,
-  TO_TOP: 1200,
-  TO_CENTER: 800,
-}

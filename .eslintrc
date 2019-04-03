@@ -12,7 +12,6 @@
     "no-underscore-dangle": 0,
     "import/imports-first": ["error", "absolute-first"],
     "import/newline-after-import": "error",
-    "jsx-a11y/anchor-has-content": 0,
     "react/no-danger": 0,
     "no-console": 0,
     "jsx-a11y/anchor-is-valid": 0,
@@ -20,7 +19,8 @@
     "jsx-a11y/click-events-have-key-events": 0,
     "react/no-unescaped-entities": 0,
     "import/prefer-default-export": 0,
-    "no-param-reassign": 0
+    "no-param-reassign": 0,
+    "jsx-a11y/anchor-has-content": 0
   },
   "globals": {
     "window": true,

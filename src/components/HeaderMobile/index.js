@@ -22,7 +22,7 @@ class HeaderMobile extends Component {
   };
 
   changePage = (event) => {
-    if (!window.disableLinks && event.target.href) {
+    if (!window.disableLinks && !window.disableMouseWheel && event.target.href) {
       const hash = event.target.href.split('#')[1];
       window.location.hash = hash;
     }

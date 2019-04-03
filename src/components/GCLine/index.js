@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { GC_LINE_MARGIN_TOP } from './constants';
-import { GC_LINE_ANIMATION_INTERVAL } from '../../constants';
 import gImage from './images/g.png';
 import cImage from './images/c.png';
 import { isTablet } from '../../utils/media';
@@ -66,26 +65,23 @@ class GCLine extends Component {
   };
 
   pageChanged = () => {
-    setTimeout(() => {
-      // Page changed. Detect position and start smoothly line move
-      this.getDOMNodes();
-      const {
-        screenLinePaddingTop,
-        screenLinePaddingBottom
-      } = this.getScreenLinePaddings();
-      this.nextLinePosY = this.clientHeight - screenLinePaddingBottom;
-      this.startMove = true;
-      this.prevImageTopHeight = 0;
+    // Page changed. Detect position and start smoothly line move
+    this.getDOMNodes();
+    const {
+      screenLinePaddingBottom
+    } = this.getScreenLinePaddings();
 
-      window.animationTimers.push(setTimeout(() => {
-        this.nextLinePosY = screenLinePaddingTop;
-      }, GC_LINE_ANIMATION_INTERVAL.TO_BOTTOM));
-
-      window.animationTimers.push(setTimeout(() => {
-        this.nextLinePosY = this.getCenterLinePosY();
-      }, GC_LINE_ANIMATION_INTERVAL.TO_TOP + GC_LINE_ANIMATION_INTERVAL.TO_CENTER));
-    }, GC_LINE_ANIMATION_INTERVAL.START_DELAY)
+    window.animateStep = 1;
+    this.nextLinePosY = this.clientHeight - screenLinePaddingBottom;
+    this.startMove = true;
+    this.prevImageTopHeight = 0;
   };
+
+  checkAnimate = () => {
+    if (window.animateStep === 2) {
+
+    }
+  }
 
   handleResize = () => {
     if (
@@ -180,25 +176,44 @@ class GCLine extends Component {
   };
 
   checkLinePosition = () => {
+    const { screenLinePaddingTop } = this.getScreenLinePaddings();
+
     if (this.nextLinePosY && this.currentLinePositionY) {
       let lineYChanged = false;
 
-      if (this.currentLinePositionY < this.nextLinePosY) {
-        // Calc speed
-        const speed = this.getMoveSpeed(
-          this.nextLinePosY - this.currentLinePositionY
-        );
-        this.currentLinePositionY += speed;
-        lineYChanged = true;
+      // To top
+      if (window.animateStep === 2) {
+        if (this.currentLinePositionY > this.nextLinePosY) {
+          // Calc speed
+          const speed = this.getMoveSpeed(
+            this.currentLinePositionY - this.nextLinePosY
+          );
+          this.currentLinePositionY += -speed;
+          lineYChanged = true;
+        } else {
+          window.animateStep = 3; // Change step of aniamtion
+          this.nextLinePosY = this.getCenterLinePosY();
+        }
       }
 
-      if (this.currentLinePositionY > this.nextLinePosY) {
-        // Calc speed
-        const speed = this.getMoveSpeed(
-          this.currentLinePositionY - this.nextLinePosY
-        );
-        this.currentLinePositionY += -speed;
-        lineYChanged = true;
+      // To bottom and to center
+      if (window.animateStep === 1 || window.animateStep === 3) {
+        if (this.currentLinePositionY < this.nextLinePosY) {
+          // Calc speed
+          const speed = this.getMoveSpeed(
+            this.nextLinePosY - this.currentLinePositionY
+          );
+          this.currentLinePositionY += speed;
+          lineYChanged = true;
+        } else {
+          window.animateStep = window.animateStep === 1 // Change step of aniamtion
+            ? 2
+            : 4
+
+          if (window.animateStep === 2) {
+            this.nextLinePosY = screenLinePaddingTop;
+          }
+        }
       }
 
       if (lineYChanged) {
@@ -209,7 +224,7 @@ class GCLine extends Component {
   };
 
   getMoveSpeed = diffY => {
-    const speed = Math.ceil(diffY / 45);
+    const speed = Math.ceil(diffY / 40);
     return speed < 2 ? 2 : speed;
   };
 

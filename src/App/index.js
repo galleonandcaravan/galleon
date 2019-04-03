@@ -7,7 +7,7 @@ import Story from '../pages/Story';
 import Expertise from '../pages/Expertise';
 import Contact from '../pages/Contact';
 import Layout from '../components/Layout';
-import { PAGES, PAGES_IMAGES, GC_LINE_ANIMATION_INTERVAL } from '../constants';
+import { PAGES, PAGES_IMAGES } from '../constants';
 import ModalPrivacy from '../components/ModalPrivacy';
 import { isDesktop, isMobile } from '../utils/media';
 import './styles/app.css';
@@ -41,19 +41,22 @@ class App extends Component {
 
     this.prevPage = this.getPage();
     this.loadSwitcherImages();
-    this.disableLinks();
     window.disableMouseWheel = true;
+
     setTimeout(() => {
       window.addEventListener('hashchange', this.handleChangePage);
     }, 1000);
     setTimeout(() => {
       window.disableMouseWheel = false;
     }, 2000);
+
+    this.checkAnimateStepInterval = setInterval(this.checkAnimateStep, 10);
   }
 
   componentWillUnmount() {
     window.removeEventListener('hashchange', this.handleChangePage);
     window.removeEventListener('mousewheel', this.handleMouseWheelThrottle);
+    clearInterval(this.checkAnimateStepInterval);
   }
 
   setMobileImages() {
@@ -70,6 +73,88 @@ class App extends Component {
       imageTopDOM.style.backgroundImage = `url(${nextPageImages.TOP})`;
       imageBottomDOM.style.backgroundImage = `url(${nextPageImages.BOTTOM})`;
     });
+  }
+
+  checkAnimateStep = () => {
+    if (window.animateStep !== this.prevAnimateStep) {
+      const page = this.getPage();
+      const pageIndex = this.getPageIndex(page);
+
+      // Start new animation
+      const nextPage = this.getPage().toUpperCase();
+      const nextPageImages = PAGES_IMAGES[nextPage];
+
+      if (window.animateStep === 1 && !isDesktop()) {
+        this.fadeContent()
+      }
+
+      if (window.animateStep === 4) {
+        if (isDesktop()) {
+          this.fadeContent();
+        } else {
+          window.disableMouseWheel = false;
+          window.disableLinks = false;
+          window.animateStep = 0;
+        }
+      }
+
+      if (window.animateStep === 2) {
+        // Change image content after complete first step animation
+        this.imagesSWitcherDOMNodes[pageIndex].style.opacity = '0';
+
+        this.imagesSWitcherDOMNodes.forEach((imagesSwitcherDOM, index) => {
+          const imageTopDOM = imagesSwitcherDOM.querySelector(
+            '.js-image-switcher-top > div'
+          );
+          const imageBottomDOM = imagesSwitcherDOM.querySelector(
+            '.js-image-switcher-bottom > div'
+          );
+          imageTopDOM.style.backgroundImage = this.prevPageImageTopBackgroundImage;
+          imageBottomDOM.style.backgroundImage = `url(${
+            nextPageImages.BOTTOM
+          })`;
+
+          if (index !== pageIndex) {
+            imagesSwitcherDOM.style.opacity = '1';
+          }
+        });
+      }
+
+      if (window.animateStep === 3) {
+        // Change image content after complete 2 steps animation
+        this.imagesSWitcherDOMNodes.forEach((imagesSwitcherDOM) => {
+          const imageTopDOM = imagesSwitcherDOM.querySelector(
+            '.js-image-switcher-top > div'
+          );
+          imageTopDOM.style.backgroundImage = `url(${nextPageImages.TOP})`;
+        })
+      }
+    }
+
+    this.prevAnimateStep = window.animateStep;
+  };
+
+  fadeContent = () => {
+    const page = this.getPage();
+    const pageIndex = this.getPageIndex(page);
+
+    // Fade content after complete 3 steps of animation
+    this.contentTitleDOMNodes.forEach(contentTitleDOM => {
+      contentTitleDOM.style.opacity = '0';
+    });
+    this.contentTextDOMNodes.forEach(contentTextOOM => {
+      contentTextOOM.style.opacity = '0';
+    });
+
+    setTimeout(() => {
+      this.contentTitleDOMNodes[pageIndex].style.opacity = '1';
+      this.contentTextDOMNodes[pageIndex].style.opacity = '1';
+      if (isDesktop()) {
+        window.animateStep = 5; // Change step of aniamtion
+        window.disableMouseWheel = false;
+        window.disableLinks = false;
+      }
+    }, 500)
   }
 
   getDOMNodes = () => {
@@ -170,22 +255,20 @@ class App extends Component {
   };
 
   handleChangePage = () => {
+    this.prevAnimateStep = 0;
     const prevPageImageTopDOM = document.querySelector(
       '.section_active .js-image-switcher-top > div'
     );
     this.prevPageImageTopBackgroundImage =
       prevPageImageTopDOM.style.backgroundImage;
     const page = this.getPage();
-    const pageIndex = this.getPageIndex(page);
 
     this.setState({
       page,
       popupVisibleBlock: ''
     });
 
-    if (!isMobile()) {
-      this.desktopAnimate(pageIndex);
-    } else {
+    if (isMobile()) {
       this.setMobileImages();
     }
     this.prevPage = this.getPage();
@@ -196,71 +279,14 @@ class App extends Component {
   disableLinks = () => {
     if (!isMobile()) {
       window.disableLinks = true;
-      setTimeout(() => {
-        window.disableLinks = false;
-      }, 1500);
     }
   };
 
   disableMouseWheel = () => {
     if (!isMobile()) {
       window.disableMouseWheel = true;
-      setTimeout(() => {
-        window.disableMouseWheel = false;
-      }, GC_LINE_ANIMATION_INTERVAL.START_DELAY + GC_LINE_ANIMATION_INTERVAL.TO_BOTTOM + GC_LINE_ANIMATION_INTERVAL.TO_TOP + GC_LINE_ANIMATION_INTERVAL.TO_CENTER)
     }
-  }
-
-  desktopAnimate(pageIndex) {
-    // Clear all animations
-    window.animationTimers.forEach(timer => clearTimeout(timer));
-
-    // Start new animation
-    const nextPage = this.getPage().toUpperCase();
-    const nextPageImages = PAGES_IMAGES[nextPage];
-    this.contentTitleDOMNodes.forEach(contentTitleDOM => {
-      contentTitleDOM.style.opacity = '0';
-    });
-    this.contentTextDOMNodes.forEach(contentTextOOM => {
-      contentTextOOM.style.opacity = '0';
-    });
-
-    window.animationTimers.push(
-      setTimeout(() => {
-        this.contentTitleDOMNodes[pageIndex].style.opacity = '1';
-        this.contentTextDOMNodes[pageIndex].style.opacity = '1';
-      }, 500)
-    );
-
-    window.animationTimers.push(
-      setTimeout(() => {
-        this.imagesSWitcherDOMNodes[pageIndex].style.opacity = '0';
-
-        this.imagesSWitcherDOMNodes.forEach((imagesSwitcherDOM, index) => {
-          const imageTopDOM = imagesSwitcherDOM.querySelector(
-            '.js-image-switcher-top > div'
-          );
-          const imageBottomDOM = imagesSwitcherDOM.querySelector(
-            '.js-image-switcher-bottom > div'
-          );
-          imageTopDOM.style.backgroundImage = this.prevPageImageTopBackgroundImage;
-          imageBottomDOM.style.backgroundImage = `url(${
-            nextPageImages.BOTTOM
-          })`;
-
-          if (index !== pageIndex) {
-            imagesSwitcherDOM.style.opacity = '1';
-          }
-
-          window.animationTimers.push(
-            setTimeout(() => {
-              imageTopDOM.style.backgroundImage = `url(${nextPageImages.TOP})`;
-            }, GC_LINE_ANIMATION_INTERVAL.TO_TOP)
-          );
-        });
-      }, GC_LINE_ANIMATION_INTERVAL.START_DELAY + GC_LINE_ANIMATION_INTERVAL.TO_BOTTOM)
-    );
-  }
+  };
 
   render() {
     const { page, popupVisibleBlock } = this.state;

@@ -23,7 +23,7 @@ class Header extends Component {
     event.stopPropagation();
     const { popupVisibleBlock, togglePopup } = this.props;
 
-    if (!window.disableLinks) {
+    if (!window.disableLinks && !window.disableMouseWheel) {
       const hash = event.target.href.split('#')[1];
       window.location.hash = hash;
       if (popupVisibleBlock) {
