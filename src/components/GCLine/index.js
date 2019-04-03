@@ -224,7 +224,7 @@ class GCLine extends Component {
   };
 
   getMoveSpeed = diffY => {
-    const speed = Math.ceil(diffY / 40);
+    const speed = Math.ceil(diffY / 30);
     return speed < 2 ? 2 : speed;
   };
 
