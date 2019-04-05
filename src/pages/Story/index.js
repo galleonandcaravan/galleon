@@ -7,7 +7,7 @@ import './styles.css';
 const Story = ({ switcherImagesVisible }) => (
   <div className="story" id="page-story">
     <MainContent
-      title="We have <b>a&nbsp;Story</b>"
+      title="We have <br /><b>a&nbsp;Story</b>"
       text="Many moons ago, galleons and caravans<br class='desktop' />helped facilitate the exchange of goods,<br class='desktop' />services and ideas."
     />
     <ImagesSwitcher
