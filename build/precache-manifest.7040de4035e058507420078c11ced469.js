@@ -4,7 +4,7 @@ self.__precacheManifest = [
     "url": "/galleon/static/media/390FD6_0_0.9a84eddf.eot"
   },
   {
-    "revision": "4282a13314fb0b6a61d2",
+    "revision": "947af5e869948fb47c88",
     "url": "/galleon/static/css/main.39a42927.chunk.css"
   },
   {
@@ -76,16 +76,12 @@ self.__precacheManifest = [
     "url": "/galleon/static/media/gradient-mobile.0956fa59.jpg"
   },
   {
-    "revision": "4282a13314fb0b6a61d2",
-    "url": "/galleon/static/js/main.f6a3f146.chunk.js"
+    "revision": "947af5e869948fb47c88",
+    "url": "/galleon/static/js/main.649410ba.chunk.js"
   },
   {
     "revision": "e95d4986339f94723be4fe5047744723",
     "url": "/galleon/static/media/390FD6_0_0.e95d4986.woff2"
-  },
-  {
-    "revision": "3515f27ef128c3cbc6e0b44b2dd68964",
-    "url": "/galleon/static/media/NocturneSerif-Light.3515f27e.woff2"
   },
   {
     "revision": "4478beff6552736d8a7e8131f727b791",
@@ -96,59 +92,63 @@ self.__precacheManifest = [
     "url": "/galleon/static/media/390FD6_0_0.a37d460b.ttf"
   },
   {
-    "revision": "e5e03e6deca5cd3954734f9c1696ed2d",
-    "url": "/galleon/static/media/390FD6_3_0.e5e03e6d.eot"
-  },
-  {
     "revision": "9ef3466cddccdedf805c5a54e0a098ea",
     "url": "/galleon/static/media/NocturneSerif-Light.9ef3466c.woff"
+  },
+  {
+    "revision": "3515f27ef128c3cbc6e0b44b2dd68964",
+    "url": "/galleon/static/media/NocturneSerif-Light.3515f27e.woff2"
   },
   {
     "revision": "3f2485f2ee098466eeb1bc042455796d",
     "url": "/galleon/static/media/390FD6_3_0.3f2485f2.woff2"
   },
   {
-    "revision": "7c9712413c163a6f968d4d60b2e25b21",
-    "url": "/galleon/static/media/390FD6_3_0.7c971241.woff"
+    "revision": "e5e03e6deca5cd3954734f9c1696ed2d",
+    "url": "/galleon/static/media/390FD6_3_0.e5e03e6d.eot"
   },
   {
-    "revision": "4612750acd225a28c3baec12fc39f27b",
-    "url": "/galleon/static/media/390FD6_2_0.4612750a.woff2"
+    "revision": "7c9712413c163a6f968d4d60b2e25b21",
+    "url": "/galleon/static/media/390FD6_3_0.7c971241.woff"
   },
   {
     "revision": "a788f6ecc2bf373c486c0db59a6e1f4a",
     "url": "/galleon/static/media/390FD6_2_0.a788f6ec.eot"
   },
   {
+    "revision": "4612750acd225a28c3baec12fc39f27b",
+    "url": "/galleon/static/media/390FD6_2_0.4612750a.woff2"
+  },
+  {
     "revision": "c37d4466fe0ac9a6c658633761014120",
     "url": "/galleon/static/media/390FD6_3_0.c37d4466.ttf"
-  },
-  {
-    "revision": "548142f9efdb76a88157f82b687e51a9",
-    "url": "/galleon/static/media/390FD6_1_0.548142f9.eot"
-  },
-  {
-    "revision": "d93f6cd9c98df2a20b45bb6030c69ab0",
-    "url": "/galleon/static/media/390FD6_2_0.d93f6cd9.woff"
   },
   {
     "revision": "9049d2b2458cbbd15f50d95a3522fe8b",
     "url": "/galleon/static/media/390FD6_2_0.9049d2b2.ttf"
   },
   {
-    "revision": "3e47231284442bcf863a5a5a86f26147",
-    "url": "/galleon/static/media/390FD6_1_0.3e472312.woff2"
+    "revision": "d93f6cd9c98df2a20b45bb6030c69ab0",
+    "url": "/galleon/static/media/390FD6_2_0.d93f6cd9.woff"
   },
   {
-    "revision": "60a20ab38f68edb071a69fe90a96ca06",
-    "url": "/galleon/static/media/390FD6_1_0.60a20ab3.ttf"
+    "revision": "548142f9efdb76a88157f82b687e51a9",
+    "url": "/galleon/static/media/390FD6_1_0.548142f9.eot"
+  },
+  {
+    "revision": "3e47231284442bcf863a5a5a86f26147",
+    "url": "/galleon/static/media/390FD6_1_0.3e472312.woff2"
   },
   {
     "revision": "390cb624f5ae8e437441ed25dcc51f83",
     "url": "/galleon/static/media/390FD6_1_0.390cb624.woff"
   },
   {
-    "revision": "24e2daa530e5085c7dfb6dd45e9935f0",
+    "revision": "60a20ab38f68edb071a69fe90a96ca06",
+    "url": "/galleon/static/media/390FD6_1_0.60a20ab3.ttf"
+  },
+  {
+    "revision": "537da9aa9b0af8bee774efd8b6a94524",
     "url": "/galleon/index.html"
   }
 ];
