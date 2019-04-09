@@ -79,7 +79,7 @@ class HeaderMobile extends Component {
                       href={`#${PAGES.ABOUT}`}
                       onClick={this.changePage}
                     >
-                      about us
+                      About us
                     </a>
                   </li>
 
@@ -93,7 +93,7 @@ class HeaderMobile extends Component {
                       href={`#${PAGES.STORY}`}
                       onClick={this.changePage}
                     >
-                      story
+                      Story
                     </a>
                   </li>
 
@@ -107,7 +107,7 @@ class HeaderMobile extends Component {
                       href={`#${PAGES.MISSION}`}
                       onClick={this.changePage}
                     >
-                      misson
+                      Mission
                     </a>
                   </li>
 
@@ -121,7 +121,7 @@ class HeaderMobile extends Component {
                       href={`#${PAGES.EXPERTISE}`}
                       onClick={this.changePage}
                     >
-                      expertise
+                      Expertise
                     </a>
                   </li>
 
@@ -135,7 +135,7 @@ class HeaderMobile extends Component {
                       href={`#${PAGES.CONTACT}`}
                       onClick={this.changePage}
                     >
-                      contact us
+                      Contact us
                     </a>
                   </li>
                 </ul>
@@ -146,7 +146,7 @@ class HeaderMobile extends Component {
                       href={HEADER_AUTH_LINKS.REGISTER}
                       onClick={this.toggleMenuVisible}
                     >
-                      REGISTER
+                      Register
                     </a>
                   </li>
                   <li className="header-mobile-auth__item">
@@ -154,7 +154,7 @@ class HeaderMobile extends Component {
                       href={HEADER_AUTH_LINKS.LOGIN}
                       onClick={this.toggleMenuVisible}
                     >
-                      LOG IN
+                      Log In
                     </a>
                   </li>
                 </ul>
@@ -164,23 +164,32 @@ class HeaderMobile extends Component {
                     className="header-mobile-additional__item"
                     onClick={() => this.openModal('privacy')}
                   >
-                    privacy
+                    Privacy
                   </li>
 
                   <li
                     className="header-mobile-additional__item"
                     onClick={() => this.openModal('security')}
                   >
-                    security
+                    Security
                   </li>
 
                   <li
                     className="header-mobile-additional__item"
                     onClick={() => this.openModal('terms')}
                   >
-                    terms & conditions
+                    Terms & conditions
                   </li>
                 </ul>
+
+                <div className="header-mobile-copyright">
+                  Galleon & Caravan is the trading name of Galcar Limited, a company registered in
+                  England and Wales (no. 11656491) and whose registered office is at Flat 15, 1
+                  Bramshaw Road, London, E9 5BF. Galleon & Caravan's payment, foreign currency
+                  exchange services and e-money accounts are provided by Ebury Partners UK
+                  Limited. Ebury Partners UK Limited is authorised and regulated by the Financial
+                  Conduct Authority as an Electronic Money Institution (no. 900797).
+                </div>
               </div>
             </div>
           </Portal>

@@ -8,7 +8,7 @@ import './styles.css';
 const About = ({ switcherImagesVisible }) => (
   <div className="about" id="page-about">
     <MainContent
-      title="We are<br /><b>Galleon &&nbsp;Caravan</b>"
+      title="We are<br /><b>Galleon & <br class='desktop' />Caravan</b>"
       text="A boutique payment services firm working<br class='desktop' />primarily within the arts, media and<br class='desktop' />entertainment sectors."
     />
     <ImagesSwitcher

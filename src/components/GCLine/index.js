@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { GC_LINE_MARGIN_TOP } from './constants';
 import gImage from './images/g.png';
 import cImage from './images/c.png';
-import { isTablet } from '../../utils/media';
+import { isTablet, isMobile } from '../../utils/media';
+import logo from './images/logo.svg';
 import './styles.css';
 
 class GCLine extends Component {
@@ -19,12 +20,14 @@ class GCLine extends Component {
   };
 
   state = {
-    mountAnimateStarted: false
+    mountAnimateStarted: false,
+    animateTransformStop: false,
   };
 
   constructor(props) {
     super(props);
     this.dragStarted = false;
+    this.gcLineCenter = React.createRef();
   }
 
   componentDidMount() {
@@ -37,10 +40,19 @@ class GCLine extends Component {
     this.handleResize();
     this.getDOMNodes();
 
-    // Start mount animate in next tick
     setTimeout(() => {
       this.startMountAnimate();
-    }, 0);
+
+      setTimeout(() => {
+        this.setState({
+          animateTransformStop: true,
+        })
+        if (this.gcLineCenter.current) {
+          this.gcLineCenter.current.style.transition = 'none';
+          this.gcLineCenter.current.style.opacity = '1';
+        }
+      }, !isMobile() ? 3000 : 0)
+    }, 1400);
     this.setLineAndImagesPosition(this.currentLinePositionY, true);
   }
 
@@ -67,9 +79,7 @@ class GCLine extends Component {
   pageChanged = () => {
     // Page changed. Detect position and start smoothly line move
     this.getDOMNodes();
-    const {
-      screenLinePaddingBottom
-    } = this.getScreenLinePaddings();
+    const { screenLinePaddingBottom } = this.getScreenLinePaddings();
 
     window.animateStep = 1;
     this.nextLinePosY = this.clientHeight - screenLinePaddingBottom;
@@ -79,9 +89,8 @@ class GCLine extends Component {
 
   checkAnimate = () => {
     if (window.animateStep === 2) {
-
     }
-  }
+  };
 
   handleResize = () => {
     if (
@@ -206,9 +215,10 @@ class GCLine extends Component {
           this.currentLinePositionY += speed;
           lineYChanged = true;
         } else {
-          window.animateStep = window.animateStep === 1 // Change step of aniamtion
-            ? 2
-            : 4
+          window.animateStep =
+            window.animateStep === 1 // Change step of aniamtion
+              ? 2
+              : 4;
 
           if (window.animateStep === 2) {
             this.nextLinePosY = screenLinePaddingTop;
@@ -283,22 +293,42 @@ class GCLine extends Component {
 
   render() {
     const { isHidden } = this.props;
-    const { mountAnimateStarted } = this.state;
+    const { mountAnimateStarted, animateTransformStop } = this.state;
 
     return (
-      <div
-        className={cn(
-          'gcLine',
-          { gcLine_hidden: isHidden },
-          { gcLine_animated: mountAnimateStarted }
-        )}
-      >
-        <img src={gImage} className="gcLine__g" alt="" />
-        <div className="gcLine__center js-gcLine">
-          <div className="gcLine__line" />
+      <Fragment>
+        <div
+          className={cn(
+            'gcLine',
+            { gcLine_hidden: isHidden || !mountAnimateStarted },
+            { gcLine_animated: mountAnimateStarted }
+          )}
+        >
+          <img src={gImage} className="gcLine__g" alt="" />
+          <div
+            className="gcLine__center js-gcLine"
+            ref={this.gcLineCenter}
+          >
+            <div className="gcLine__line" />
+          </div>
+
+          <img src={cImage} className="gcLine__c" alt="" />
         </div>
-        <img src={cImage} className="gcLine__c" alt="" />
-      </div>
+
+        <img
+          className={cn('gcLine__logo', {
+            hidden: animateTransformStop
+          })}
+          src={logo}
+          alt=""
+        />
+
+        <div
+          className={cn('gcLine__logo-transform', {
+            hidden: animateTransformStop
+          })}
+        />
+      </Fragment>
     );
   }
 }

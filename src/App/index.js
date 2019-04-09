@@ -48,7 +48,7 @@ class App extends Component {
     }, 1000);
     setTimeout(() => {
       window.disableMouseWheel = false;
-    }, 2000);
+    }, 4500);
 
     this.checkAnimateStepInterval = setInterval(this.checkAnimateStep, 10);
   }

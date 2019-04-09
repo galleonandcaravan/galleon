@@ -78,7 +78,7 @@ class Header extends Component {
               })}
             >
               <a href={`#${PAGES.MISSION}`} onClick={this.handleMenuItem}>
-                misson
+                mission
               </a>
             </li>
 

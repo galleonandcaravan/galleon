@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import { CSSTransition } from 'react-transition-group';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import Header from '../Header';
 import Footer from '../Footer';
 import GCLine from '../GCLine';
 import Dots from '../Dots';
-import { isMobile } from '../../utils/media';
+import { isDesktop, isMobile } from '../../utils/media';
 import './styles.css';
 
 class Layout extends Component {
@@ -29,7 +30,9 @@ class Layout extends Component {
   };
 
   state = {
-    pageMounted: false
+    pageMounted: false,
+    headerAnimateStarted: false,
+    footerAnimateStarted: false,
   };
 
   componentDidMount() {
@@ -37,7 +40,16 @@ class Layout extends Component {
       this.setState({
         pageMounted: true
       });
-    }, 0);
+
+      setTimeout(() => {
+        this.setState({ headerAnimateStarted: true });
+
+        setTimeout(() => {
+          this.setState({ footerAnimateStarted: true });
+        }, 500);
+      }, 500)
+
+    }, !isMobile() ? 2050 : 0);
     window.addEventListener('resize', this.handleResize);
   }
 
@@ -60,16 +72,23 @@ class Layout extends Component {
       dotsHidden
     } = this.props;
 
-    const { pageMounted } = this.state;
+    const { pageMounted, headerAnimateStarted, footerAnimateStarted } = this.state;
 
     return (
       <div className={cn('layout', className)}>
         <div className="layout__container">
-          <Header
-            activePage={activePage}
-            popupVisibleBlock={popupVisibleBlock}
-            togglePopup={togglePopup}
-          />
+          <CSSTransition
+            in={headerAnimateStarted}
+            timeout={350}
+            classNames="header"
+            unmountOnExit
+          >
+            <Header
+              activePage={activePage}
+              popupVisibleBlock={popupVisibleBlock}
+              togglePopup={togglePopup}
+            />
+          </CSSTransition>
           {!isMobile() && (
             <GCLine activePage={activePage} isHidden={gcLineHidden} />
           )}
@@ -80,11 +99,21 @@ class Layout extends Component {
           >
             {children}
           </div>
-          <Dots activePage={activePage} isHidden={dotsHidden} />
-          <Footer
-            popupVisibleBlock={popupVisibleBlock}
-            togglePopup={togglePopup}
-          />
+          <CSSTransition
+            in={footerAnimateStarted}
+            timeout={350}
+            classNames="footer"
+            unmountOnExit
+          >
+            <div>
+              <Dots activePage={activePage} isHidden={dotsHidden} />
+
+              <Footer
+                popupVisibleBlock={popupVisibleBlock}
+                togglePopup={togglePopup}
+              />
+            </div>
+          </CSSTransition>
         </div>
       </div>
     );

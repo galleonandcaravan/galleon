@@ -55,3 +55,39 @@
     min-height: 0;
   }
 }
+
+.header-enter {
+  opacity: 0;
+}
+
+.header-enter-active {
+  opacity: 1;
+  transition: opacity 350ms;
+}
+
+.header-exit {
+  opacity: 1;
+}
+
+.header-exit-active {
+  opacity: 0;
+  transition: opacity 350ms;
+}
+
+.footer-enter {
+  opacity: 0;
+}
+
+.footer-enter-active {
+  opacity: 1;
+  transition: opacity 350ms;
+}
+
+.footer-exit {
+  opacity: 1;
+}
+
+.footer-exit-active {
+  opacity: 0;
+  transition: opacity 350ms;
+}
