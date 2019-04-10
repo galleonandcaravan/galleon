@@ -108,9 +108,22 @@
   margin-top: -7px;
 }
 
+@media screen and (min-width: 1700px) {
+  .gcLine__logo-transform {
+    width: 300px;
+    animation: 2s logo-big-desktop ease-in-out forwards;
+    width: 512px;
+    margin-left: -98px;
+  }
+
+  .gcLine_animated {
+    width: 700px;
+  }
+}
+
 @media screen and (max-width: 1023px) {
   .gcLine {
-    margin-top: 80px;
+    margin-top: 120px;
     left: 50%;
     right: auto;
     transform: translate(-50%, 0px);
@@ -189,6 +202,59 @@
   }
 }
 
+@keyframes logo-big-desktop {
+  0% {
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
+    left: 50%;
+    opacity: 1;
+    margin-left: 0;
+  }
+
+  25% {
+    width: 0;
+    transform: translate(-50%, -50%) rotate(-60deg);
+    height: 0;
+    left: 50%;
+    margin-left: 0;
+    opacity: 1;
+  }
+
+  45% {
+    width: 80px;
+    height: 80px;
+    transform: translate(-50%, -50%) rotate(-30deg);
+    border-radius: 0;
+    left: 50%;
+    opacity: 1;
+    margin-left: 0;
+  }
+
+  65% {
+    width: 80px;
+    height: 80px;
+    transform: translate(-50%, -50%) rotate(0deg);
+    border-radius: 0;
+    left: 50%;
+    opacity: 1;
+    margin-left: 0;
+  }
+
+  80% {
+    opacity: 1;
+    height: 7px;
+    margin-left: 0;
+  }
+
+  100% {
+    width: 512px;
+    left: 100%;
+    transform: translate(-100%, -50%);
+    margin-left: -98px;
+  }
+}
+
 @keyframes logo-tablet {
   0% {
     width: 80px;
@@ -231,7 +297,6 @@
     height: 0px;
   }
 }
-
 
 @keyframes logo-hidden {
   0% {

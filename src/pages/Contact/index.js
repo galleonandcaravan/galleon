@@ -7,8 +7,8 @@ import './styles.css';
 const Contact = ({ switcherImagesVisible }) => (
   <div className="contact" id="page-contact">
     <MainContent
-      title="Contact <b>us</b>"
-      text="If you have a foreign exchange requirement<br class='desktop' /> above £1m per annum, say <br class='desktop' /><br class='desktop' />hello@galleonandcaravan.com"
+      title="Contact us"
+      text="If you have a foreign exchange requirement<br class='desktop' /> above £1m per annum, say <br class='desktop' /><br class='desktop' /><span class='main-content__email'>hello@galleonandcaravan.com</span>"
     />
     <ImagesSwitcher
       imageTopClassName="contact__image-top"

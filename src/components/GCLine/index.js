@@ -51,7 +51,7 @@ class GCLine extends Component {
           this.gcLineCenter.current.style.transition = 'none';
           this.gcLineCenter.current.style.opacity = '1';
         }
-      }, !isMobile() ? 3000 : 0)
+      }, !isMobile() ? 630 : 0)
     }, 1400);
     this.setLineAndImagesPosition(this.currentLinePositionY, true);
   }
@@ -100,8 +100,11 @@ class GCLine extends Component {
       this.clientHeight = document.body.clientHeight;
       this.clientWidth = document.body.clientWidth;
       this.isTablet = isTablet();
+      this.imagesSwitcherHeight = document.querySelector('.js-images-switcher').offsetHeight;
+      this.getDOMNodes();
       this.getGCLineMarginTop();
       this.resetPosition();
+      this.setLineAndImagesPosition(this.nextLinePosY, true);
     }
     this.prevWindowWidth = window.innerWidth;
   };
@@ -273,8 +276,8 @@ class GCLine extends Component {
       20;
 
     if (isTablet()) {
-      imageTopHeight = posY - (clientHeight - 400) / 2 + 15;
-      imageBottomHeight = 400 - imageTopHeight;
+      imageTopHeight = posY - (clientHeight - this.imagesSwitcherHeight) / 2 + 15;
+      imageBottomHeight = this.imagesSwitcherHeight - imageTopHeight;
     }
 
     // Set styles

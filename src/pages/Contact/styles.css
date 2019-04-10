@@ -1,0 +1,9 @@
+#page-contact .main-content {
+  margin-top: -4.5rem;
+}
+
+@media screen and (max-width: 1023px) {
+  #page-contact .main-content {
+    margin-top: 0;
+  }
+}

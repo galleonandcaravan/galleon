@@ -58,15 +58,23 @@
   bottom: 0;
 }
 
+@media screen and (min-width: 1700px) {
+  .images-switcher {
+    width: 500px;
+    right: 105px;
+  }
+}
+
 @media screen and (max-width: 1023px) {
   .images-switcher {
-    width: 37rem;
+    width: 50rem;
     right: auto;
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
-    height: 400px;
+    height: 50vh;
     top: 50%;
-    margin-top: 100px;
+    margin-top: 140px;
+    max-width: 450px;
   }
 }
 
@@ -74,6 +82,7 @@
   .images-switcher-container {
     position: relative;
     padding: 10rem 0 5rem 0;
+    margin-right: -20px;
   }
 
   .images-switcher {
@@ -87,6 +96,7 @@
     transform: none;
     opacity: 1 !important;
     margin-top: 30px;
+    max-width: none;
   }
 
   .images-switcher__image-bottom,
