@@ -1,5 +1,5 @@
 {
-  "main.css": "/galleon/static/css/main.7cd751f6.chunk.css",
+  "main.css": "/galleon/static/css/main.a6929f7e.chunk.css",
   "main.js": "/galleon/static/js/main.01006c92.chunk.js",
   "main.js.map": "/galleon/static/js/main.01006c92.chunk.js.map",
   "runtime~main.js": "/galleon/static/js/runtime~main.e48db09e.js",
@@ -7,9 +7,9 @@
   "static/js/2.1d674332.chunk.js": "/galleon/static/js/2.1d674332.chunk.js",
   "static/js/2.1d674332.chunk.js.map": "/galleon/static/js/2.1d674332.chunk.js.map",
   "index.html": "/galleon/index.html",
-  "precache-manifest.011dc8d13e384ec2d7954ad83f53715c.js": "/galleon/precache-manifest.011dc8d13e384ec2d7954ad83f53715c.js",
+  "precache-manifest.c781bac76afd9d7bd64a0aac9de15a16.js": "/galleon/precache-manifest.c781bac76afd9d7bd64a0aac9de15a16.js",
   "service-worker.js": "/galleon/service-worker.js",
-  "static/css/main.7cd751f6.chunk.css.map": "/galleon/static/css/main.7cd751f6.chunk.css.map",
+  "static/css/main.a6929f7e.chunk.css.map": "/galleon/static/css/main.a6929f7e.chunk.css.map",
   "static/media/fonts.css": "/galleon/static/media/NocturneSerif-Light.9ef3466c.woff",
   "static/media/bg-1.png": "/galleon/static/media/bg-1.d960f423.png",
   "static/media/bg-2.png": "/galleon/static/media/bg-2.d3ef9291.png",
