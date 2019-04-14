@@ -6,7 +6,7 @@ import Header from '../Header';
 import Footer from '../Footer';
 import GCLine from '../GCLine';
 import Dots from '../Dots';
-import { isDesktop, isMobile } from '../../utils/media';
+import { isMobile } from '../../utils/media';
 import './styles.css';
 
 class Layout extends Component {
@@ -71,7 +71,6 @@ class Layout extends Component {
       gcLineHidden,
       dotsHidden
     } = this.props;
-
     const { pageMounted, headerAnimateStarted, footerAnimateStarted } = this.state;
 
     return (
@@ -89,9 +88,9 @@ class Layout extends Component {
               togglePopup={togglePopup}
             />
           </CSSTransition>
-          {!isMobile() && (
-            <GCLine activePage={activePage} isHidden={gcLineHidden} />
-          )}
+
+          <GCLine activePage={activePage} isHidden={gcLineHidden} />
+
           <div
             className={cn('layout-page', {
               'layout-page_mounted': pageMounted

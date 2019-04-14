@@ -128,7 +128,7 @@
     top: auto;
     transform: none;
     height: auto;
-    padding-top: 25rem;
+    padding-top: calc(60px + 6rem);
   }
 
   .main-content__top {
@@ -145,7 +145,7 @@
     bottom: auto;
     left: auto;
     width: 100%;
-    padding-top: 8rem;
+    padding-top: 66px;
     right: auto;
   }
 
@@ -153,17 +153,18 @@
     position: relative;
     bottom: auto;
     left: auto;
-    font-size: 8rem;
+    font-size: 6.4rem;
     margin-bottom: 0;
-    opacity: 1 !important;
   }
 
   .main-content__text {
     position: relative;
     left: auto;
     top: auto;
-    font-size: 3rem;
-    padding-top: 8.5rem;
-    opacity: 1 !important;
+    font-size: 1.8rem;
+  }
+
+  .main-content__email {
+    font-size: 2.2rem;
   }
 }

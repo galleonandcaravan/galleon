@@ -13,8 +13,8 @@
 }
 
 .gcLine_hidden {
-  opacity: 0;
-  transition: all 0.5s ease;
+  opacity: 0 !important;
+  transition: all 0.5s ease !important;
 }
 
 .gcLine__c {
@@ -150,6 +150,37 @@
     animation: 2s logo-tablet ease-in-out forwards;
     opacity: 0;
     height: 0;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .gcLine {
+    top: auto;
+    margin: 0;
+    bottom: calc(40px + 14rem);
+  }
+
+  .gcLine__logo-transform {
+    animation: none;
+    display: none !important;
+  }
+
+  .gcLine__logo {
+    animation: none;
+    display: none !important;
+  }
+
+  .gcLine__c,
+  .gcLine__g {
+    width: 40px;
+  }
+
+  .gcLine__c {
+    margin-left: 1rem;
+  }
+
+  .gcLine__line {
+    height: 5px;
   }
 }
 

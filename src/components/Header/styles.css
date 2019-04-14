@@ -124,14 +124,9 @@
 
 @media screen and (max-width: 720px) {
   .header__container {
-    height: 55px;
-  }
-}
-
-@media screen and (max-width: 720px) {
-  .header__container {
     position: absolute;
-    top: 12rem;
+    height: auto;
+    top: 16px;
   }
 
   .header-logo {
@@ -141,6 +136,6 @@
   .header-logo_mobile {
     display: block;
     max-width: 300px;
-    width: 30rem;
+    width: 20rem;
   }
 }

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import cn from 'classnames';
 import PropTypes from 'prop-types';
 import logo from './images/logo.png';
-import logoMobile from './images/logo-mobile.png';
 import { HEADER_AUTH_LINKS, PAGES } from '../../constants';
 import HeaderMobile from '../HeaderMobile';
 import './styles.css';
@@ -46,7 +45,7 @@ class Header extends Component {
               window.location.hash = '';
             }}
           />
-          <img className="header-logo_mobile" src={logoMobile} alt="" />
+          <img className="header-logo_mobile" src={logo} alt="" />
 
           <ul className="header-menu">
             <li

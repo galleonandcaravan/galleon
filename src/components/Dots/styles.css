@@ -57,7 +57,10 @@
 
 @media screen and (max-width: 720px) {
   .dots {
-    bottom: 6rem;
+    bottom: 37px;
+    right: 0;
+    text-align: right;
+    transform: none;
   }
 
   .dots__item {

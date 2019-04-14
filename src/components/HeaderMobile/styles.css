@@ -102,9 +102,12 @@
   width: 100%;
   max-width: 365px;
   padding-top: 40px;
+  padding-bottom: 40px;
+  box-sizing: border-box;
   padding-left: 50px;
   background-color: rgba(0, 0, 0, 1);
   z-index: 10;
+  overflow-y: auto;
 }
 
 .header-mobile-menu__item {
@@ -209,4 +212,28 @@
   color: #828181;
   padding-right: 50px;
   max-width: 400px;
+}
+
+@media screen and (max-width: 720px) {
+  .header-mobile__hamburger {
+    top: 15px;
+    height: 20px;
+  }
+
+  .header-mobile-layout__in {
+    width: 80vw;
+  }
+
+  .header-mobile-menu__item,
+  .header-mobile-auth__item,
+  .header-mobile-additional__item {
+    font-size: 26px;
+    margin-bottom: 16px;
+  }
+
+  .header-mobile-menu__item:last-child,
+  .header-mobile-auth__item:last-child,
+  .header-mobile-additional__item:last-child {
+    margin-bottom: 0;
+  }
 }

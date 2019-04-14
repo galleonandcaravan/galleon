@@ -6,11 +6,11 @@ import './styles.css';
 
 const Dots = ({ activePage, isHidden }) => (
   <ul className={cn('dots', { dots_hidden: isHidden })}>
-    {Object.keys(PAGES).map(pageKey => (
+    {Object.keys(PAGES).map((pageKey, index) => (
       <li
         key={pageKey}
         className={cn('dots__item', {
-          dots__item_active: activePage === PAGES[pageKey]
+          dots__item_active: (activePage === PAGES[pageKey]) || (index === 0 && !activePage)
         })}
       >
         <a href={`#${PAGES[pageKey]}`} />

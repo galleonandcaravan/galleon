@@ -9,7 +9,7 @@ import Contact from '../pages/Contact';
 import Layout from '../components/Layout';
 import { PAGES, PAGES_IMAGES } from '../constants';
 import ModalPrivacy from '../components/ModalPrivacy';
-import { isDesktop, isMobile } from '../utils/media';
+import { isDesktop } from '../utils/media';
 import './styles/app.css';
 import './styles/fonts.css';
 
@@ -84,18 +84,8 @@ class App extends Component {
       const nextPage = this.getPage().toUpperCase();
       const nextPageImages = PAGES_IMAGES[nextPage];
 
-      if (window.animateStep === 1 && !isDesktop()) {
-        this.fadeContent()
-      }
-
       if (window.animateStep === 4) {
-        if (isDesktop()) {
-          this.fadeContent();
-        } else {
-          window.disableMouseWheel = false;
-          window.disableLinks = false;
-          window.animateStep = 0;
-        }
+        this.fadeContent();
       }
 
       if (window.animateStep === 2) {
@@ -149,11 +139,10 @@ class App extends Component {
     setTimeout(() => {
       this.contentTitleDOMNodes[pageIndex].style.opacity = '1';
       this.contentTextDOMNodes[pageIndex].style.opacity = '1';
-      if (isDesktop()) {
-        window.animateStep = 5; // Change step of aniamtion
-        window.disableMouseWheel = false;
-        window.disableLinks = false;
-      }
+
+      window.animateStep = 5; // Change step of aniamtion
+      window.disableMouseWheel = false;
+      window.disableLinks = false;
     }, 500)
   }
 
@@ -268,24 +257,17 @@ class App extends Component {
       popupVisibleBlock: ''
     });
 
-    if (isMobile()) {
-      this.setMobileImages();
-    }
     this.prevPage = this.getPage();
     this.disableLinks();
     this.disableMouseWheel();
   };
 
   disableLinks = () => {
-    if (!isMobile()) {
-      window.disableLinks = true;
-    }
+    window.disableLinks = true;
   };
 
   disableMouseWheel = () => {
-    if (!isMobile()) {
-      window.disableMouseWheel = true;
-    }
+    window.disableMouseWheel = true;
   };
 
   render() {

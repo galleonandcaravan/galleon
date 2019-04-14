@@ -57,6 +57,36 @@
   flex: 1 1 70%;
 }
 
+.modal-privacy__text ul,
+.modal-privacy__text li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.modal-privacy__text li {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.modal-privacy__text-space {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.modal-privacy__break-big {
+  display: block;
+  font-size: 20px;
+}
+
+.modal-privacy__text li:last-child {
+  margin-bottom: 0;
+}
+
+.modal-privacy__text a {
+  color: white;
+}
+
 .modal-privacy__close {
   position: absolute;
   right: 35px;
@@ -146,6 +176,7 @@
     right: 20px;
   }
 
+
   .modal-privacy::-webkit-scrollbar {
     width: 3px;
     background-color: white;
@@ -170,7 +201,7 @@
   }
 
   .modal-privacy__container {
-    padding: 20px;
+    padding: 20px 0px;
   }
 
   .modal-privacy__title {

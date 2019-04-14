@@ -14,7 +14,7 @@ const MainContent = ({ title, text }) => (
     </div>
 
     <div className="main-content__bottom">
-      <span
+      <div
         className="main-content__text js-content-text"
         dangerouslySetInnerHTML={{
           __html: text,

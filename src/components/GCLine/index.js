@@ -5,7 +5,6 @@ import { GC_LINE_MARGIN_TOP } from './constants';
 import gImage from './images/g.png';
 import cImage from './images/c.png';
 import { isTablet, isMobile } from '../../utils/media';
-import logo from './images/logo.svg';
 import './styles.css';
 
 class GCLine extends Component {
@@ -52,7 +51,7 @@ class GCLine extends Component {
           this.gcLineCenter.current.style.opacity = '1';
         }
       }, !isMobile() ? 630 : 0)
-    }, 1400);
+    }, !isMobile() ? 1400 : 0);
     this.setLineAndImagesPosition(this.currentLinePositionY, true);
   }
 
@@ -100,6 +99,7 @@ class GCLine extends Component {
       this.clientHeight = document.body.clientHeight;
       this.clientWidth = document.body.clientWidth;
       this.isTablet = isTablet();
+      this.isMobile = isMobile();
       this.imagesSwitcherHeight = document.querySelector('.js-images-switcher').offsetHeight;
       this.getDOMNodes();
       this.getGCLineMarginTop();
@@ -142,6 +142,15 @@ class GCLine extends Component {
     };
   };
 
+  getMinimumMobilePaddings = () => {
+    return {
+      minimumMobilePaddingTop:
+        (this.clientHeight / 100) * 33,
+      minimumMobilePaddingBottom:
+        (this.clientHeight / 100) * 35
+    };
+  };
+
   getScreenLinePaddings = () => {
     // Get screen paddings for line
     const {
@@ -152,12 +161,21 @@ class GCLine extends Component {
       minimumTabletPaddingTop,
       minimumTabletPaddingBottom
     } = this.getMinimumTabletPaddings();
-    const screenLinePaddingTop = this.isTablet
+    const {
+      minimumMobilePaddingTop,
+      minimumMobilePaddingBottom
+    } = this.getMinimumMobilePaddings();
+    let screenLinePaddingTop = this.isTablet
       ? minimumTabletPaddingTop
       : minimumDesktopPaddingTop;
-    const screenLinePaddingBottom = this.isTablet
+    let screenLinePaddingBottom = this.isTablet
       ? minimumTabletPaddingBottom
       : minimumDesktopPaddingBottom;
+
+    if (this.isMobile) {
+      screenLinePaddingTop = minimumMobilePaddingTop
+      screenLinePaddingBottom = minimumMobilePaddingBottom
+    }
 
     return {
       screenLinePaddingTop,
@@ -169,6 +187,9 @@ class GCLine extends Component {
     let gcLineMarginTop = GC_LINE_MARGIN_TOP.DEFAULT;
     if (isTablet()) {
       gcLineMarginTop = GC_LINE_MARGIN_TOP.TABLET;
+    }
+    if (isMobile()) {
+      gcLineMarginTop = GC_LINE_MARGIN_TOP.MOBILE;
     }
     this.gcLineMarginTop = gcLineMarginTop;
   };
@@ -275,7 +296,7 @@ class GCLine extends Component {
       clientHeight15Percent -
       20;
 
-    if (isTablet()) {
+    if (isTablet() || isMobile()) {
       imageTopHeight = posY - (clientHeight - this.imagesSwitcherHeight) / 2 + 15;
       imageBottomHeight = this.imagesSwitcherHeight - imageTopHeight;
     }
@@ -318,13 +339,16 @@ class GCLine extends Component {
           <img src={cImage} className="gcLine__c" alt="" />
         </div>
 
-        <img
+        <svg
           className={cn('gcLine__logo', {
             hidden: animateTransformStop
           })}
-          src={logo}
-          alt=""
-        />
+          viewBox="0 0 42 41"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+         <path d="M23.1668 20.9262H31.4284L36.1031 25.4971L41.601 20.1213L36.1031 14.7456L31.4284 19.3164H23.1668L29.635 12.992H36.2501V5.37392H28.4589V11.8421L21.9908 18.1665V8.50738C23.9606 8.13367 25.4601 6.43757 25.4601 4.36777C25.4601 2.03923 23.5196 0.170654 21.1676 0.170654C18.8155 0.170654 16.8751 2.06798 16.8751 4.36777C16.8751 6.40883 18.3745 8.10492 20.3443 8.50738V18.1665L13.9938 11.9571C15.111 10.3185 14.9346 8.07617 13.4646 6.6388C11.7887 5.00021 9.05448 5.00021 7.37864 6.6388C5.7028 8.2774 5.7028 10.9509 7.37864 12.5895C8.84867 14.0269 11.1419 14.1994 12.8178 13.107L19.1683 19.3164H9.28968C8.90747 17.3903 7.17285 15.9242 5.056 15.9242C2.67454 15.9242 0.763489 17.8215 0.763489 20.1213C0.763489 22.4498 2.70394 24.3184 5.056 24.3184C7.14345 24.3184 8.87807 22.8523 9.28968 20.9262H19.1683L12.8178 27.1357C11.1419 26.0433 8.84867 26.2157 7.37864 27.6531C5.7028 29.2917 5.7028 31.9652 7.37864 33.6038C9.05448 35.2424 11.7887 35.2424 13.4646 33.6038C14.9346 32.1664 15.111 29.9241 13.9938 28.2855L20.3443 22.0761V30.1541L15.6696 34.6962L21.1676 40.072L26.6655 34.6962L21.9908 30.1254V22.0474L28.4589 28.3718V34.8399H36.2501V27.2219H29.635L23.1668 20.9262Z" fill="#FFFFFF" />
+        </svg>
 
         <div
           className={cn('gcLine__logo-transform', {
