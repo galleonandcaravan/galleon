@@ -44,7 +44,7 @@ body {
 
 
 body {
-  background-image: url('../images/gradient.jpg');
+  background: linear-gradient(60deg, rgb(20, 20, 20) 45%, rgb(41, 72, 77) 100%);
   background-repeat: no-repeat;
   background-position: top right;
   background-size: cover;
@@ -113,7 +113,7 @@ ul {
 
 @media screen and (max-width: 720px) {
   body {
-    background-image: url('../images/gradient-mobile.jpg');
+    background: linear-gradient(59deg, rgb(21, 25, 26) 0%, rgb(43, 72, 76) 100%);
     background-repeat: no-repeat;
     background-position: top right;
     background-color: black;
