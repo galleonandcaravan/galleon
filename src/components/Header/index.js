@@ -43,6 +43,9 @@ class Header extends Component {
             alt=""
             onClick={() => {
               window.location.hash = '';
+              if (popupVisibleBlock) {
+                togglePopup();
+              }
             }}
           />
           <img className="header-logo_mobile" src={logo} alt="" />

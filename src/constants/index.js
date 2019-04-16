@@ -41,6 +41,6 @@ export const PAGES_IMAGES = {
 }
 
 export const HEADER_AUTH_LINKS = {
-  REGISTER: '/',
-  LOGIN: '/',
+  REGISTER: 'https://apply.ebury.com/sfdc/servlet/SmartForm.html?formCode=CS-Galcar-GB-EN',
+  LOGIN: 'https://ogalcar.ebury.com/',
 }
