@@ -326,6 +326,8 @@ class App extends Component {
     this.disableLinks();
     this.disableMouseWheel();
     this.disableKeyboardNav();
+  
+    this.fadeContent();
   };
   
   disableLinks = () => {
