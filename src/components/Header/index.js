@@ -44,6 +44,7 @@ class Header extends Component {
             onClick={() => {
               window.location.hash = '';
               if (popupVisibleBlock) {
+                window.skipAnimation = true;
                 togglePopup();
               }
             }}

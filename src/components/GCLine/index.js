@@ -59,7 +59,7 @@ class GCLine extends Component {
     const { activePage } = this.props;
 
     // Page changed, start pageChanged method in next tick
-    if (prevProps.activePage !== activePage) {
+    if (prevProps.activePage !== activePage && !window.skipAnimation) {
       setTimeout(() => {
         this.pageChanged();
       }, 0);
