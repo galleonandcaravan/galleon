@@ -4,7 +4,7 @@ self.__precacheManifest = [
     "url": "/static/media/NocturneSerif-Light.3515f27e.woff2"
   },
   {
-    "revision": "00b83b35ce1419b76d41",
+    "revision": "e6e71b6fc78650cc6627",
     "url": "/static/css/main.cf03c70a.chunk.css"
   },
   {
@@ -72,8 +72,8 @@ self.__precacheManifest = [
     "url": "/static/media/gradient-mobile.0956fa59.jpg"
   },
   {
-    "revision": "00b83b35ce1419b76d41",
-    "url": "/static/js/main.f46abcf2.chunk.js"
+    "revision": "e6e71b6fc78650cc6627",
+    "url": "/static/js/main.fa96ebe9.chunk.js"
   },
   {
     "revision": "9ef3466cddccdedf805c5a54e0a098ea",
@@ -144,7 +144,7 @@ self.__precacheManifest = [
     "url": "/static/media/390FD6_1_0.60a20ab3.ttf"
   },
   {
-    "revision": "bc8537dd5c33a5fa9a0aa9a451d96a91",
+    "revision": "83f96fe1cef1b3901ddf10a49ad9a4bf",
     "url": "/index.html"
   }
 ];
