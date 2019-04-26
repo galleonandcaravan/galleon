@@ -27,7 +27,6 @@ class App extends Component {
     this.switcherImagesVisible = {};
     this.switcherImagesVisible = {};
     window.animationTimers = [];
-    window.location.hash = '';
   }
   
   componentDidMount() {
@@ -49,6 +48,7 @@ class App extends Component {
     
     setTimeout(() => {
       window.addEventListener('hashchange', this.handleChangePage);
+      this.handleChangePage();
     }, 100);
     setTimeout(() => {
       window.disableMouseWheel = false;
