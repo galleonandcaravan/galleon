@@ -38,9 +38,11 @@ class GCLine extends Component {
     window.addEventListener('resize', this.handleResize);
   
     this.imagesSwitcher = document.querySelector('.js-images-switcher');
-    
-    this.gcLineCenter.current.addEventListener('mousedown', this.mouseDown, false);
-    window.addEventListener('mouseup', this.mouseUp, false);
+  
+    if (!isMobile()) {
+      this.gcLineCenter.current.addEventListener('mousedown', this.mouseDown, false);
+      window.addEventListener('mouseup', this.mouseUp, false);
+    }
 
     this.handleResize();
     this.getDOMNodes();
