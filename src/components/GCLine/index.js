@@ -1,12 +1,17 @@
 /* eslint-disable prefer-const */
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import throttle from 'lodash.throttle';
 import cn from 'classnames';
 import { GC_LINE_MARGIN_TOP } from './constants';
 import gImage from './images/g.png';
 import cImage from './images/c.png';
-import { isTablet, isMobile } from '../../utils/media';
+import {isTablet, isMobile, isDesktop} from '../../utils/media';
 import './styles.css';
+
+const UP_ARROW_KEY_NUM = 38;
+const DOWN_ARROW_KEY_NUM = 40;
+const ARROW_LINE_MOVE_SPEED = 20;
 
 class GCLine extends Component {
   static propTypes = {
@@ -22,6 +27,7 @@ class GCLine extends Component {
   state = {
     mountAnimateStarted: false,
     animateTransformStop: false,
+    linePosY: 0
   };
 
   constructor(props) {
@@ -42,6 +48,9 @@ class GCLine extends Component {
     if (!isMobile()) {
       this.gcLineCenter.current.addEventListener('mousedown', this.mouseDown, false);
       window.addEventListener('mouseup', this.mouseUp, false);
+  
+      this.handleKeyboardNavThrottle = throttle(this.handleKeyboardNav, 100);
+      window.addEventListener('keydown', this.handleKeyboardNavThrottle);
     }
 
     this.handleResize();
@@ -321,6 +330,10 @@ class GCLine extends Component {
     }
 
     this.prevImageTopHeight = imageTopHeight;
+  
+    this.setState({
+      linePosY: linePosY
+    });
   };
   
   mouseDown = () => {
@@ -341,6 +354,35 @@ class GCLine extends Component {
   
     line.classList.add('gcLine_dragged');
     this.setLineAndImagesPosition(linePosition, false);
+  };
+  
+  moveLineUp = () => {
+    let linePosition = this.state.linePosY - ARROW_LINE_MOVE_SPEED;
+    this.setLineAndImagesPosition(linePosition, false);
+  };
+  
+  moveLineDown = () => {
+    let linePosition = this.state.linePosY + ARROW_LINE_MOVE_SPEED;
+    this.setLineAndImagesPosition(linePosition, false);
+  };
+  
+  handleKeyboardNav = event => {
+    const { popupVisibleBlock } = this.state;
+    const keyNum = event.keyCode;
+    
+    if (
+      !window.disableLinks &&
+      !window.disableKeyboardNav &&
+      !popupVisibleBlock &&
+      isDesktop() &&
+      ( keyNum === UP_ARROW_KEY_NUM || keyNum === DOWN_ARROW_KEY_NUM )
+    ) {
+      if (keyNum === UP_ARROW_KEY_NUM) {
+        this.moveLineUp();
+      } else if (keyNum === DOWN_ARROW_KEY_NUM) {
+        this.moveLineDown();
+      }
+    }
   };
   
   render() {
