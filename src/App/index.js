@@ -15,6 +15,8 @@ import './styles/fonts.css';
 
 const PAGES_COUNT = 5;
 const LOAD_NEXT_SWITCH_IMAGES_INTERVAL = 150;
+const LEFT_ARROW_KEY_NUM = 37;
+const RIGHT_ARROW_KEY_NUM = 39;
 
 class App extends Component {
   constructor(props) {
@@ -271,11 +273,11 @@ class App extends Component {
       !window.disableKeyboardNav &&
       !popupVisibleBlock &&
       isDesktop() &&
-      ( keyNum === 40 || keyNum === 38 )
+      ( keyNum === RIGHT_ARROW_KEY_NUM || keyNum === LEFT_ARROW_KEY_NUM )
     ) {
-      if (keyNum === 40) {
+      if (keyNum === RIGHT_ARROW_KEY_NUM) {
         this.goToNextPage();
-      } else if (keyNum === 38) {
+      } else if (keyNum === LEFT_ARROW_KEY_NUM) {
         this.goToPrevPage();
       }
     }

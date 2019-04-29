@@ -28,6 +28,7 @@
 
 .gcLine_animated {
   transform: translate(0, -30px);
+  user-select: none;
 }
 
 .gcLine_animated  .gcLine__c {
@@ -79,6 +80,18 @@
   right: 0;
   transform: translateY(-50%);
   outline: none;
+}
+
+.gcLine__line:hover {
+  cursor: grab;
+}
+
+.gcLine__line:active {
+  cursor: grabbing;
+}
+
+.gcLine_dragged {
+  cursor: grabbing;
 }
 
 .gcLine__logo,

@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
@@ -35,6 +36,11 @@ class GCLine extends Component {
     this.nextLinePosY = this.currentLinePositionY;
     this.clientHeight = document.body.clientHeight;
     window.addEventListener('resize', this.handleResize);
+  
+    this.imagesSwitcher = document.querySelector('.js-images-switcher');
+    
+    this.gcLineCenter.current.addEventListener('mousedown', this.mouseDown, false);
+    window.addEventListener('mouseup', this.mouseUp, false);
 
     this.handleResize();
     this.getDOMNodes();
@@ -100,7 +106,7 @@ class GCLine extends Component {
       this.clientWidth = document.body.clientWidth;
       this.isTablet = isTablet();
       this.isMobile = isMobile();
-      this.imagesSwitcherHeight = document.querySelector('.js-images-switcher').offsetHeight;
+      this.imagesSwitcherHeight = this.imagesSwitcher.offsetHeight;
       this.getDOMNodes();
       this.getGCLineMarginTop();
       this.resetPosition();
@@ -213,7 +219,7 @@ class GCLine extends Component {
 
     if (this.nextLinePosY && this.currentLinePositionY) {
       let lineYChanged = false;
-
+  
       // To top
       if (window.animateStep === 2) {
         if (this.currentLinePositionY > this.nextLinePosY) {
@@ -314,7 +320,27 @@ class GCLine extends Component {
 
     this.prevImageTopHeight = imageTopHeight;
   };
+  
+  mouseDown = () => {
+    window.addEventListener('mousemove', this.lineMove, true);
+    clearInterval(this.checkLinePositionInterval);
+  };
 
+  mouseUp = () => {
+    this.gcLineCenter.current.classList.remove('gcLine_dragged');
+    window.removeEventListener('mousemove', this.lineMove, true);
+    this.checkLinePositionInterval = setInterval(this.checkLinePosition, 10);
+  };
+
+  lineMove = (event) => {
+    const line = this.gcLineCenter.current;
+    let lineOffsetTop = event.clientY - this.imagesSwitcher.offsetTop - (line.clientHeight / 2);
+    let linePosition = lineOffsetTop + this.imagesSwitcher.clientHeight / 2 + line.clientHeight * 2;
+  
+    line.classList.add('gcLine_dragged');
+    this.setLineAndImagesPosition(linePosition, false);
+  };
+  
   render() {
     const { isHidden } = this.props;
     const { mountAnimateStarted, animateTransformStop } = this.state;
