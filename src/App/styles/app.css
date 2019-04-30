@@ -122,6 +122,7 @@ ul {
 
   .layout {
     width: 100vw;
+    touch-action: none;
   }
 
   .layout, .layout__container, .section > div {
