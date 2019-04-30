@@ -9,7 +9,7 @@ import Contact from '../pages/Contact';
 import Layout from '../components/Layout';
 import { PAGES, PAGES_IMAGES } from '../constants';
 import ModalPrivacy from '../components/ModalPrivacy';
-import { isDesktop } from '../utils/media';
+import { isDesktop, isMobile, isTablet } from '../utils/media';
 import './styles/app.css';
 import './styles/fonts.css';
 
@@ -34,16 +34,17 @@ class App extends Component {
   }
   
   componentDidMount() {
-    this.handleMouseWheelThrottle = throttle(this.handleMouseWheel, 100);
-    window.addEventListener('mousewheel', this.handleMouseWheelThrottle);
-    
-    this.handleKeyboardNavThrottle = throttle(this.handleKeyboardNav, 100);
-    window.addEventListener('keydown', this.handleKeyboardNavThrottle);
-    
-    this.layoutPage = document.querySelector('.js-layout-page');
+    if (isTablet() || isMobile()) {
+      this.layoutPage = document.querySelector('.js-layout-page');
+      this.layoutPage.addEventListener('touchstart', this.handleTouchStart, false);
+      this.layoutPage.addEventListener('touchmove', this.handleTouchMove, false);
+    } else {
+      this.handleMouseWheelThrottle = throttle(this.handleMouseWheel, 100);
+      window.addEventListener('mousewheel', this.handleMouseWheelThrottle);
   
-    this.layoutPage.addEventListener('touchstart', this.handleTouchStart, false);
-    this.layoutPage.addEventListener('touchmove', this.handleTouchMove, false);
+      this.handleKeyboardNavThrottle = throttle(this.handleKeyboardNav, 100);
+      window.addEventListener('keydown', this.handleKeyboardNavThrottle);
+    }
     
     this.getDOMNodes();
     this.contentTitleDOMNodes[0].style.opacity = '1';
@@ -69,11 +70,14 @@ class App extends Component {
   
   componentWillUnmount() {
     window.removeEventListener('hashchange', this.handleChangePage);
-    window.removeEventListener('mousewheel', this.handleMouseWheelThrottle);
-    window.removeEventListener('keydown', this.handleKeyboardNavThrottle);
-    
-    this.layoutPage.removeEventListener('touchstart', this.handleTouchStart, false);
-    this.layoutPage.removeEventListener('touchmove', this.handleTouchMove, false);
+  
+    if (isTablet() || isMobile()) {
+      this.layoutPage.removeEventListener('touchstart', this.handleTouchStart, false);
+      this.layoutPage.removeEventListener('touchmove', this.handleTouchMove, false);
+    } else {
+      window.removeEventListener('mousewheel', this.handleMouseWheelThrottle);
+      window.removeEventListener('keydown', this.handleKeyboardNavThrottle);
+    }
     
     clearInterval(this.checkAnimateStepInterval);
   }
@@ -82,7 +86,7 @@ class App extends Component {
     const nextPage = this.getPage().toUpperCase();
     const nextPageImages = PAGES_IMAGES[nextPage];
     
-    this.imagesSWitcherDOMNodes.forEach((imagesSwitcherDOM, index) => {
+    this.imagesSWitcherDOMNodes.forEach((imagesSwitcherDOM) => {
       const imageTopDOM = imagesSwitcherDOM.querySelector(
         '.js-image-switcher-top > div'
       );

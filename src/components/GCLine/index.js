@@ -26,15 +26,15 @@ class GCLine extends Component {
 
   state = {
     mountAnimateStarted: false,
-    animateTransformStop: false,
-    linePosY: 0,
-    checkLinePositionPaused: false
+    animateTransformStop: false
   };
 
   constructor(props) {
     super(props);
     this.dragStarted = false;
     this.gcLineCenter = React.createRef();
+    this.linePosY = 0;
+    this.checkLinePositionPaused = false;
   }
 
   componentDidMount() {
@@ -46,15 +46,17 @@ class GCLine extends Component {
   
     this.imagesSwitcher = document.querySelector('.js-images-switcher');
   
-    this.gcLineCenter.current.addEventListener('touchstart', this.mouseDown, false);
-    this.gcLineCenter.current.addEventListener('touchend', this.mouseUp, false);
+    if (isTablet() || isMobile()) {
+      this.gcLineCenter.current.addEventListener('touchstart', this.mouseDown, false);
+      this.gcLineCenter.current.addEventListener('touchend', this.mouseUp, false);
+    } else {
+      this.gcLineCenter.current.addEventListener('mousedown', this.mouseDown, false);
+      window.addEventListener('mouseup', this.mouseUp, false);
+  
+      this.handleKeyboardNavThrottle = throttle(this.handleKeyboardNav, 100);
+      window.addEventListener('keydown', this.handleKeyboardNavThrottle);
+    }
     
-    this.gcLineCenter.current.addEventListener('mousedown', this.mouseDown, false);
-    window.addEventListener('mouseup', this.mouseUp, false);
-
-    this.handleKeyboardNavThrottle = throttle(this.handleKeyboardNav, 100);
-    window.addEventListener('keydown', this.handleKeyboardNavThrottle);
-
     this.handleResize();
     this.getDOMNodes();
 
@@ -103,11 +105,6 @@ class GCLine extends Component {
     this.nextLinePosY = this.clientHeight - screenLinePaddingBottom;
     this.startMove = true;
     this.prevImageTopHeight = 0;
-  };
-
-  checkAnimate = () => {
-    if (window.animateStep === 2) {
-    }
   };
 
   handleResize = () => {
@@ -230,7 +227,7 @@ class GCLine extends Component {
   checkLinePosition = () => {
     const { screenLinePaddingTop } = this.getScreenLinePaddings();
     
-    if (this.state.checkLinePositionPaused) {
+    if (this.checkLinePositionPaused) {
       return false;
     }
 
@@ -336,21 +333,17 @@ class GCLine extends Component {
     }
 
     this.prevImageTopHeight = imageTopHeight;
-  
-    this.setState({
-      linePosY: linePosY
-    });
+    this.linePosY = linePosY;
   };
   
-  mouseDown = () => {
+  mouseDown = (event) => {
     if (isTablet() || isMobile()) {
+      event.preventDefault();
       this.gcLineCenter.current.addEventListener('touchmove', this.lineMove, false);
     } else {
       window.addEventListener('mousemove', this.lineMove, true);
     }
-    this.setState({
-      checkLinePositionPaused: true
-    });
+    this.checkLinePositionPaused = true;
   };
 
   mouseUp = () => {
@@ -360,17 +353,19 @@ class GCLine extends Component {
       this.gcLineCenter.current.classList.remove('gcLine_dragged');
       window.removeEventListener('mousemove', this.lineMove, true);
     }
-    this.setState({
-      checkLinePositionPaused: false
-    });
+    this.checkLinePositionPaused = false;
   };
-
+  
+  getTouches = (event) => {
+    return event.touches || event.originalEvent.touches;
+  };
+  
   lineMove = (event) => {
     const line = this.gcLineCenter.current;
     let movePositionTop = event.clientY;
   
     if (isTablet() || isMobile()) {
-      let touches = event.changedTouches;
+      let touches = this.getTouches(event);
   
       if (touches.length > 0) {
         movePositionTop = touches[0].clientY;
@@ -393,12 +388,12 @@ class GCLine extends Component {
   };
   
   moveLineUp = () => {
-    let linePosition = this.state.linePosY - ARROW_LINE_MOVE_SPEED;
+    let linePosition = this.linePosY - ARROW_LINE_MOVE_SPEED;
     this.setLineAndImagesPosition(linePosition, false);
   };
   
   moveLineDown = () => {
-    let linePosition = this.state.linePosY + ARROW_LINE_MOVE_SPEED;
+    let linePosition = this.linePosY + ARROW_LINE_MOVE_SPEED;
     this.setLineAndImagesPosition(linePosition, false);
   };
   

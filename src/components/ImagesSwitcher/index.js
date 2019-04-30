@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import cn from 'classnames';
 import PropTypes from 'prop-types';
-import { isMobile } from '../../utils/media';
 import './styles.css';
 
 class ImagesSwitcher extends Component {
