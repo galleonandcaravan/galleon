@@ -46,16 +46,14 @@ class GCLine extends Component {
   
     this.imagesSwitcher = document.querySelector('.js-images-switcher');
   
-    if (isTablet() || isMobile()) {
-      this.gcLineCenter.current.addEventListener('touchstart', this.mouseDown, false);
-      window.addEventListener('touchend', this.mouseUp, false);
-    } else {
-      this.gcLineCenter.current.addEventListener('mousedown', this.mouseDown, false);
-      window.addEventListener('mouseup', this.mouseUp, false);
-  
-      this.handleKeyboardNavThrottle = throttle(this.handleKeyboardNav, 100);
-      window.addEventListener('keydown', this.handleKeyboardNavThrottle);
-    }
+    this.gcLineCenter.current.addEventListener('touchstart', this.mouseDown, false);
+    this.gcLineCenter.current.addEventListener('touchend', this.mouseUp, false);
+    
+    this.gcLineCenter.current.addEventListener('mousedown', this.mouseDown, false);
+    window.addEventListener('mouseup', this.mouseUp, false);
+
+    this.handleKeyboardNavThrottle = throttle(this.handleKeyboardNav, 100);
+    window.addEventListener('keydown', this.handleKeyboardNavThrottle);
 
     this.handleResize();
     this.getDOMNodes();
@@ -346,7 +344,7 @@ class GCLine extends Component {
   
   mouseDown = () => {
     if (isTablet() || isMobile()) {
-      window.addEventListener('touchmove', this.lineMove, false);
+      this.gcLineCenter.current.addEventListener('touchmove', this.lineMove, false);
     } else {
       window.addEventListener('mousemove', this.lineMove, true);
     }
@@ -357,7 +355,7 @@ class GCLine extends Component {
 
   mouseUp = () => {
     if (isTablet() || isMobile()) {
-      window.removeEventListener('touchmove', this.lineMove, false);
+      this.gcLineCenter.current.removeEventListener('touchmove', this.lineMove, false);
     } else {
       this.gcLineCenter.current.classList.remove('gcLine_dragged');
       window.removeEventListener('mousemove', this.lineMove, true);

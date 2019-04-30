@@ -29,6 +29,8 @@ class App extends Component {
     this.switcherImagesVisible = {};
     this.switcherImagesVisible = {};
     window.animationTimers = [];
+    this.xDown = null;
+    this.yDown = null;
   }
   
   componentDidMount() {
@@ -37,6 +39,11 @@ class App extends Component {
     
     this.handleKeyboardNavThrottle = throttle(this.handleKeyboardNav, 100);
     window.addEventListener('keydown', this.handleKeyboardNavThrottle);
+    
+    this.layoutPage = document.querySelector('.js-layout-page');
+  
+    this.layoutPage.addEventListener('touchstart', this.handleTouchStart, false);
+    this.layoutPage.addEventListener('touchmove', this.handleTouchMove, false);
     
     this.getDOMNodes();
     this.contentTitleDOMNodes[0].style.opacity = '1';
@@ -64,6 +71,10 @@ class App extends Component {
     window.removeEventListener('hashchange', this.handleChangePage);
     window.removeEventListener('mousewheel', this.handleMouseWheelThrottle);
     window.removeEventListener('keydown', this.handleKeyboardNavThrottle);
+    
+    this.layoutPage.removeEventListener('touchstart', this.handleTouchStart, false);
+    this.layoutPage.removeEventListener('touchmove', this.handleTouchMove, false);
+    
     clearInterval(this.checkAnimateStepInterval);
   }
   
@@ -344,6 +355,41 @@ class App extends Component {
     window.disableKeyboardNav = true;
   };
   
+  getTouches = (evt) => {
+    return evt.touches || evt.originalEvent.touches;
+  };
+  
+  handleTouchStart = (evt) => {
+    const firstTouch = this.getTouches(evt)[0];
+    this.xDown = firstTouch.clientX;
+    this.yDown = firstTouch.clientY;
+  };
+  
+  handleTouchMove = (evt) => {
+    if ( ! this.xDown || ! this.yDown ) {
+      return;
+    }
+    
+    const xUp = evt.touches[0].clientX;
+    const yUp = evt.touches[0].clientY;
+  
+    const xDiff = this.xDown - xUp;
+    const yDiff = this.yDown - yUp;
+    
+    if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {
+      if ( xDiff > 0 ) {
+        this.goToNextPage();
+      } else {
+        this.goToPrevPage();
+      }
+    } else {
+      return false;
+    }
+    
+    this.xDown = null;
+    this.yDown = null;
+  };
+  
   render() {
     const { page, popupVisibleBlock } = this.state;
     const aboutPageIsActive = page === PAGES.ABOUT || !page;
@@ -362,7 +408,7 @@ class App extends Component {
         gcLineHidden={!!popupVisibleBlock}
         dotsHidden={!!popupVisibleBlock}
       >
-        <div className={cn('page', { page_hidden: popupVisibleBlock })}>
+        <div className={cn('page js-layout-page', { page_hidden: popupVisibleBlock })}>
           <div className={cn('section', { section_active: aboutPageIsActive })}>
             <About switcherImagesVisible />
           </div>
