@@ -290,10 +290,15 @@ class App extends Component {
       isDesktop() &&
       ( keyNum === RIGHT_ARROW_KEY_NUM || keyNum === LEFT_ARROW_KEY_NUM )
     ) {
-      if (keyNum === RIGHT_ARROW_KEY_NUM) {
-        this.goToNextPage();
-      } else if (keyNum === LEFT_ARROW_KEY_NUM) {
-        this.goToPrevPage();
+      switch (keyNum) {
+        case RIGHT_ARROW_KEY_NUM:
+          this.goToNextPage();
+          break;
+        case LEFT_ARROW_KEY_NUM:
+          this.goToPrevPage();
+          break;
+        default:
+          return;
       }
     }
   };

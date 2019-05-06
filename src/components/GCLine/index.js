@@ -11,7 +11,8 @@ import './styles.css';
 
 const UP_ARROW_KEY_NUM = 38;
 const DOWN_ARROW_KEY_NUM = 40;
-const ARROW_LINE_MOVE_SPEED = 20;
+const ARROW_LINE_MOVE_AMOUNT = 2;
+const ARROW_LINE_MOVE_SPEED = 10;
 
 class GCLine extends Component {
   static propTypes = {
@@ -35,6 +36,8 @@ class GCLine extends Component {
     this.gcLineCenter = React.createRef();
     this.linePosY = 0;
     this.checkLinePositionPaused = false;
+    this.moveLineIntervalUp = false;
+    this.moveLineIntervalDown = false;
   }
 
   componentDidMount() {
@@ -53,8 +56,8 @@ class GCLine extends Component {
       this.gcLineCenter.current.addEventListener('mousedown', this.mouseDown, false);
       window.addEventListener('mouseup', this.mouseUp, false);
   
-      this.handleKeyboardNavThrottle = throttle(this.handleKeyboardNav, 100);
-      window.addEventListener('keydown', this.handleKeyboardNavThrottle);
+      document.addEventListener('keydown', this.handleKeyDownNav);
+      document.addEventListener('keyup', this.handleKeyUpNav);
     }
     
     this.handleResize();
@@ -66,7 +69,8 @@ class GCLine extends Component {
       setTimeout(() => {
         this.setState({
           animateTransformStop: true,
-        })
+        });
+        
         if (this.gcLineCenter.current) {
           this.gcLineCenter.current.style.transition = 'none';
           this.gcLineCenter.current.style.opacity = '1';
@@ -330,10 +334,11 @@ class GCLine extends Component {
       this.imagesBottomDOM.forEach(imageBottomDOM => {
         imageBottomDOM.style.height = `${imageBottomHeight}px`;
       });
+  
+      this.linePosY = linePosY;
     }
 
     this.prevImageTopHeight = imageTopHeight;
-    this.linePosY = linePosY;
   };
   
   mouseDown = (event) => {
@@ -388,18 +393,29 @@ class GCLine extends Component {
   };
   
   moveLineUp = () => {
-    let linePosition = this.linePosY - ARROW_LINE_MOVE_SPEED;
-    this.setLineAndImagesPosition(linePosition, false);
+    if (this.moveLineIntervalUp) {
+      return;
+    }
+    this.moveLineIntervalUp = setInterval(() => {
+      let linePosition = this.linePosY - ARROW_LINE_MOVE_AMOUNT;
+      this.setLineAndImagesPosition(linePosition, false);
+    }, ARROW_LINE_MOVE_SPEED);
   };
   
   moveLineDown = () => {
-    let linePosition = this.linePosY + ARROW_LINE_MOVE_SPEED;
-    this.setLineAndImagesPosition(linePosition, false);
+    if (this.moveLineIntervalDown) {
+      return;
+    }
+    
+    this.moveLineIntervalDown = setInterval(() => {
+      let linePosition = this.linePosY + ARROW_LINE_MOVE_AMOUNT;
+      this.setLineAndImagesPosition(linePosition, false);
+    }, ARROW_LINE_MOVE_SPEED);
   };
   
-  handleKeyboardNav = event => {
+  handleKeyDownNav = event => {
     const { popupVisibleBlock } = this.state;
-    const keyNum = event.keyCode;
+    const keyNum = event.keyCode ? event.keyCode : event.which;
     
     if (
       !window.disableLinks &&
@@ -408,11 +424,35 @@ class GCLine extends Component {
       isDesktop() &&
       ( keyNum === UP_ARROW_KEY_NUM || keyNum === DOWN_ARROW_KEY_NUM )
     ) {
-      if (keyNum === UP_ARROW_KEY_NUM) {
-        this.moveLineUp();
-      } else if (keyNum === DOWN_ARROW_KEY_NUM) {
-        this.moveLineDown();
+      switch (keyNum) {
+        case UP_ARROW_KEY_NUM:
+          this.moveLineUp();
+          break;
+        case DOWN_ARROW_KEY_NUM:
+          this.moveLineDown();
+          break;
+        default:
+          return;
       }
+    }
+    
+    event.preventDefault();
+  };
+  
+  handleKeyUpNav = event => {
+    const keyNum = event.keyCode ? event.keyCode : event.which;
+  
+    switch (keyNum) {
+      case UP_ARROW_KEY_NUM:
+        clearInterval(this.moveLineIntervalUp);
+        this.moveLineIntervalUp = false;
+        break;
+      case DOWN_ARROW_KEY_NUM:
+        clearInterval(this.moveLineIntervalDown);
+        this.moveLineIntervalDown = false;
+        break;
+      default:
+        return;
     }
   };
   
