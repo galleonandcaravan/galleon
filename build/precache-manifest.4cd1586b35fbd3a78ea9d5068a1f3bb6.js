@@ -1,10 +1,10 @@
 self.__precacheManifest = [
   {
-    "revision": "550daf09dd13c94099eb",
-    "url": "/galleon/static/css/main.028e8f85.chunk.css"
+    "revision": "a8cdc3ce7c6eb03642ce",
+    "url": "/galleon/static/css/main.be37bb53.chunk.css"
   },
   {
-    "revision": "550daf09dd13c94099eb",
+    "revision": "a8cdc3ce7c6eb03642ce",
     "url": "/galleon/static/js/main.25035985.chunk.js"
   },
   {
@@ -72,12 +72,20 @@ self.__precacheManifest = [
     "url": "/galleon/static/media/gradient-mobile.0956fa59.jpg"
   },
   {
+    "revision": "e95d4986339f94723be4fe5047744723",
+    "url": "/galleon/static/media/390FD6_0_0.e95d4986.woff2"
+  },
+  {
     "revision": "9a84eddf8c11602ec5220d798257b153",
     "url": "/galleon/static/media/390FD6_0_0.9a84eddf.eot"
   },
   {
-    "revision": "e95d4986339f94723be4fe5047744723",
-    "url": "/galleon/static/media/390FD6_0_0.e95d4986.woff2"
+    "revision": "3515f27ef128c3cbc6e0b44b2dd68964",
+    "url": "/galleon/static/media/NocturneSerif-Light.3515f27e.woff2"
+  },
+  {
+    "revision": "a37d460b985283f2bcff1efe68e17eaa",
+    "url": "/galleon/static/media/390FD6_0_0.a37d460b.ttf"
   },
   {
     "revision": "4478beff6552736d8a7e8131f727b791",
@@ -88,24 +96,16 @@ self.__precacheManifest = [
     "url": "/galleon/static/media/NocturneSerif-Light.9ef3466c.woff"
   },
   {
-    "revision": "a37d460b985283f2bcff1efe68e17eaa",
-    "url": "/galleon/static/media/390FD6_0_0.a37d460b.ttf"
-  },
-  {
-    "revision": "3515f27ef128c3cbc6e0b44b2dd68964",
-    "url": "/galleon/static/media/NocturneSerif-Light.3515f27e.woff2"
-  },
-  {
     "revision": "e5e03e6deca5cd3954734f9c1696ed2d",
     "url": "/galleon/static/media/390FD6_3_0.e5e03e6d.eot"
   },
   {
-    "revision": "3f2485f2ee098466eeb1bc042455796d",
-    "url": "/galleon/static/media/390FD6_3_0.3f2485f2.woff2"
-  },
-  {
     "revision": "7c9712413c163a6f968d4d60b2e25b21",
     "url": "/galleon/static/media/390FD6_3_0.7c971241.woff"
+  },
+  {
+    "revision": "3f2485f2ee098466eeb1bc042455796d",
+    "url": "/galleon/static/media/390FD6_3_0.3f2485f2.woff2"
   },
   {
     "revision": "c37d4466fe0ac9a6c658633761014120",
@@ -144,7 +144,7 @@ self.__precacheManifest = [
     "url": "/galleon/static/media/390FD6_1_0.60a20ab3.ttf"
   },
   {
-    "revision": "5d4268d9e423bb11f951ecc493193055",
+    "revision": "92c342125704b9b4cdeb3f8281d14aca",
     "url": "/galleon/index.html"
   }
 ];
