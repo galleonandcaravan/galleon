@@ -27,6 +27,10 @@
   right: 0;
 }
 
+.contact .main-content__bottom {
+  bottom: 2.4rem;
+}
+
 .main-content__title {
   position: absolute;
   bottom: 0;
@@ -112,6 +116,10 @@
     left: 0;
     right: auto;
     width: 50%;
+  }
+  
+  .contact .main-content__bottom {
+    bottom: auto;
   }
 
   .main-content__title {
