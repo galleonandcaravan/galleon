@@ -8,7 +8,7 @@ const Story = ({ switcherImagesVisible }) => (
   <div className="story" id="page-story">
     <MainContent
       title="We have <br class='desktop' /><b>a&nbsp;story</b>"
-      text="Many moons ago, galleons and caravans<br class='desktop' />helped facilitate the exchange of goods,<br class='desktop' />services and ideas."
+      text="Many moons ago, galleons and caravans <br class='desktop' />helped facilitate the exchange of goods, <br class='desktop' />services and ideas."
     />
     <ImagesSwitcher
       imageTopClassName="story__image-top"
