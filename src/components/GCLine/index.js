@@ -6,7 +6,7 @@ import cn from 'classnames';
 import { GC_LINE_MARGIN_TOP } from './constants';
 import gImage from './images/g.png';
 import cImage from './images/c.png';
-import {isTablet, isMobile, isDesktop} from '../../utils/media';
+import {isTablet, isMobile, isDesktop, isIOS} from '../../utils/media';
 import './styles.css';
 
 const UP_ARROW_KEY_NUM = 38;
@@ -50,10 +50,14 @@ class GCLine extends Component {
     this.imagesSwitcher = document.querySelector('.js-images-switcher');
   
     if (isTablet() || isMobile()) {
-      this.gcLineCenter.current.addEventListener('touchstart', this.mouseDown, false);
-      this.gcLineCenter.current.addEventListener('touchend', this.mouseUp, false);
+      if (this.gcLineCenter.current) {
+        this.gcLineCenter.current.addEventListener('touchstart', this.mouseDown, false);
+        this.gcLineCenter.current.addEventListener('touchend', this.mouseUp, false);
+      }
     } else {
-      this.gcLineCenter.current.addEventListener('mousedown', this.mouseDown, false);
+      if (this.gcLineCenter.current) {
+        this.gcLineCenter.current.addEventListener('mousedown', this.mouseDown, false);
+      }
       window.addEventListener('mouseup', this.mouseUp, false);
   
       document.addEventListener('keydown', this.handleKeyDownNav);
@@ -75,8 +79,9 @@ class GCLine extends Component {
           this.gcLineCenter.current.style.transition = 'none';
           this.gcLineCenter.current.style.opacity = '1';
         }
-      }, !isMobile() ? 630 : 0)
-    }, !isMobile() ? 1400 : 0);
+      }, !isMobile() ? 630 : isIOS() ? 315 : 0);
+    }, !isMobile() ? 1400 : isIOS() ? 700 : 0);
+    
     this.setLineAndImagesPosition(this.currentLinePositionY, true);
   }
 
@@ -245,6 +250,7 @@ class GCLine extends Component {
           const speed = this.getMoveSpeed(
             this.currentLinePositionY - this.nextLinePosY
           );
+          
           this.currentLinePositionY += -speed;
           lineYChanged = true;
         } else {
@@ -260,6 +266,7 @@ class GCLine extends Component {
           const speed = this.getMoveSpeed(
             this.nextLinePosY - this.currentLinePositionY
           );
+          
           this.currentLinePositionY += speed;
           lineYChanged = true;
         } else {
@@ -282,7 +289,12 @@ class GCLine extends Component {
   };
 
   getMoveSpeed = diffY => {
-    const speed = Math.ceil(diffY / 30);
+    let speed = Math.ceil(diffY / 30);
+  
+    if (isIOS()) {
+      speed += 10;
+    }
+    
     return speed < 2 ? 2 : speed;
   };
 
@@ -383,6 +395,11 @@ class GCLine extends Component {
     if (isTablet() || isMobile()) {
       lineOffsetTop = movePositionTop - (line.clientHeight / 2);
       linePosition = lineOffsetTop;
+  
+      if (isIOS()) {
+        linePosition += 60;
+      }
+      
     } else {
       lineOffsetTop = movePositionTop - this.imagesSwitcher.offsetTop - (line.clientHeight / 2);
       linePosition = lineOffsetTop + this.imagesSwitcher.clientHeight / 2 + line.clientHeight * 2;

@@ -12,3 +12,7 @@ export const isMobile = () => {
 export const isDesktop = () => {
   return window.matchMedia('(min-width: 1024px)').matches;
 };
+
+export const isIOS = () => {
+  return !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
+};
