@@ -298,7 +298,7 @@ class App extends Component {
           this.goToPrevPage();
           break;
         default:
-          return;
+          
       }
     }
   };

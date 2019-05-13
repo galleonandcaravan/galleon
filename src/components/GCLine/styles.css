@@ -56,8 +56,11 @@
   outline: none;
   will-change: transform;
   flex: 0 1 auto;
-  transition: all 1.5s ease;
   opacity: 0;
+}
+
+.gcLine__center.gcLine__center--active {
+  opacity: 1;
 }
 
 .gcLine_animated .gcLine__center {

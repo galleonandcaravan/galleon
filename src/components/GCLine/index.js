@@ -1,18 +1,17 @@
 /* eslint-disable prefer-const */
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import throttle from 'lodash.throttle';
 import cn from 'classnames';
 import { GC_LINE_MARGIN_TOP } from './constants';
 import gImage from './images/g.png';
 import cImage from './images/c.png';
-import {isTablet, isMobile, isDesktop, isIOS} from '../../utils/media';
+import {isTablet, isMobile, isDesktop} from '../../utils/media';
 import './styles.css';
 
 const UP_ARROW_KEY_NUM = 38;
 const DOWN_ARROW_KEY_NUM = 40;
 const ARROW_LINE_MOVE_AMOUNT = 2;
-const ARROW_LINE_MOVE_SPEED = 10;
+const LINE_MOVE_SPEED = 10;
 
 class GCLine extends Component {
   static propTypes = {
@@ -76,11 +75,10 @@ class GCLine extends Component {
         });
         
         if (this.gcLineCenter.current) {
-          this.gcLineCenter.current.style.transition = 'none';
-          this.gcLineCenter.current.style.opacity = '1';
+          this.gcLineCenter.current.classList.add('gcLine__center--active');
         }
-      }, !isMobile() ? 630 : isIOS() ? 315 : 0);
-    }, !isMobile() ? 1400 : isIOS() ? 700 : 0);
+      }, !isMobile() ? 630 : 0);
+    }, !isMobile() ? 1400 : 0);
     
     this.setLineAndImagesPosition(this.currentLinePositionY, true);
   }
@@ -237,7 +235,7 @@ class GCLine extends Component {
     const { screenLinePaddingTop } = this.getScreenLinePaddings();
     
     if (this.checkLinePositionPaused) {
-      return false;
+      return;
     }
 
     if (this.nextLinePosY && this.currentLinePositionY) {
@@ -289,12 +287,7 @@ class GCLine extends Component {
   };
 
   getMoveSpeed = diffY => {
-    let speed = Math.ceil(diffY / 30);
-  
-    if (isIOS()) {
-      speed += 10;
-    }
-    
+    const speed = Math.ceil(diffY / 30);
     return speed < 2 ? 2 : speed;
   };
 
@@ -322,15 +315,8 @@ class GCLine extends Component {
     const centerLinePosY = posY - halfScreenHeight;
 
     // Calc height of images containers
-    let imageTopHeight =
-      posY + 12 + this.gcLineMarginTop - clientHeight15Percent + 20;
-    let imageBottomHeight =
-      clientHeight -
-      12 -
-      posY -
-      this.gcLineMarginTop -
-      clientHeight15Percent -
-      20;
+    let imageTopHeight = posY + 12 + this.gcLineMarginTop - clientHeight15Percent + 20;
+    let imageBottomHeight = clientHeight - 12 - posY - this.gcLineMarginTop - clientHeight15Percent - 20;
 
     if (isTablet() || isMobile()) {
       imageTopHeight = posY - (clientHeight - this.imagesSwitcherHeight) / 2 + 15;
@@ -359,8 +345,8 @@ class GCLine extends Component {
       this.gcLineCenter.current.addEventListener('touchmove', this.lineMove, false);
     } else {
       window.addEventListener('mousemove', this.lineMove, true);
+      this.checkLinePositionPaused = true;
     }
-    this.checkLinePositionPaused = true;
   };
 
   mouseUp = () => {
@@ -369,8 +355,8 @@ class GCLine extends Component {
     } else {
       this.gcLineCenter.current.classList.remove('gcLine_dragged');
       window.removeEventListener('mousemove', this.lineMove, true);
+      this.checkLinePositionPaused = false;
     }
-    this.checkLinePositionPaused = false;
   };
   
   getTouches = (event) => {
@@ -383,27 +369,13 @@ class GCLine extends Component {
   
     if (isTablet() || isMobile()) {
       let touches = this.getTouches(event);
-  
+      
       if (touches.length > 0) {
         movePositionTop = touches[0].clientY;
       }
     }
   
-    let lineOffsetTop = 0;
-    let linePosition = 0;
-  
-    if (isTablet() || isMobile()) {
-      lineOffsetTop = movePositionTop - (line.clientHeight / 2);
-      linePosition = lineOffsetTop;
-  
-      if (isIOS()) {
-        linePosition += 60;
-      }
-      
-    } else {
-      lineOffsetTop = movePositionTop - this.imagesSwitcher.offsetTop - (line.clientHeight / 2);
-      linePosition = lineOffsetTop + this.imagesSwitcher.clientHeight / 2 + line.clientHeight * 2;
-    }
+    const linePosition = movePositionTop;
   
     line.classList.add('gcLine_dragged');
     this.setLineAndImagesPosition(linePosition, false);
@@ -416,7 +388,7 @@ class GCLine extends Component {
     this.moveLineIntervalUp = setInterval(() => {
       let linePosition = this.linePosY - ARROW_LINE_MOVE_AMOUNT;
       this.setLineAndImagesPosition(linePosition, false);
-    }, ARROW_LINE_MOVE_SPEED);
+    }, LINE_MOVE_SPEED);
   };
   
   moveLineDown = () => {
@@ -427,7 +399,7 @@ class GCLine extends Component {
     this.moveLineIntervalDown = setInterval(() => {
       let linePosition = this.linePosY + ARROW_LINE_MOVE_AMOUNT;
       this.setLineAndImagesPosition(linePosition, false);
-    }, ARROW_LINE_MOVE_SPEED);
+    }, LINE_MOVE_SPEED);
   };
   
   handleKeyDownNav = event => {
@@ -469,7 +441,7 @@ class GCLine extends Component {
         this.moveLineIntervalDown = false;
         break;
       default:
-        return;
+      
     }
   };
   
