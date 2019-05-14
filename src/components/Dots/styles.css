@@ -3,7 +3,7 @@
   bottom: 45px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 5;
+  z-index: 12;
   transition: opacity 500ms;
 }
 
@@ -45,7 +45,7 @@
     bottom: 58px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 5;
+    z-index: 12;
   }
 
   .dots__item {
