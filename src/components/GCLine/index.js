@@ -40,11 +40,11 @@ class GCLine extends Component {
   }
 
   componentDidMount() {
-    this.checkLinePositionInterval = setInterval(this.checkLinePosition, 10);
     this.currentLinePositionY = this.getCenterLinePosY();
     this.nextLinePosY = this.currentLinePositionY;
     this.clientHeight = document.body.clientHeight;
     window.addEventListener('resize', this.handleResize);
+    window.addEventListener('hashchange', this.handleChangePage);
   
     this.imagesSwitcher = document.querySelector('.js-images-switcher');
   
@@ -96,6 +96,14 @@ class GCLine extends Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleResize);
+    window.removeEventListener('hashchange', this.handleChangePage);
+    document.removeEventListener('keydown', this.handleKeyDownNav);
+    document.removeEventListener('keyup', this.handleKeyUpNav);
+    if (this.gcLineCenter.current) {
+      this.gcLineCenter.current.removeEventListener('mousedown', this.mouseDown, false);
+      this.gcLineCenter.current.removeEventListener('touchstart', this.mouseDown, false);
+      this.gcLineCenter.current.removeEventListener('touchend', this.mouseUp, false);
+    }
     clearInterval(this.checkLinePositionInterval);
   }
 
@@ -130,6 +138,14 @@ class GCLine extends Component {
       this.setLineAndImagesPosition(this.nextLinePosY, true);
     }
     this.prevWindowWidth = window.innerWidth;
+  };
+  
+  handleChangePage = () => {
+    if (this.checkLinePositionInterval) {
+      clearInterval(this.checkLinePositionInterval);
+    }
+    
+    this.checkLinePositionInterval = setInterval(this.checkLinePosition, 10);
   };
 
   startMountAnimate = () => {
@@ -233,6 +249,10 @@ class GCLine extends Component {
 
   checkLinePosition = () => {
     const { screenLinePaddingTop } = this.getScreenLinePaddings();
+    
+    if (!window.enableLineAnimation) {
+      clearInterval(this.checkLinePositionInterval);
+    }
     
     if (window.checkLinePositionPaused) {
       return;

@@ -29,11 +29,14 @@ class App extends Component {
     this.switcherImagesVisible = {};
     this.switcherImagesVisible = {};
     window.animationTimers = [];
+    window.enableLineAnimation = false;
     this.xDown = null;
     this.yDown = null;
   }
   
   componentDidMount() {
+    document.addEventListener('DOMContentLoaded', this.handleLoadingPage);
+    
     if (isTablet() || isMobile()) {
       this.layoutPage = document.querySelector('.js-layout-page');
       this.layoutPage.addEventListener('touchstart', this.handleTouchStart, false);
@@ -51,21 +54,17 @@ class App extends Component {
     this.contentTextDOMNodes[0].style.opacity = '1';
     this.imagesSWitcherDOMNodes[0].style.display = 'block';
     
-    this.prevPage = this.getPage();
     this.loadSwitcherImages();
     window.disableMouseWheel = true;
     window.disableKeyboardNav = true;
     
     setTimeout(() => {
       window.addEventListener('hashchange', this.handleChangePage);
-      this.handleChangePage();
     }, 100);
     setTimeout(() => {
       window.disableMouseWheel = false;
       window.disableKeyboardNav = false;
     }, 4500);
-    
-    this.checkAnimateStepInterval = setInterval(this.checkAnimateStep, 10);
   }
   
   componentWillUnmount() {
@@ -98,38 +97,42 @@ class App extends Component {
     });
   }
   
+  setPageImages = () => {
+    const page = this.getPage();
+    const pageIndex = this.getPageIndex(page);
+    const nextPage = this.getPage().toUpperCase();
+    const nextPageImages = PAGES_IMAGES[nextPage];
+  
+    this.imagesSWitcherDOMNodes[pageIndex].style.opacity = '0';
+  
+    this.imagesSWitcherDOMNodes.forEach((imagesSwitcherDOM, index) => {
+      const imageTopDOM = imagesSwitcherDOM.querySelector(
+        '.js-image-switcher-top > div'
+      );
+      const imageBottomDOM = imagesSwitcherDOM.querySelector(
+        '.js-image-switcher-bottom > div'
+      );
+    
+      imageTopDOM.style.backgroundImage = `url(${
+        nextPageImages.TOP
+        })`;
+      imageBottomDOM.style.backgroundImage = `url(${
+        nextPageImages.BOTTOM
+        })`;
+    
+      if (index !== pageIndex) {
+        imagesSwitcherDOM.style.opacity = '1';
+      }
+    });
+  };
+  
   checkAnimateStep = () => {
     if (window.checkLinePositionPaused) {
       return;
     }
     
     if (window.skipAnimation) {
-      const page = this.getPage();
-      const pageIndex = this.getPageIndex(page);
-      const nextPage = this.getPage().toUpperCase();
-      const nextPageImages = PAGES_IMAGES[nextPage];
-  
-      this.imagesSWitcherDOMNodes[pageIndex].style.opacity = '0';
-  
-      this.imagesSWitcherDOMNodes.forEach((imagesSwitcherDOM, index) => {
-        const imageTopDOM = imagesSwitcherDOM.querySelector(
-          '.js-image-switcher-top > div'
-        );
-        const imageBottomDOM = imagesSwitcherDOM.querySelector(
-          '.js-image-switcher-bottom > div'
-        );
-        
-        imageTopDOM.style.backgroundImage = `url(${
-          nextPageImages.TOP
-          })`;
-        imageBottomDOM.style.backgroundImage = `url(${
-          nextPageImages.BOTTOM
-          })`;
-    
-        if (index !== pageIndex) {
-          imagesSwitcherDOM.style.opacity = '1';
-        }
-      });
+      this.setPageImages();
     }
     
     if (window.animateStep !== this.prevAnimateStep) {
@@ -146,6 +149,9 @@ class App extends Component {
           window.disableMouseWheel = false;
           window.disableKeyboardNav = false;
           window.disableLinks = false;
+  
+          clearInterval(this.checkAnimateStepInterval);
+          window.enableLineAnimation = false;
         }, 300)
       }
       
@@ -336,11 +342,15 @@ class App extends Component {
   
   handleChangePage = () => {
     this.prevAnimateStep = 0;
-    const prevPageImageTopDOM = document.querySelector(
-      '.section_active .js-image-switcher-top > div'
-    );
-    this.prevPageImageTopBackgroundImage =
-      prevPageImageTopDOM.style.backgroundImage;
+    window.enableLineAnimation = true;
+    
+    if (this.checkAnimateStepInterval){
+      clearInterval(this.checkAnimateStepInterval);
+    }
+    this.checkAnimateStepInterval = setInterval(this.checkAnimateStep, 10);
+    
+    const prevPageImageTopDOM = document.querySelector('.section_active .js-image-switcher-top > div');
+    this.prevPageImageTopBackgroundImage = prevPageImageTopDOM.style.backgroundImage;
     const page = this.getPage();
     
     this.setState({
@@ -348,11 +358,26 @@ class App extends Component {
       popupVisibleBlock: ''
     });
     
-    this.prevPage = this.getPage();
     this.disableLinks();
     this.disableMouseWheel();
     this.disableKeyboardNav();
   
+    this.fadeContent();
+  };
+  
+  handleLoadingPage = () => {
+    this.prevAnimateStep = 0;
+    window.enableLineAnimation = true;
+    const page = this.getPage();
+    
+    console.log('!!! page: ', page)
+  
+    this.setState({
+      page,
+      popupVisibleBlock: ''
+    });
+  
+    this.setPageImages();
     this.fadeContent();
   };
   
