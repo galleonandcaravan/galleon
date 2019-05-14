@@ -99,6 +99,10 @@ class App extends Component {
   }
   
   checkAnimateStep = () => {
+    if (window.checkLinePositionPaused) {
+      return;
+    }
+    
     if (window.skipAnimation) {
       const page = this.getPage();
       const pageIndex = this.getPageIndex(page);
@@ -298,7 +302,7 @@ class App extends Component {
           this.goToPrevPage();
           break;
         default:
-          
+        
       }
     }
   };

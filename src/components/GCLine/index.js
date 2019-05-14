@@ -5,7 +5,7 @@ import cn from 'classnames';
 import { GC_LINE_MARGIN_TOP } from './constants';
 import gImage from './images/g.png';
 import cImage from './images/c.png';
-import {isTablet, isMobile, isDesktop} from '../../utils/media';
+import {isTablet, isMobile, isDesktop, isIOS} from '../../utils/media';
 import './styles.css';
 
 const UP_ARROW_KEY_NUM = 38;
@@ -34,7 +34,7 @@ class GCLine extends Component {
     this.dragStarted = false;
     this.gcLineCenter = React.createRef();
     this.linePosY = 0;
-    this.checkLinePositionPaused = false;
+    window.checkLinePositionPaused = false;
     this.moveLineIntervalUp = false;
     this.moveLineIntervalDown = false;
   }
@@ -234,7 +234,7 @@ class GCLine extends Component {
   checkLinePosition = () => {
     const { screenLinePaddingTop } = this.getScreenLinePaddings();
     
-    if (this.checkLinePositionPaused) {
+    if (window.checkLinePositionPaused) {
       return;
     }
 
@@ -345,8 +345,8 @@ class GCLine extends Component {
       this.gcLineCenter.current.addEventListener('touchmove', this.lineMove, false);
     } else {
       window.addEventListener('mousemove', this.lineMove, true);
-      this.checkLinePositionPaused = true;
     }
+    window.checkLinePositionPaused = true;
   };
 
   mouseUp = () => {
@@ -355,8 +355,8 @@ class GCLine extends Component {
     } else {
       this.gcLineCenter.current.classList.remove('gcLine_dragged');
       window.removeEventListener('mousemove', this.lineMove, true);
-      this.checkLinePositionPaused = false;
     }
+    window.checkLinePositionPaused = false;
   };
   
   getTouches = (event) => {
@@ -375,10 +375,12 @@ class GCLine extends Component {
       }
     }
   
-    const linePosition = movePositionTop;
+    if(window.scrollY > 0 && isIOS()) {
+      movePositionTop += window.scrollY / 3;
+    }
   
     line.classList.add('gcLine_dragged');
-    this.setLineAndImagesPosition(linePosition, false);
+    this.setLineAndImagesPosition(movePositionTop, false);
   };
   
   moveLineUp = () => {
