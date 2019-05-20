@@ -38,7 +38,7 @@ class Footer extends Component {
 
         <div className="footer-copyright">
           Galleon & Caravan is the trading name of Galcar Limited, a company registered in
-          England and Wales (no. 11656491) and whose registered office is at Flat 15, 1
+          England and Wales (no. 11656491) and whose registered office is at Unit 15, 1
           Bramshaw Road, London, E9 5BF. Galleon & Caravan's payment, foreign currency
           exchange services and e-money accounts are provided by Ebury Partners UK
           Limited. Ebury Partners UK Limited is authorised and regulated by the Financial
