@@ -255,7 +255,7 @@ class ModalPrivacy extends Component {
                 <span className="modal-privacy__title">Terms & Conditions</span>
 
                 <span className="modal-privacy__text">
-                  Galleon & Caravan is the trading name of Galcar Limited, a company registered in England and Wales (no. 11656491) and whose registered office is at Flat 15, 1 Bramshaw Road, London, E9 5BF. Galleon & Caravan's payment, foreign currency exchange services and e-money accounts are provided by Ebury Partners UK Limited. Ebury Partners UK Limited is authorised and regulated by the Financial Conduct Authority as an Electronic Money Institution (no. 900797).
+                  Galleon & Caravan is the trading name of Galcar Limited, a company registered in England and Wales (no. 11656491) and whose registered office is at Unit 15, 1 Bramshaw Road, London, E9 5BF. Galleon & Caravan's payment, foreign currency exchange services and e-money accounts are provided by Ebury Partners UK Limited. Ebury Partners UK Limited is authorised and regulated by the Financial Conduct Authority as an Electronic Money Institution (no. 900797).
                   <br /><br /><br />
                   <b>PART A: BACKGROUND</b>
                   <br /><br />
