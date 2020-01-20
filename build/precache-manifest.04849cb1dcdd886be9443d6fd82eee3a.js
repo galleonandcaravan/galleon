@@ -96,20 +96,20 @@ self.__precacheManifest = [
     "url": "/static/media/390FD6_3_0.3f2485f2.woff2"
   },
   {
-    "revision": "4612750acd225a28c3baec12fc39f27b",
-    "url": "/static/media/390FD6_2_0.4612750a.woff2"
-  },
-  {
     "revision": "a788f6ecc2bf373c486c0db59a6e1f4a",
     "url": "/static/media/390FD6_2_0.a788f6ec.eot"
   },
   {
-    "revision": "548142f9efdb76a88157f82b687e51a9",
-    "url": "/static/media/390FD6_1_0.548142f9.eot"
+    "revision": "4612750acd225a28c3baec12fc39f27b",
+    "url": "/static/media/390FD6_2_0.4612750a.woff2"
   },
   {
     "revision": "3e47231284442bcf863a5a5a86f26147",
     "url": "/static/media/390FD6_1_0.3e472312.woff2"
+  },
+  {
+    "revision": "548142f9efdb76a88157f82b687e51a9",
+    "url": "/static/media/390FD6_1_0.548142f9.eot"
   },
   {
     "revision": "4478beff6552736d8a7e8131f727b791",
