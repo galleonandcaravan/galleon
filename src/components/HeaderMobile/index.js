@@ -9,7 +9,6 @@ import './styles.css';
 class HeaderMobile extends Component {
   static propTypes = {
     activePage: PropTypes.string,
-    popupVisibleBlock: PropTypes.string.isRequired,
     togglePopup: PropTypes.func.isRequired,
   };
 
@@ -160,6 +159,7 @@ class HeaderMobile extends Component {
                 </ul>
 
                 <ul className="header-mobile-additional">
+                  {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
                   <li
                     className="header-mobile-additional__item"
                     onClick={() => this.openModal('privacy')}
@@ -167,6 +167,7 @@ class HeaderMobile extends Component {
                     Privacy
                   </li>
 
+                  {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
                   <li
                     className="header-mobile-additional__item"
                     onClick={() => this.openModal('security')}
@@ -174,6 +175,7 @@ class HeaderMobile extends Component {
                     Security
                   </li>
 
+                  {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
                   <li
                     className="header-mobile-additional__item"
                     onClick={() => this.openModal('terms')}
@@ -183,12 +185,10 @@ class HeaderMobile extends Component {
                 </ul>
 
                 <div className="header-mobile-copyright">
-                  Galleon & Caravan is the trading name of Galcar Limited, a company registered in
-                  England and Wales (no. 11656491) and whose registered office is at Flat 15, 1
-                  Bramshaw Road, London, E9 5BF. Galleon & Caravan's payment, foreign currency
-                  exchange services and e-money accounts are provided by Ebury Partners UK
-                  Limited. Ebury Partners UK Limited is authorised and regulated by the Financial
-                  Conduct Authority as an Electronic Money Institution (no. 900797).
+                  Galleon & Caravan, GC Lite & GC Pro are trading names of
+                  Galcar Limited, a company registered in England & Wales
+                  (no. 11656491) and whose registered office is at Unit 15, 1
+                  Bramshaw Road, London, E9 5BF.
                 </div>
               </div>
             </div>

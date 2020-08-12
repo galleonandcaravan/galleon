@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import cn from 'classnames';
 import PropTypes from 'prop-types';
-import logo from './images/logo.png';
+
 import { HEADER_AUTH_LINKS, PAGES } from '../../constants';
 import HeaderMobile from '../HeaderMobile';
+import logo from './images/logo.png';
+import iconGcLite from './images/icon-gc-lite.svg';
+import iconGcPro from './images/icon-gc-pro.svg';
+
 import './styles.css';
 
 class Header extends Component {
@@ -37,6 +41,7 @@ class Header extends Component {
     return (
       <div className="header">
         <div className="header__container">
+          {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
           <img
             className="header-logo"
             src={logo}
@@ -110,11 +115,15 @@ class Header extends Component {
 
           <ul className="header-auth">
             <li className="header-auth__item">
-              <a href={HEADER_AUTH_LINKS.REGISTER}>Register</a>
+              <a href={HEADER_AUTH_LINKS.REGISTER}>
+                <img src={iconGcLite} alt='galcarlite.com' />
+              </a>
             </li>
 
             <li className="header-auth__item">
-              <a href={HEADER_AUTH_LINKS.LOGIN}>Log In</a>
+              <a href={HEADER_AUTH_LINKS.LOGIN}>
+                <img src={iconGcPro} alt='galcarpro.com' />
+              </a>
             </li>
           </ul>
         </div>

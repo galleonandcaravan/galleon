@@ -41,6 +41,6 @@ export const PAGES_IMAGES = {
 }
 
 export const HEADER_AUTH_LINKS = {
-  REGISTER: 'https://apply.ebury.com/sfdc/servlet/SmartForm.html?formCode=currency-services&brand=GLR',
-  LOGIN: 'https://ogalcar.ebury.com/',
+  REGISTER: 'https://galcarlite.com',
+  LOGIN: 'https://galcarpro.com',
 }

@@ -35,7 +35,7 @@
   top: 1.5rem;
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: center;
   align-content: flex-end;
   z-index: 5;
 }
@@ -56,7 +56,7 @@
 }
 
 .header-auth__item a:hover {
-  border-bottom: 1px solid;
+  border-bottom: medium none;
 }
 
 .header-auth__item:last-child {
