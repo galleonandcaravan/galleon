@@ -108,7 +108,7 @@ class Header extends Component {
               })}
             >
               <a href={`#${PAGES.CONTACT}`} onClick={this.handleMenuItem}>
-                Contact us
+                Contact
               </a>
             </li>
           </ul>

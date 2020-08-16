@@ -370,8 +370,6 @@ class App extends Component {
     window.enableLineAnimation = true;
     const page = this.getPage();
 
-    console.log('!!! page: ', page)
-
     this.setState({
       page,
       popupVisibleBlock: ''

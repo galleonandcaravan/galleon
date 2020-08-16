@@ -4,6 +4,9 @@ import cn from 'classnames';
 import { CSSTransition } from 'react-transition-group';
 import { Portal } from 'react-portal';
 import { HEADER_AUTH_LINKS, PAGES } from '../../constants';
+import iconGcLite from './images/icon-gc-lite.svg';
+import iconGcPro from './images/icon-gc-pro.svg';
+
 import './styles.css';
 
 class HeaderMobile extends Component {
@@ -44,7 +47,7 @@ class HeaderMobile extends Component {
     const { togglePopup } = this.props;
     togglePopup(activeBlock);
     this.toggleMenuVisible();
-  }
+  };
 
   render() {
     const { activePage } = this.props;
@@ -67,6 +70,14 @@ class HeaderMobile extends Component {
                 className="header-mobile-layout__in"
                 onClick={event => event.stopPropagation()}
               >
+                <button
+                  className="header-mobile__close"
+                  onClick={this.toggleMenuVisible}
+                  type="button"
+                >
+                  <span />
+                </button>
+
                 <ul className="header-mobile-menu">
                   <li
                     className={cn('header-mobile-menu__item', {
@@ -78,7 +89,7 @@ class HeaderMobile extends Component {
                       href={`#${PAGES.ABOUT}`}
                       onClick={this.changePage}
                     >
-                      About us
+                      About
                     </a>
                   </li>
 
@@ -134,53 +145,21 @@ class HeaderMobile extends Component {
                       href={`#${PAGES.CONTACT}`}
                       onClick={this.changePage}
                     >
-                      Contact us
+                      Contact
                     </a>
                   </li>
                 </ul>
 
                 <ul className="header-mobile-auth">
                   <li className="header-mobile-auth__item">
-                    <a
-                      href={HEADER_AUTH_LINKS.REGISTER}
-                      onClick={this.toggleMenuVisible}
-                    >
-                      Register
+                    <a href={HEADER_AUTH_LINKS.LOGIN}>
+                      <img src={iconGcPro} alt='galcarpro.com' />
                     </a>
                   </li>
                   <li className="header-mobile-auth__item">
-                    <a
-                      href={HEADER_AUTH_LINKS.LOGIN}
-                      onClick={this.toggleMenuVisible}
-                    >
-                      Log In
+                    <a href={HEADER_AUTH_LINKS.REGISTER}>
+                      <img src={iconGcLite} alt='galcarlite.com' />
                     </a>
-                  </li>
-                </ul>
-
-                <ul className="header-mobile-additional">
-                  {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
-                  <li
-                    className="header-mobile-additional__item"
-                    onClick={() => this.openModal('privacy')}
-                  >
-                    Privacy
-                  </li>
-
-                  {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
-                  <li
-                    className="header-mobile-additional__item"
-                    onClick={() => this.openModal('security')}
-                  >
-                    Security
-                  </li>
-
-                  {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
-                  <li
-                    className="header-mobile-additional__item"
-                    onClick={() => this.openModal('terms')}
-                  >
-                    Terms & conditions
                   </li>
                 </ul>
 
@@ -199,7 +178,6 @@ class HeaderMobile extends Component {
           onClick={this.toggleMenuVisible}
           type="button"
         >
-          <span />
         </button>
 
       </div>
