@@ -32,7 +32,7 @@
   position: absolute;
   left: 0;
   right: 0;
-  top: 1.5rem;
+  top: 3rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -48,11 +48,8 @@
 .header-auth__item {
   text-transform: uppercase;
   margin-right: 3rem;
-  font-size: 1.5rem;
-  letter-spacing: 2px;
   display: inline-block;
   vertical-align: middle;
-  font-weight: 500;
 }
 
 .header-auth__item a:hover {
@@ -84,7 +81,7 @@
 
 .header-menu__item-active {
   font-style: italic;
-  color: #5e838a;
+  color: #66CCCC;
 }
 
 .header-menu__item-active a:hover {

@@ -64,7 +64,7 @@ class Header extends Component {
               })}
             >
               <a href={`#${PAGES.ABOUT}`} onClick={this.handleMenuItem}>
-                about us
+                About
               </a>
             </li>
 
@@ -75,7 +75,7 @@ class Header extends Component {
               })}
             >
               <a href={`#${PAGES.STORY}`} onClick={this.handleMenuItem}>
-                story
+                Story
               </a>
             </li>
 
@@ -86,7 +86,7 @@ class Header extends Component {
               })}
             >
               <a href={`#${PAGES.MISSION}`} onClick={this.handleMenuItem}>
-                mission
+                Mission
               </a>
             </li>
 
@@ -97,7 +97,7 @@ class Header extends Component {
               })}
             >
               <a href={`#${PAGES.EXPERTISE}`} onClick={this.handleMenuItem}>
-                expertise
+                Expertise
               </a>
             </li>
 
@@ -108,7 +108,7 @@ class Header extends Component {
               })}
             >
               <a href={`#${PAGES.CONTACT}`} onClick={this.handleMenuItem}>
-                contact us
+                Contact us
               </a>
             </li>
           </ul>

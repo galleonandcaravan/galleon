@@ -10,6 +10,7 @@
   align-content: center;
   transform: translate(-100px, -30px);
   transition: transform 0.5s ease;
+  margin-top: 25px;
 }
 
 .gcLine_hidden {
@@ -27,6 +28,7 @@
 }
 
 .gcLine_animated {
+  width: 52rem;
   transform: translate(0, -30px);
   user-select: none;
 }
@@ -41,10 +43,6 @@
   width: 70px;
   transform: translateY(-10px);
   user-select: none;
-}
-
-.gcLine_animated {
-  width: 50rem;
 }
 
 .gcLine__center {

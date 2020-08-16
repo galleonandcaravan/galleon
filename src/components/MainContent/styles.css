@@ -14,17 +14,18 @@
 .main-content__top {
   position: absolute;
   top: 0;
-  height: 15rem;
-  left: 8rem;
+  height: 50%;
+  left: 0;
   right: 0;
 }
 
 .main-content__bottom {
   position: absolute;
-  height: 15rem;
+  height: 50%;
   bottom: 0;
-  left: 8rem;
+  left: 0;
   right: 0;
+  padding-top: 10px;
 }
 
 .contact .main-content__bottom {
@@ -35,7 +36,7 @@
   position: absolute;
   bottom: 0;
   left: 0;
-  font-size: 5rem;
+  font-size: 6rem;
   opacity: 0;
   font-weight: 300;
   font-style: italic;
@@ -51,7 +52,7 @@
 .main-content__text {
   position: absolute;
   left: 0;
-  top: 0;
+  top: 10px;
   user-select: none;
   opacity: 0;
   font-size: 1.5rem;

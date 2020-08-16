@@ -1,5 +1,5 @@
 export const GC_LINE_MARGIN_TOP = {
-  DEFAULT: 0,
+  DEFAULT: -20,
   TABLET: 40,
   MOBILE: 0,
-}
+};

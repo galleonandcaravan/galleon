@@ -45,9 +45,9 @@ class GCLine extends Component {
     this.clientHeight = document.body.clientHeight;
     window.addEventListener('resize', this.handleResize);
     window.addEventListener('hashchange', this.handleChangePage);
-  
+
     this.imagesSwitcher = document.querySelector('.js-images-switcher');
-  
+
     if (isTablet() || isMobile()) {
       if (this.gcLineCenter.current) {
         this.gcLineCenter.current.addEventListener('touchstart', this.mouseDown, false);
@@ -58,11 +58,11 @@ class GCLine extends Component {
         this.gcLineCenter.current.addEventListener('mousedown', this.mouseDown, false);
       }
       window.addEventListener('mouseup', this.mouseUp, false);
-  
+
       document.addEventListener('keydown', this.handleKeyDownNav);
       document.addEventListener('keyup', this.handleKeyUpNav);
     }
-    
+
     this.handleResize();
     this.getDOMNodes();
 
@@ -73,13 +73,13 @@ class GCLine extends Component {
         this.setState({
           animateTransformStop: true,
         });
-        
+
         if (this.gcLineCenter.current) {
           this.gcLineCenter.current.classList.add('gcLine__center--active');
         }
       }, !isMobile() ? 630 : 0);
     }, !isMobile() ? 1400 : 0);
-    
+
     this.setLineAndImagesPosition(this.currentLinePositionY, true);
   }
 
@@ -139,12 +139,12 @@ class GCLine extends Component {
     }
     this.prevWindowWidth = window.innerWidth;
   };
-  
+
   handleChangePage = () => {
     if (this.checkLinePositionInterval) {
       clearInterval(this.checkLinePositionInterval);
     }
-    
+
     this.checkLinePositionInterval = setInterval(this.checkLinePosition, 10);
   };
 
@@ -196,24 +196,28 @@ class GCLine extends Component {
       minimumDesktopPaddingTop,
       minimumDesktopPaddingBottom
     } = this.getMinimumDesktopPaddings();
+
     const {
       minimumTabletPaddingTop,
       minimumTabletPaddingBottom
     } = this.getMinimumTabletPaddings();
+
     const {
       minimumMobilePaddingTop,
       minimumMobilePaddingBottom
     } = this.getMinimumMobilePaddings();
+
     let screenLinePaddingTop = this.isTablet
       ? minimumTabletPaddingTop
       : minimumDesktopPaddingTop;
+
     let screenLinePaddingBottom = this.isTablet
       ? minimumTabletPaddingBottom
       : minimumDesktopPaddingBottom;
 
     if (this.isMobile) {
-      screenLinePaddingTop = minimumMobilePaddingTop
-      screenLinePaddingBottom = minimumMobilePaddingBottom
+      screenLinePaddingTop = minimumMobilePaddingTop;
+      screenLinePaddingBottom = minimumMobilePaddingBottom;
     }
 
     return {
@@ -249,18 +253,18 @@ class GCLine extends Component {
 
   checkLinePosition = () => {
     const { screenLinePaddingTop } = this.getScreenLinePaddings();
-    
+
     if (!window.enableLineAnimation) {
       clearInterval(this.checkLinePositionInterval);
     }
-    
+
     if (window.checkLinePositionPaused) {
       return;
     }
 
     if (this.nextLinePosY && this.currentLinePositionY) {
       let lineYChanged = false;
-  
+
       // To top
       if (window.animateStep === 2) {
         if (this.currentLinePositionY > this.nextLinePosY) {
@@ -268,7 +272,7 @@ class GCLine extends Component {
           const speed = this.getMoveSpeed(
             this.currentLinePositionY - this.nextLinePosY
           );
-          
+
           this.currentLinePositionY += -speed;
           lineYChanged = true;
         } else {
@@ -284,7 +288,7 @@ class GCLine extends Component {
           const speed = this.getMoveSpeed(
             this.nextLinePosY - this.currentLinePositionY
           );
-          
+
           this.currentLinePositionY += speed;
           lineYChanged = true;
         } else {
@@ -352,13 +356,13 @@ class GCLine extends Component {
       this.imagesBottomDOM.forEach(imageBottomDOM => {
         imageBottomDOM.style.height = `${imageBottomHeight}px`;
       });
-  
+
       this.linePosY = linePosY;
     }
 
     this.prevImageTopHeight = imageTopHeight;
   };
-  
+
   mouseDown = (event) => {
     if (isTablet() || isMobile()) {
       event.preventDefault();
@@ -378,31 +382,31 @@ class GCLine extends Component {
     }
     window.checkLinePositionPaused = false;
   };
-  
+
   getTouches = (event) => {
     return event.touches || event.originalEvent.touches;
   };
-  
+
   lineMove = (event) => {
     const line = this.gcLineCenter.current;
-    let movePositionTop = event.clientY;
-  
+    let movePositionTop = event.clientY + GC_LINE_MARGIN_TOP.DEFAULT;
+
     if (isTablet() || isMobile()) {
       let touches = this.getTouches(event);
-      
+
       if (touches.length > 0) {
-        movePositionTop = touches[0].clientY;
+        movePositionTop = touches[0].clientY + GC_LINE_MARGIN_TOP.MOBILE;
       }
     }
-  
+
     if(window.scrollY > 0 && isIOS()) {
       movePositionTop += window.scrollY / 3;
     }
-  
+
     line.classList.add('gcLine_dragged');
     this.setLineAndImagesPosition(movePositionTop, false);
   };
-  
+
   moveLineUp = () => {
     if (this.moveLineIntervalUp) {
       return;
@@ -412,22 +416,22 @@ class GCLine extends Component {
       this.setLineAndImagesPosition(linePosition, false);
     }, LINE_MOVE_SPEED);
   };
-  
+
   moveLineDown = () => {
     if (this.moveLineIntervalDown) {
       return;
     }
-    
+
     this.moveLineIntervalDown = setInterval(() => {
       let linePosition = this.linePosY + ARROW_LINE_MOVE_AMOUNT;
       this.setLineAndImagesPosition(linePosition, false);
     }, LINE_MOVE_SPEED);
   };
-  
+
   handleKeyDownNav = event => {
     const { popupVisibleBlock } = this.state;
     const keyNum = event.keyCode ? event.keyCode : event.which;
-    
+
     if (
       !window.disableLinks &&
       !window.disableKeyboardNav &&
@@ -446,13 +450,13 @@ class GCLine extends Component {
           return;
       }
     }
-    
+
     event.preventDefault();
   };
-  
+
   handleKeyUpNav = event => {
     const keyNum = event.keyCode ? event.keyCode : event.which;
-  
+
     switch (keyNum) {
       case UP_ARROW_KEY_NUM:
         clearInterval(this.moveLineIntervalUp);
@@ -463,10 +467,10 @@ class GCLine extends Component {
         this.moveLineIntervalDown = false;
         break;
       default:
-      
+
     }
   };
-  
+
   render() {
     const { isHidden } = this.props;
     const { mountAnimateStarted, animateTransformStop } = this.state;
