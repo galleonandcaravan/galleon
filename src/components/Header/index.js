@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { HEADER_AUTH_LINKS, PAGES } from '../../constants';
 import HeaderMobile from '../HeaderMobile';
-import logo from './images/logo.png';
+import logo from './images/logo.svg';
 import iconGcLite from './images/icon-gc-lite.svg';
 import iconGcPro from './images/icon-gc-pro.svg';
 

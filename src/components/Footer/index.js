@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import footerIcon from './images/icon.png';
+import footerIcon from './images/icon.svg';
 import './styles.css';
 
 // eslint-disable-next-line react/prefer-stateless-function

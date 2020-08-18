@@ -3,8 +3,8 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { GC_LINE_MARGIN_TOP } from './constants';
-import gImage from './images/g.png';
-import cImage from './images/c.png';
+import gImage from './images/g.svg';
+import cImage from './images/c.svg';
 import {isTablet, isMobile, isDesktop, isIOS} from '../../utils/media';
 import './styles.css';
 
