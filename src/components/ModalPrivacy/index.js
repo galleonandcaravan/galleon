@@ -851,7 +851,7 @@ class ModalPrivacy extends Component {
                   <br className="modal-privacy__break-big" />
                   22.2.6 we will send you a written statement explaining the amount of any sums that may be payable to us and the amount of any sums being withheld by us.
                   <br /><br /><br />
-                  <b>PART D: GENERAL</b>b>
+                  <b>PART D: GENERAL</b>
                   <br /><br />
 
                   23. OTHER IMPORTANT TERMS
