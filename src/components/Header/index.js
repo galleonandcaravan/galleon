@@ -5,8 +5,6 @@ import PropTypes from 'prop-types';
 import { HEADER_AUTH_LINKS, PAGES } from '../../constants';
 import HeaderMobile from '../HeaderMobile';
 import logo from './images/logo.svg';
-import iconGcLite from './images/icon-gc-lite.svg';
-import iconGcPro from './images/icon-gc-pro.svg';
 
 import './styles.css';
 
@@ -21,22 +19,36 @@ class Header extends Component {
     activePage: ''
   };
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      dropdownActive: false,
+    }
+  }
+
   handleMenuItem = event => {
     event.preventDefault();
     event.stopPropagation();
     const { popupVisibleBlock, togglePopup } = this.props;
 
     if (!window.disableLinks && !window.disableMouseWheel) {
-      const hash = event.target.href.split('#')[1];
-      window.location.hash = hash;
+      window.location.hash = event.target.href.split('#')[1];
       if (popupVisibleBlock) {
         togglePopup();
       }
     }
   };
 
+  toggleDropdown = () => {
+    const { dropdownActive } = this.state;
+
+    this.setState({ dropdownActive: !dropdownActive });
+  };
+
   render() {
     const { activePage, popupVisibleBlock, togglePopup } = this.props;
+    const { dropdownActive } = this.state;
 
     return (
       <div className="header">
@@ -115,15 +127,24 @@ class Header extends Component {
 
           <ul className="header-auth">
             <li className="header-auth__item">
-              <a href={HEADER_AUTH_LINKS.REGISTER}>
-                <img src={iconGcLite} alt='galcarlite.com' />
-              </a>
+              <div className="header-dropdown">
+                <span className="header-dropdownAction" onClick={this.toggleDropdown}>Register</span>
+
+                {dropdownActive && (
+                  <ul>
+                    <li>
+                      <a href={HEADER_AUTH_LINKS.REGISTER_BUSINESS}>Business</a>
+                    </li>
+                    <li>
+                      <a href={HEADER_AUTH_LINKS.REGISTER_PERSONAL}>Personal</a>
+                    </li>
+                  </ul>
+                )}
+              </div>
             </li>
 
             <li className="header-auth__item">
-              <a href={HEADER_AUTH_LINKS.LOGIN}>
-                <img src={iconGcPro} alt='galcarpro.com' />
-              </a>
+              <a href={HEADER_AUTH_LINKS.LOGIN}>Log In</a>
             </li>
           </ul>
         </div>
