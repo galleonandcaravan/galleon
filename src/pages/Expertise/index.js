@@ -8,7 +8,7 @@ const Expertise = ({ switcherImagesVisible }) => (
   <div className="expertise" id="page-expertise">
     <MainContent
       title="We have <br class='desktop' /><b>expertise</b>"
-      text="By partnering with an award-winning fintech <br class='desktop' />firm, we offer innovative products and <br class='desktop' />tailored strategic solutions that get your funds where <br class='desktop' />they need to be, seamlessly."
+      text="By partnering with an award-winning fintech <br class='desktop' />firm, we offer innovative products and <br class='desktop' />tailored and personalised service that get your funds where <br class='desktop' />they need to be, seamlessly."
     />
     <ImagesSwitcher
       imageTopClassName="expertise__image-top"
