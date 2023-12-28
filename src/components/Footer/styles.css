@@ -23,13 +23,12 @@
 
 .footer-copyright {
   position: absolute;
+  bottom: 0;
   right: 0;
-  width: 30%;
-  max-width: 350px;
-  font-size: 9px;
+  width: 35%;
+  font-size: 8px;
   font-weight: 500;
   font-family: Roboto;
-  bottom: 0px;
   color: #828181;
 }
 
@@ -52,10 +51,6 @@
 
   .footer-logo {
     width: 38px;
-  }
-
-  .footer-copyright {
-    font-size: 10px;
   }
 }
 
