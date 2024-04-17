@@ -59,13 +59,16 @@ class ImagesSwitcher extends Component {
   };
 
   resizeImages = () => {
-    const imagesSwitcherHeight = document.querySelector('.section_active .js-images-switcher')
-      .offsetHeight;
+    const imagesSwitcherDOM = document.querySelector('.section_active .js-images-switcher');
 
-    this.setState({
-      imageTopHeight: imagesSwitcherHeight,
-      imageBottomHeight: imagesSwitcherHeight
-    });
+    if (imagesSwitcherDOM) {
+      const imagesSwitcherHeight = imagesSwitcherDOM.offsetHeight;
+
+      this.setState({
+        imageTopHeight: imagesSwitcherHeight,
+        imageBottomHeight: imagesSwitcherHeight
+      });
+    }
   };
 
   render() {
@@ -77,6 +80,10 @@ class ImagesSwitcher extends Component {
       switcherImagesVisible
     } = this.props;
     const { imageTopHeight, imageBottomHeight, bgImagesVisible } = this.state;
+
+    if (!switcherImagesVisible) {
+      return null;
+    }
 
     return (
       <div className="images-switcher-container">

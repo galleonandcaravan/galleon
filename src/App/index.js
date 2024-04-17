@@ -6,8 +6,10 @@ import Mission from '../pages/Misson';
 import Story from '../pages/Story';
 import Expertise from '../pages/Expertise';
 import Contact from '../pages/Contact';
+import Complaints from '../pages/Complaints';
+import Safeguarding from '../pages/Safeguarding';
 import Layout from '../components/Layout';
-import { PAGES, PAGES_IMAGES } from '../constants';
+import {ADDITIONAL_PAGES, PAGES, PAGES_IMAGES} from '../constants';
 import ModalPrivacy from '../components/ModalPrivacy';
 import { isDesktop, isMobile, isTablet } from '../utils/media';
 import './styles/app.css';
@@ -52,7 +54,10 @@ class App extends Component {
     this.getDOMNodes();
     this.contentTitleDOMNodes[0].style.opacity = '1';
     this.contentTextDOMNodes[0].style.opacity = '1';
-    this.imagesSWitcherDOMNodes[0].style.display = 'block';
+
+    if (this.imagesSWitcherDOMNodes[0]) {
+      this.imagesSWitcherDOMNodes[0].style.display = 'block';
+    }
 
     this.loadSwitcherImages();
     window.disableMouseWheel = true;
@@ -85,6 +90,10 @@ class App extends Component {
     const nextPage = this.getPage().toUpperCase();
     const nextPageImages = PAGES_IMAGES[nextPage];
 
+    if (!this.imagesSWitcherDOMNodes || !nextPageImages) {
+      return;
+    }
+
     this.imagesSWitcherDOMNodes.forEach((imagesSwitcherDOM) => {
       const imageTopDOM = imagesSwitcherDOM.querySelector(
         '.js-image-switcher-top > div'
@@ -103,6 +112,10 @@ class App extends Component {
     const nextPage = this.getPage().toUpperCase();
     const nextPageImages = PAGES_IMAGES[nextPage];
 
+    if (!this.imagesSWitcherDOMNodes[pageIndex] || !nextPageImages) {
+      return;
+    }
+
     this.imagesSWitcherDOMNodes[pageIndex].style.opacity = '0';
 
     this.imagesSWitcherDOMNodes.forEach((imagesSwitcherDOM, index) => {
@@ -115,10 +128,10 @@ class App extends Component {
 
       imageTopDOM.style.backgroundImage = `url(${
         nextPageImages.TOP
-        })`;
+      })`;
       imageBottomDOM.style.backgroundImage = `url(${
         nextPageImages.BOTTOM
-        })`;
+      })`;
 
       if (index !== pageIndex) {
         imagesSwitcherDOM.style.opacity = '1';
@@ -131,6 +144,10 @@ class App extends Component {
       return;
     }
 
+    if (!this.imagesSWitcherDOMNodes) {
+      return;
+    }
+
     if (window.skipAnimation) {
       this.setPageImages();
     }
@@ -138,6 +155,10 @@ class App extends Component {
     if (window.animateStep !== this.prevAnimateStep) {
       const page = this.getPage();
       const pageIndex = this.getPageIndex(page);
+
+      if (!this.imagesSWitcherDOMNodes[pageIndex]) {
+        return;
+      }
 
       // Start new animation
       const nextPage = this.getPage().toUpperCase();
@@ -156,6 +177,7 @@ class App extends Component {
       }
 
       if (window.animateStep === 2) {
+
         // Change image content after complete first step animation
         this.imagesSWitcherDOMNodes[pageIndex].style.opacity = '0';
 
@@ -166,10 +188,16 @@ class App extends Component {
           const imageBottomDOM = imagesSwitcherDOM.querySelector(
             '.js-image-switcher-bottom > div'
           );
-          imageTopDOM.style.backgroundImage = this.prevPageImageTopBackgroundImage;
-          imageBottomDOM.style.backgroundImage = `url(${
-            nextPageImages.BOTTOM
+
+          if (imageTopDOM) {
+            imageTopDOM.style.backgroundImage = this.prevPageImageTopBackgroundImage;
+          }
+
+          if (imageBottomDOM && nextPageImages) {
+            imageBottomDOM.style.backgroundImage = `url(${
+              nextPageImages.BOTTOM
             })`;
+          }
 
           if (index !== pageIndex) {
             imagesSwitcherDOM.style.opacity = '1';
@@ -183,7 +211,10 @@ class App extends Component {
           const imageTopDOM = imagesSwitcherDOM.querySelector(
             '.js-image-switcher-top > div'
           );
-          imageTopDOM.style.backgroundImage = `url(${nextPageImages.TOP})`;
+
+          if (imageTopDOM && nextPageImages) {
+            imageTopDOM.style.backgroundImage = `url(${nextPageImages.TOP})`;
+          }
         })
       }
     }
@@ -194,6 +225,10 @@ class App extends Component {
   fadeContent = () => {
     const page = this.getPage();
     const pageIndex = this.getPageIndex(page);
+
+    if (!this.imagesSWitcherDOMNodes || !this.imagesSWitcherDOMNodes[pageIndex] || !this.contentTitleDOMNodes) {
+      return;
+    }
 
     // Fade content after complete 3 steps of animation
     this.contentTitleDOMNodes.forEach(contentTitleDOM => {
@@ -328,7 +363,11 @@ class App extends Component {
   goToPageByIndex = pageIndex => {
     const pages = Object.keys(PAGES).map(pageKey => PAGES[pageKey]);
     const nextPage = pages[pageIndex];
-    window.location.hash = nextPage;
+
+    if (nextPage) {
+      window.location.hash = nextPage;
+    }
+
     this.fadeContent();
   };
 
@@ -350,7 +389,11 @@ class App extends Component {
     this.checkAnimateStepInterval = setInterval(this.checkAnimateStep, 10);
 
     const prevPageImageTopDOM = document.querySelector('.section_active .js-image-switcher-top > div');
-    this.prevPageImageTopBackgroundImage = prevPageImageTopDOM.style.backgroundImage;
+
+    if (prevPageImageTopDOM) {
+      this.prevPageImageTopBackgroundImage = prevPageImageTopDOM.style.backgroundImage;
+    }
+
     const page = this.getPage();
 
     this.setState({
@@ -433,6 +476,8 @@ class App extends Component {
     const storyPageIsActive = page === PAGES.STORY;
     const expertisePageIsActive = page === PAGES.EXPERTISE;
     const contactPageIsActive = page === PAGES.CONTACT;
+    const complaintsPageIsActive = page === ADDITIONAL_PAGES.COMPLAINTS;
+    const safeguardingPageIsActive = page === ADDITIONAL_PAGES.SAFEGUARDING;
 
     return (
       <Layout
@@ -469,6 +514,18 @@ class App extends Component {
             className={cn('section', { section_active: contactPageIsActive })}
           >
             <Contact switcherImagesVisible />
+          </div>
+
+          <div
+            className={cn('section', { section_active: complaintsPageIsActive })}
+          >
+            <Complaints switcherImagesVisible={false} />
+          </div>
+
+          <div
+            className={cn('section', { section_active: safeguardingPageIsActive })}
+          >
+            <Safeguarding switcherImagesVisible={false} />
           </div>
 
           <ModalPrivacy

@@ -21,15 +21,52 @@
   cursor: pointer;
 }
 
+.footer-menu {
+  line-height: 1;
+}
+
+.footer-menu__item {
+  margin-right: 1.5rem;
+  display: inline-block;
+  color: white;
+  font-weight: 500;
+  vertical-align: middle;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+.footer-menu__item-active {
+  font-style: italic;
+  color: #66CCCC;
+}
+
+.footer-menu__item-active a:hover {
+  border-bottom: none;
+}
+
+
+.footer-menu__item:last-child {
+  margin-right: 0;
+}
+
 .footer-copyright {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 35%;
-  font-size: 8px;
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  width: 40%;
+  font-size: 12px;
   font-weight: 500;
   font-family: Roboto;
   color: #828181;
+}
+
+.footer-copyright.footer-copyright__right {
+  right: 16px;
+}
+
+.footer-copyright.footer-copyright__left {
+  right: auto;
+  left: 16px;
 }
 
 .footer-copyright__col {

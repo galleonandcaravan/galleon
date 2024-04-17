@@ -2,7 +2,7 @@
   position: relative;
   padding: 0 12rem;
   margin: 0 auto;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 .layout__container {

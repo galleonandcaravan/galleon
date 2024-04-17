@@ -16,6 +16,10 @@ export const PAGES = {
   EXPERTISE: 'expertise',
   CONTACT: 'contact',
 };
+export const ADDITIONAL_PAGES = {
+  COMPLAINTS: 'complaints',
+  SAFEGUARDING: 'safeguarding',
+};
 
 export const PAGES_IMAGES = {
   ABOUT: {
