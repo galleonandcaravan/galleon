@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { CSSTransition } from 'react-transition-group';
 import { Portal } from 'react-portal';
-import { HEADER_AUTH_LINKS, PAGES } from '../../constants';
+import {ADDITIONAL_PAGES, HEADER_AUTH_LINKS, PAGES} from '../../constants';
 import iconGcLite from './images/icon-gc-lite.svg';
 import iconGcPro from './images/icon-gc-pro.svg';
 
@@ -146,6 +146,34 @@ class HeaderMobile extends Component {
                       onClick={this.changePage}
                     >
                       Contact
+                    </a>
+                  </li>
+
+                  <li
+                    className={cn('header-mobile-menu__item', {
+                      'header-mobile-menu__item_active':
+                        activePage === ADDITIONAL_PAGES.COMPLAINTS
+                    })}
+                  >
+                    <a
+                      href={`#${ADDITIONAL_PAGES.COMPLAINTS}`}
+                      onClick={this.changePage}
+                    >
+                      Complaints
+                    </a>
+                  </li>
+
+                  <li
+                    className={cn('header-mobile-menu__item', {
+                      'header-mobile-menu__item_active':
+                        activePage === ADDITIONAL_PAGES.SAFEGUARDING
+                    })}
+                  >
+                    <a
+                      href={`#${ADDITIONAL_PAGES.SAFEGUARDING}`}
+                      onClick={this.changePage}
+                    >
+                      Safeguarding
                     </a>
                   </li>
                 </ul>

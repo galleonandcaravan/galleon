@@ -42,6 +42,14 @@ export const PAGES_IMAGES = {
     TOP: contactImageTop,
     BOTTOM: contactImageBottom,
   },
+  COMPLAINTS: {
+    TOP: undefined,
+    BOTTOM: undefined,
+  },
+  SAFEGUARDING: {
+    TOP: undefined,
+    BOTTOM: undefined,
+  },
 }
 
 export const HEADER_AUTH_LINKS = {

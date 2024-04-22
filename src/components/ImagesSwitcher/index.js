@@ -81,10 +81,6 @@ class ImagesSwitcher extends Component {
     } = this.props;
     const { imageTopHeight, imageBottomHeight, bgImagesVisible } = this.state;
 
-    if (!switcherImagesVisible) {
-      return null;
-    }
-
     return (
       <div className="images-switcher-container">
         <div

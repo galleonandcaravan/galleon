@@ -90,9 +90,9 @@ class App extends Component {
     const nextPage = this.getPage().toUpperCase();
     const nextPageImages = PAGES_IMAGES[nextPage];
 
-    if (!this.imagesSWitcherDOMNodes || !nextPageImages) {
-      return;
-    }
+    // if (!this.imagesSWitcherDOMNodes || !nextPageImages) {
+    //   return;
+    // }
 
     this.imagesSWitcherDOMNodes.forEach((imagesSwitcherDOM) => {
       const imageTopDOM = imagesSwitcherDOM.querySelector(
@@ -111,10 +111,6 @@ class App extends Component {
     const pageIndex = this.getPageIndex(page);
     const nextPage = this.getPage().toUpperCase();
     const nextPageImages = PAGES_IMAGES[nextPage];
-
-    if (!this.imagesSWitcherDOMNodes[pageIndex] || !nextPageImages) {
-      return;
-    }
 
     this.imagesSWitcherDOMNodes[pageIndex].style.opacity = '0';
 
@@ -144,10 +140,6 @@ class App extends Component {
       return;
     }
 
-    if (!this.imagesSWitcherDOMNodes) {
-      return;
-    }
-
     if (window.skipAnimation) {
       this.setPageImages();
     }
@@ -156,17 +148,13 @@ class App extends Component {
       const page = this.getPage();
       const pageIndex = this.getPageIndex(page);
 
-      if (!this.imagesSWitcherDOMNodes[pageIndex]) {
-        return;
-      }
-
       // Start new animation
       const nextPage = this.getPage().toUpperCase();
       const nextPageImages = PAGES_IMAGES[nextPage];
 
       if (window.animateStep === 4) {
         setTimeout(() => {
-          window.animateStep = 5; // Change step of aniamtion
+          window.animateStep = 5; // Change step of animation
           window.disableMouseWheel = false;
           window.disableKeyboardNav = false;
           window.disableLinks = false;
@@ -226,7 +214,13 @@ class App extends Component {
     const page = this.getPage();
     const pageIndex = this.getPageIndex(page);
 
-    if (!this.contentTitleDOMNodes) {
+    setTimeout(() => {
+      window.disableLinks = false;
+      window.disableMouseWheel = false;
+      window.disableKeyboardNav = false;
+    }, 500);
+
+    if (!this.contentTitleDOMNodes || !this.contentTextDOMNodes) {
       return;
     }
 
@@ -238,12 +232,13 @@ class App extends Component {
       contentTextOOM.style.opacity = '0';
     });
 
+    if (!this.contentTitleDOMNodes[pageIndex] || !this.contentTextDOMNodes[pageIndex]) {
+      return;
+    }
+
     setTimeout(() => {
       this.contentTitleDOMNodes[pageIndex].style.opacity = '1';
       this.contentTextDOMNodes[pageIndex].style.opacity = '1';
-      window.disableLinks = false;
-      window.disableMouseWheel = false;
-      window.disableKeyboardNav = false;
     }, 500);
   };
 
@@ -384,6 +379,8 @@ class App extends Component {
   };
 
   handleChangePage = () => {
+    const page = this.getPage();
+
     this.prevAnimateStep = 0;
     window.enableLineAnimation = true;
 
@@ -398,8 +395,6 @@ class App extends Component {
       this.prevPageImageTopBackgroundImage = prevPageImageTopDOM.style.backgroundImage;
     }
 
-    const page = this.getPage();
-
     this.setState({
       page,
       popupVisibleBlock: ''
@@ -413,9 +408,10 @@ class App extends Component {
   };
 
   handleLoadingPage = () => {
+    const page = this.getPage();
+
     this.prevAnimateStep = 0;
     window.enableLineAnimation = true;
-    const page = this.getPage();
 
     this.setState({
       page,
@@ -483,6 +479,8 @@ class App extends Component {
     const complaintsPageIsActive = page === ADDITIONAL_PAGES.COMPLAINTS;
     const safeguardingPageIsActive = page === ADDITIONAL_PAGES.SAFEGUARDING;
 
+    const modalPagesIsActive = complaintsPageIsActive || safeguardingPageIsActive;
+
     return (
       <Layout
         className="app"
@@ -490,46 +488,46 @@ class App extends Component {
         popupVisibleBlock={popupVisibleBlock}
         togglePopup={this.togglePopup}
         activePage={page}
-        gcLineHidden={!!popupVisibleBlock}
+        gcLineHidden={!!popupVisibleBlock || complaintsPageIsActive || safeguardingPageIsActive}
         dotsHidden={!!popupVisibleBlock}
       >
         <div className={cn('page js-layout-page', { page_hidden: popupVisibleBlock })}>
           <div className={cn('section', { section_active: aboutPageIsActive })}>
-            <About switcherImagesVisible />
+            <About switcherImagesVisible={!modalPagesIsActive} />
           </div>
 
           <div className={cn('section', { section_active: storyPageIsActive })}>
-            <Story switcherImagesVisible />
+            <Story switcherImagesVisible={!modalPagesIsActive} />
           </div>
 
           <div
             className={cn('section', { section_active: missionPageIsActive })}
           >
-            <Mission switcherImagesVisible />
+            <Mission switcherImagesVisible={!modalPagesIsActive} />
           </div>
 
           <div
             className={cn('section', { section_active: expertisePageIsActive })}
           >
-            <Expertise switcherImagesVisible />
+            <Expertise switcherImagesVisible={!modalPagesIsActive} />
           </div>
 
           <div
             className={cn('section', { section_active: contactPageIsActive })}
           >
-            <Contact switcherImagesVisible />
+            <Contact switcherImagesVisible={!modalPagesIsActive} />
           </div>
 
           <div
-            className={cn('section', { section_active: complaintsPageIsActive })}
+            className={cn('section', 'section_modal', { section_active: complaintsPageIsActive })}
           >
-            <Complaints />
+            <Complaints switcherImagesVisible={false} />
           </div>
 
           <div
-            className={cn('section', { section_active: safeguardingPageIsActive })}
+            className={cn('section', 'section_modal', { section_active: safeguardingPageIsActive })}
           >
-            <Safeguarding />
+            <Safeguarding switcherImagesVisible={false} />
           </div>
 
           <ModalPrivacy

@@ -71,11 +71,24 @@ ul {
   transition: all 1s ease;
 }
 
+.section.section_modal .modal-content {
+  opacity: 0;
+  transition: all 1s ease;
+}
+
 .section.section_active {
   z-index: 11;
 }
 
+.section.section_active.section_modal {
+  z-index: 1001;
+}
+
 .section.section_active .main-content {
+  opacity: 1;
+}
+
+.section.section_modal.section_active .modal-content {
   opacity: 1;
 }
 

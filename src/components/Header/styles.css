@@ -190,6 +190,10 @@
     display: none;
   }
 
+  .header-sub-menu {
+    display: none;
+  }
+
   .header-auth {
     display: none;
   }
