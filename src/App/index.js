@@ -226,7 +226,7 @@ class App extends Component {
     const page = this.getPage();
     const pageIndex = this.getPageIndex(page);
 
-    if (!this.imagesSWitcherDOMNodes || !this.imagesSWitcherDOMNodes[pageIndex] || !this.contentTitleDOMNodes) {
+    if (!this.contentTitleDOMNodes) {
       return;
     }
 
@@ -241,7 +241,10 @@ class App extends Component {
     setTimeout(() => {
       this.contentTitleDOMNodes[pageIndex].style.opacity = '1';
       this.contentTextDOMNodes[pageIndex].style.opacity = '1';
-    }, 500)
+      window.disableLinks = false;
+      window.disableMouseWheel = false;
+      window.disableKeyboardNav = false;
+    }, 500);
   };
 
   getDOMNodes = () => {
@@ -258,9 +261,10 @@ class App extends Component {
 
   getPageIndex = page => {
     let pageIndex = 0;
+    const pages = {...PAGES, ...ADDITIONAL_PAGES};
 
-    Object.keys(PAGES).forEach((key, index) => {
-      if (PAGES[key] === page) {
+    Object.keys(pages).forEach((key, index) => {
+      if (pages[key] === page) {
         pageIndex = index;
       }
     });
@@ -519,13 +523,13 @@ class App extends Component {
           <div
             className={cn('section', { section_active: complaintsPageIsActive })}
           >
-            <Complaints switcherImagesVisible={false} />
+            <Complaints />
           </div>
 
           <div
             className={cn('section', { section_active: safeguardingPageIsActive })}
           >
-            <Safeguarding switcherImagesVisible={false} />
+            <Safeguarding />
           </div>
 
           <ModalPrivacy

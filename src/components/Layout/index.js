@@ -98,6 +98,7 @@ class Layout extends Component {
           >
             {children}
           </div>
+
           <CSSTransition
             in={footerAnimateStarted}
             timeout={350}
