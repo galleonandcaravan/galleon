@@ -3,13 +3,14 @@ import PropTypes from "prop-types";
 import ModalContent from '../../components/ModalContent';
 import ImagesSwitcher from '../../components/ImagesSwitcher';
 
-const Complaints = ({ switcherImagesVisible }) => (
+const Complaints = ({ switcherImagesVisible, isActive }) => (
   <div className="complaints" id="page-complaints">
     <ModalContent
       title="Complaints"
       toggleModal={() => {
         window.location.href = '';
       }}
+      isActive={isActive}
     >
       <p>We are your first port of call for any queries or concerns, including complaints. We will handle these complaints in line with our complaints process.</p>
       <p>
@@ -29,10 +30,12 @@ const Complaints = ({ switcherImagesVisible }) => (
 
 Complaints.propTypes = {
   switcherImagesVisible: PropTypes.bool,
+  isActive: PropTypes.bool,
 }
 
 Complaints.defaultProps = {
   switcherImagesVisible: false,
+  isActive: false,
 }
 
 export default Complaints;

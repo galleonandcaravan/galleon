@@ -213,6 +213,13 @@ class App extends Component {
   fadeContent = () => {
     const page = this.getPage();
     const pageIndex = this.getPageIndex(page);
+    const isModalPage = page === ADDITIONAL_PAGES.COMPLAINTS || page === ADDITIONAL_PAGES.SAFEGUARDING;
+
+    if (isModalPage) {
+      document.body.classList.add('modal-open');
+    } else {
+      document.body.classList.remove('modal-open');
+    }
 
     setTimeout(() => {
       window.disableLinks = false;
@@ -521,13 +528,13 @@ class App extends Component {
           <div
             className={cn('section', 'section_modal', { section_active: complaintsPageIsActive })}
           >
-            <Complaints switcherImagesVisible={false} />
+            <Complaints switcherImagesVisible={false} isActive={complaintsPageIsActive} />
           </div>
 
           <div
             className={cn('section', 'section_modal', { section_active: safeguardingPageIsActive })}
           >
-            <Safeguarding switcherImagesVisible={false} />
+            <Safeguarding switcherImagesVisible={false} isActive={safeguardingPageIsActive} />
           </div>
 
           <ModalPrivacy
