@@ -58,9 +58,9 @@ body.modal-open .footer {
   bottom: 16px;
   right: 16px;
   width: 40%;
-  font-size: 12px;
-  font-weight: 500;
-  font-family: Roboto;
+  font-size: 9px;
+  font-weight: 400;
+  font-family: Roboto, sans-serif;
   color: #828181;
 }
 
