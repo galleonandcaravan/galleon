@@ -83,11 +83,10 @@ class Footer extends Component {
 
         <div className="footer-copyright footer-copyright__right">
           <p>
-            For clients based in the United Kingdom and rest of the world, payment services for Galcar Limited (t/a G&C)
-            are provided by The Currency Cloud Limited. Registered in England and Wales No. 06323311.
-            Registered Office: Stewardship Building 1st Floor, 12 Steward Street London E1 6FQ.
-            The Currency Cloud Limited is authorised by the Financial Conduct Authority under the Electronic Money
-            Regulations 2011 for the issuing of electronic money (FRN: 900199).
+            Payment and e-money services are provided by The Currency Cloud Limited. Registered in England No. 06323311.
+            Registered Office: Stewardship Building 1st Floor, 12 Steward Street London E1 6FQ. The Currency Cloud Limited
+            is authorized by the Financial Conduct Authority under the Electronic Money Regulations 2011 for the issuing
+            of electronic money (FRN: 900199)
           </p>
           <p>
             - Galcar Limited (Registered Office: Unit 15, 1 Bramshaw Road, London, E9 5BF) is an EMD Agent of The
