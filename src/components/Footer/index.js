@@ -46,14 +46,7 @@ class Footer extends Component {
 
         <div className="footer-copyright footer-copyright__left">
           <p>
-            - For clients based in the European Economic Area, payment services for Galcar Limited (t/a G&C) are
-            provided
-            by CurrencyCloud B.V.. Registered in the Netherlands No. 72186178. Registered Office: Nieuwezijds
-            Voorburgwal
-            296 - 298, Mindspace Nieuwezijds Office 001 Amsterdam. CurrencyCloud B.V. is authorised by the DNB under the
-            Wet op het financieel toezicht to carry out the business of an electronic-money institution (Relation
-            Number:
-            R142701).Б
+            - For clients based in the European Economic Area, the issuance of e-money and the provision of related payment services for Galcar Limited (t/a G&C) are provided by CurrencyCloud B.V. CurrencyCoud B.V. is registered with the Dutch Chamber of Commerce in the Netherlands under number 72186178. Registered office Mr. Treublaan 7, 1097 DP, Amsterdam, Netherlands. CurrencyCloud B.V. is licensed and regulated by De Nederlandsche Bank as an Electronic Money Institution (Relation Number: R142701)
           </p>
           <p>
             - For clients based in the United States, payment services for Galcar Limited (t/a G&C) are provided by The
