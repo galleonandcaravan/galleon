@@ -15,8 +15,8 @@ const Safeguarding = ({ switcherImagesVisible, isActive }) => (
       <p>
         When funds are posted to your account, e-money is issued in exchange for these funds, by an Electronic
         Money Institution who we work with, called Currencycloud. In line with regulatory requirements,
-        Currencycloud safeguards your funds. This means that all client funds are safeguarded by our FCA-regulated
-        e-money partners at a credit institution, and most importantly, is protected for you in the event of
+        Currencycloud safeguards your funds. <strong>This means that all client funds are safeguarded by our FCA-regulated
+        e-money partners at a credit institution</strong>, and most importantly, is protected for you in the event of
         Currencycloud’s, or our, insolvency. Currencycloud stops safeguarding your funds when the money has been
         paid out of your account to your beneficiary’s account.
       </p>
