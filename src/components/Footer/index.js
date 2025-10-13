@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import cn from 'classnames';
-import footerIcon from './images/icon.svg';
-import './styles.css';
-import {PAGES} from "../../constants";
 import PropTypes from "prop-types";
+import './styles.css';
 
 // eslint-disable-next-line react/prefer-stateless-function
 class Footer extends Component {
@@ -17,36 +14,16 @@ class Footer extends Component {
     activePage: ''
   };
 
-  handleMenuItem = event => {
-    event.preventDefault();
-    event.stopPropagation();
-    const { popupVisibleBlock, togglePopup } = this.props;
-
-    if (!window.disableLinks && !window.disableMouseWheel) {
-      window.location.hash = event.target.href.split('#')[1];
-      if (popupVisibleBlock) {
-        togglePopup();
-      }
-    }
-  };
-
   render() {
-    const { activePage, popupVisibleBlock, togglePopup } = this.props;
-
     return (
       <div className="footer">
-        {/*<img*/}
-        {/*  src={footerIcon}*/}
-        {/*  className="footer-logo"*/}
-        {/*  alt=""*/}
-        {/*  onClick={() => {*/}
-        {/*    window.location.hash = '';*/}
-        {/*  }}*/}
-        {/*/>*/}
-
         <div className="footer-copyright footer-copyright__left">
           <p>
-            - For clients based in the European Economic Area, the issuance of e-money and the provision of related payment services for Galcar Limited (t/a G&C) are provided by CurrencyCloud B.V. CurrencyCoud B.V. is registered with the Dutch Chamber of Commerce in the Netherlands under number 72186178. Registered office Mr. Treublaan 7, 1097 DP, Amsterdam, Netherlands. CurrencyCloud B.V. is licensed and regulated by De Nederlandsche Bank as an Electronic Money Institution (Relation Number: R142701)
+            - For clients based in the European Economic Area, <strong>the issuance of e-money and the provision of related</strong>
+            payment services for Galcar Limited (t/a G&C) are provided by CurrencyCloud B.V. <strong>CurrencyCoud B.V.
+            is registered with the Dutch Chamber of Commerce</strong> in the Netherlands <strong>under number</strong> 72186178.
+            Registered <strong>office Mr. Treublaan 7, 1097 DP, Amsterdam, Netherlands</strong>. CurrencyCloud B.V. is <strong>licensed and
+            regulated by De Nederlandsche Bank as an Electronic Money Institution</strong> (Relation Number: R142701)
           </p>
           <p>
             - For clients based in the United States, payment services for Galcar Limited (t/a G&C) are provided by The
@@ -58,21 +35,6 @@ class Footer extends Component {
             NY
             10011.</p>
         </div>
-
-        {/*<div className="footer-menu">*/}
-        {/*  <ul>*/}
-        {/*    <li className={cn('footer-menu__item', {*/}
-        {/*      'footer-menu__item-active':*/}
-        {/*        (activePage === ADDITIONAL_PAGES.COMPLAINTS || !activePage) && !popupVisibleBlock*/}
-        {/*    })}>*/}
-        {/*      <a href={`#${ADDITIONAL_PAGES.COMPLAINTS}`} onClick={this.handleMenuItem}>Complaints</a></li>*/}
-        {/*    <li className={cn('footer-menu__item', {*/}
-        {/*      'footer-menu__item-active':*/}
-        {/*        (activePage === ADDITIONAL_PAGES.SAFEGUARDING || !activePage) && !popupVisibleBlock*/}
-        {/*    })}>*/}
-        {/*      <a href={`#${ADDITIONAL_PAGES.SAFEGUARDING}`} onClick={this.handleMenuItem}>Safeguarding</a></li>*/}
-        {/*  </ul>*/}
-        {/*</div>*/}
 
         <div className="footer-copyright footer-copyright__right">
           <p>
@@ -88,6 +50,9 @@ class Footer extends Component {
             England No. 06323311. Registered Office: Stewardship Building 1st Floor, 12 Steward Street London E1 6FQ.
             The Currency Cloud Limited is authorized by the Financial Conduct Authority under the Electronic Money
             Regulations 2011 for the issuing of electronic money (FRN: 900199);
+          </p>
+          <p style={{ fontWeight: 'bold' }}>
+            Please see Currencycloud's Terms of Use page here: <a href='https://www.currencycloud.com/legal/terms/'>https://www.currencycloud.com/legal/terms/</a>
           </p>
         </div>
       </div>
