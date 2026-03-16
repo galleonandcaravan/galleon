@@ -26,30 +26,29 @@ class Footer extends Component {
             regulated by De Nederlandsche Bank as an Electronic Money Institution</strong> (Relation Number: R142701)
           </p>
           <p>
-            - For clients based in the United States, payment services for Galcar Limited (t/a G&C) are provided by The
-            Currency Cloud Inc. which operates in partnership with Community Federal Savings Bank (CFSB) to facilitate
-            payments in all 50 states in the US. CFSB is registered with the Federal Deposit Insurance Corporation (FDIC
-            Certificate# 57129). The Currency Cloud Inc is registered with FinCEN and authorised in 39 states to
-            transmit
-            money (MSB Registration Number: 31000206794359). Registered Office: 104 5th Avenue, 20th Floor, New York ,
-            NY
-            10011.</p>
+            - For United States, Payment services for Galcar Limited (T/a G&C) are provided by Visa Global Services Inc.
+            (VGSI), a licensed money transmitter (NMLS ID 181032) in the states listed <a href='https://usa.visa.com/legal/visa-global-services-licenses.html'>here</a>.
+            VGSI is licensed as a money transmitter by the New York Department of Financial Services.
+            Mailing address: 900 Metro Center Blvd, Mailstop 1Z, Foster City, CA 94404. VGSI is also a registered
+            Money Services Business (“MSB”) with FinCEN and a registered Foreign MSB with FINTRAC.
+            For live customer support contact VGSI at (888) 733-0041.
+          </p>
         </div>
 
         <div className="footer-copyright footer-copyright__right">
           <p>
             Payment and e-money services are provided by The Currency Cloud Limited. Registered in England No. 06323311.
-            Registered Office: Stewardship Building 1st Floor, 12 Steward Street London E1 6FQ. The Currency Cloud Limited
-            is authorized by the Financial Conduct Authority under the Electronic Money Regulations 2011 for the issuing
-            of electronic money (FRN: 900199)
+            Registered Office: 1 Sheldon Square, London, W2 6TT, United Kingdom. The Currency Cloud Limited is authorized
+            by the Financial Conduct Authority under the Electronic Money Regulations 2011 for the issuing of
+            electronic money (FRN: 900199)
           </p>
           <p>
             - Galcar Limited (Registered Office: Unit 15, 1 Bramshaw Road, London, E9 5BF) is an EMD Agent of The
             Currency
             Cloud Limited. Payment and e-money services are provided by The Currency Cloud Limited. Registered in
-            England No. 06323311. Registered Office: Stewardship Building 1st Floor, 12 Steward Street London E1 6FQ.
+            England No. 06323311. Registered Office: 1 Sheldon Square, London, W2 6TT, United Kingdom.
             The Currency Cloud Limited is authorized by the Financial Conduct Authority under the Electronic Money
-            Regulations 2011 for the issuing of electronic money (FRN: 900199);
+            Regulations 2011 for the issuing of electronic money (FRN: 900199)
           </p>
           <p style={{ fontWeight: 'bold' }}>
             Please see Currencycloud's Terms of Use page here: <a href='https://www.currencycloud.com/legal/terms/'>https://www.currencycloud.com/legal/terms/</a>

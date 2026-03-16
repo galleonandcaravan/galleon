@@ -146,6 +146,16 @@ class Header extends Component {
                   Safeguarding
                 </a>
               </li>
+              <li
+                className={cn('header-menu__item', {
+                  'header-menu__item-active':
+                    activePage === ADDITIONAL_PAGES.PRIVACY && !popupVisibleBlock
+                })}
+              >
+                <a href={`#${ADDITIONAL_PAGES.PRIVACY}`} onClick={this.handleMenuItem}>
+                  Privacy policy
+                </a>
+              </li>
             </ul>
           </div>
 

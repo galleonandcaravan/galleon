@@ -8,6 +8,7 @@ import Expertise from '../pages/Expertise';
 import Contact from '../pages/Contact';
 import Complaints from '../pages/Complaints';
 import Safeguarding from '../pages/Safeguarding';
+import Privacy from '../pages/Privacy';
 import Layout from '../components/Layout';
 import {ADDITIONAL_PAGES, PAGES, PAGES_IMAGES} from '../constants';
 import ModalPrivacy from '../components/ModalPrivacy';
@@ -89,10 +90,6 @@ class App extends Component {
   setMobileImages() {
     const nextPage = this.getPage().toUpperCase();
     const nextPageImages = PAGES_IMAGES[nextPage];
-
-    // if (!this.imagesSWitcherDOMNodes || !nextPageImages) {
-    //   return;
-    // }
 
     this.imagesSWitcherDOMNodes.forEach((imagesSwitcherDOM) => {
       const imageTopDOM = imagesSwitcherDOM.querySelector(
@@ -485,8 +482,9 @@ class App extends Component {
     const contactPageIsActive = page === PAGES.CONTACT;
     const complaintsPageIsActive = page === ADDITIONAL_PAGES.COMPLAINTS;
     const safeguardingPageIsActive = page === ADDITIONAL_PAGES.SAFEGUARDING;
+    const privacyPageIsActive = page === ADDITIONAL_PAGES.PRIVACY;
 
-    const modalPagesIsActive = complaintsPageIsActive || safeguardingPageIsActive;
+    const modalPagesIsActive = complaintsPageIsActive || safeguardingPageIsActive || privacyPageIsActive;
 
     return (
       <Layout
@@ -495,7 +493,7 @@ class App extends Component {
         popupVisibleBlock={popupVisibleBlock}
         togglePopup={this.togglePopup}
         activePage={page}
-        gcLineHidden={!!popupVisibleBlock || complaintsPageIsActive || safeguardingPageIsActive}
+        gcLineHidden={!!popupVisibleBlock || complaintsPageIsActive || safeguardingPageIsActive || privacyPageIsActive}
         dotsHidden={!!popupVisibleBlock}
       >
         <div className={cn('page js-layout-page', { page_hidden: popupVisibleBlock })}>
@@ -535,6 +533,12 @@ class App extends Component {
             className={cn('section', 'section_modal', { section_active: safeguardingPageIsActive })}
           >
             <Safeguarding switcherImagesVisible={false} isActive={safeguardingPageIsActive} />
+          </div>
+
+          <div
+            className={cn('section', 'section_modal', { section_active: privacyPageIsActive })}
+          >
+            <Privacy switcherImagesVisible={false} isActive={privacyPageIsActive} />
           </div>
 
           <ModalPrivacy

@@ -19,6 +19,7 @@ export const PAGES = {
 export const ADDITIONAL_PAGES = {
   COMPLAINTS: 'complaints',
   SAFEGUARDING: 'safeguarding',
+  PRIVACY: 'privacy',
 };
 
 export const PAGES_IMAGES = {
@@ -47,6 +48,10 @@ export const PAGES_IMAGES = {
     BOTTOM: undefined,
   },
   SAFEGUARDING: {
+    TOP: undefined,
+    BOTTOM: undefined,
+  },
+  PRIVACY: {
     TOP: undefined,
     BOTTOM: undefined,
   },
