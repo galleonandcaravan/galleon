@@ -43,12 +43,10 @@ class Footer extends Component {
             electronic money (FRN: 900199)
           </p>
           <p>
-            - Galcar Limited (Registered Office: Unit 15, 1 Bramshaw Road, London, E9 5BF) is an EMD Agent of The
-            Currency
-            Cloud Limited. Payment and e-money services are provided by The Currency Cloud Limited. Registered in
-            England No. 06323311. Registered Office: 1 Sheldon Square, London, W2 6TT, United Kingdom.
-            The Currency Cloud Limited is authorized by the Financial Conduct Authority under the Electronic Money
-            Regulations 2011 for the issuing of electronic money (FRN: 900199)
+            - Galcar Limited (Registered Office: Unit 15, 1 Bramshaw Road, London, E9 5BF). Payment and e-money services
+            are provided by The Currency Cloud Limited. Registered in England No. 06323311. The Currency Cloud Limited
+            is authorized by the Financial Conduct Authority under the Electronic Money Regulations 2011 for the
+            issuing of electronic money (FRN: 900199)
           </p>
           <p style={{ fontWeight: 'bold' }}>
             Please see Currencycloud's Terms of Use page here: <a href='https://www.currencycloud.com/legal/terms/'>https://www.currencycloud.com/legal/terms/</a>
